@@ -18,7 +18,9 @@ void setupLocator(){
   //GetIt.I.registerLazySingleton(() => challengeservice());
 
 }
+//coomet 3
 //void main() => runApp(new MyApp());
+
 void main() {
   setupLocator();
   runApp(MyApp());
