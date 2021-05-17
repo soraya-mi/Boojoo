@@ -23,7 +23,7 @@ void main() {
   setupLocator();
   runApp(MyApp());
 }
-
+//second comment for test
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
