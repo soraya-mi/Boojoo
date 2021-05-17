@@ -18,6 +18,7 @@ void setupLocator(){
   //GetIt.I.registerLazySingleton(() => challengeservice());
 
 }
+//comment for test
 //void main() => runApp(new MyApp());
 void main() {
   setupLocator();
