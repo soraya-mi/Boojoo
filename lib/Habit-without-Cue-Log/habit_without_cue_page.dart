@@ -296,6 +296,18 @@ class HabitWithoutCue_PageState extends State<HabitWithoutCue_Page> {
                   ),
                 ),
               ),
+              floatingActionButton: FloatingActionButton(
+                // onPressed: showButtons,
+                tooltip: 'habit logs',
+                child: Text(
+                  "گزارش عادت",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15.0,
+                  ),
+                ),
+                backgroundColor: Colors.amber,
+              ),
             ),
           );
         },
