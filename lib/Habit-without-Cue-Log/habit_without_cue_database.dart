@@ -1,7 +1,7 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import '../models/habit_without_cue_Log.dart';
+import 'habit_without_cue_Log.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';

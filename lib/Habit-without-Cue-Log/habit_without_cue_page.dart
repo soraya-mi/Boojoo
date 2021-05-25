@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
-import 'package:self_development/models/habit.dart';
+import '../Habit/habit.dart';
 import 'package:flutter/widgets.dart';
-import 'package:self_development/models/habit_without_cue_Log.dart';
-import '../database/habit_without_cue_database.dart';
+import 'habit_without_cue_Log.dart';
+import 'habit_without_cue_database.dart';
 import 'package:flutter/material.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
@@ -295,6 +295,18 @@ class HabitWithoutCue_PageState extends State<HabitWithoutCue_Page> {
                     ],
                   ),
                 ),
+              ),
+              floatingActionButton: FloatingActionButton(
+                // onPressed: showButtons,
+                tooltip: 'habit logs',
+                child: Text(
+                  "گزارش عادت",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15.0,
+                  ),
+                ),
+                backgroundColor: Colors.amber,
               ),
             ),
           );
