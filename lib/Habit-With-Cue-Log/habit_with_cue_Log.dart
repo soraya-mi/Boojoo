@@ -7,7 +7,7 @@ class Habit_with_Cue_log {
   String _date;
   int _cue;
   Habit_with_Cue_log(this._habitID, this._date, [this._cue]);
-  Habit_with_Cue_log.withID(this._habitID, this._date, [this._cue]);
+  Habit_with_Cue_log.withID(this._id, this._habitID, this._date, [this._cue]);
   int get id {
     return _id;
   }
@@ -17,6 +17,10 @@ class Habit_with_Cue_log {
   int get cue => _cue;
 
 //These are all the Setters
+  set id(int newlogID) {
+    this._id = newlogID;
+  }
+
   set habitID(int newHabitID) {
     this._habitID = newHabitID;
   }
