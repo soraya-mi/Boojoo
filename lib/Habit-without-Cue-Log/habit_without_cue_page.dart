@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import '../Habit/habit.dart';
 import 'package:flutter/widgets.dart';
+import 'CuelessLogPage.dart';
 import 'habit_without_cue_Log.dart';
 import 'habit_without_cue_database.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,12 @@ class HabitWithoutCue_PageState extends State<HabitWithoutCue_Page> {
   String appBarTitle;
   Habit_without_Cue_log habitLog;
   Habit habitInfo;
+  void navigateToLogs(Habit habitinfo, String title) async {
+    bool result =
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return HabitWithoutCue_LogPage(habitInfo, title);
+    }));
+  }
 
   //---
   String label;
@@ -233,6 +240,13 @@ class HabitWithoutCue_PageState extends State<HabitWithoutCue_Page> {
                         ],
                       ),
                       //say good
+                      RaisedButton(
+                        onPressed: () {
+                          setState(() {
+                            addFakeData();
+                          });
+                        },
+                      ),
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -292,21 +306,24 @@ class HabitWithoutCue_PageState extends State<HabitWithoutCue_Page> {
                           },
                         ),
                       ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 40.0),
+                        margin: EdgeInsets.only(bottom: 0.0),
+                        child: CupertinoButton(
+                          child: Text("logs"),
+                          color: Colors.amber,
+                          onPressed: () {
+                            setState(() {
+                              navigateToLogs(habitInfo, "گزارش عادت");
+                              // debugPrint('goning to save:');
+                              // _save();
+                            });
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ),
-              floatingActionButton: FloatingActionButton(
-                // onPressed: showButtons,
-                tooltip: 'habit logs',
-                child: Text(
-                  "گزارش عادت",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15.0,
-                  ),
-                ),
-                backgroundColor: Colors.amber,
               ),
             ),
           );
@@ -336,6 +353,7 @@ class HabitWithoutCue_PageState extends State<HabitWithoutCue_Page> {
         _showAlertDialog("متاسفانه هنگام ذخیره سازی خطایی رخ داد");
       }
     }
+//result = await helper.insertHabitLog(habitLog);
 
     // moveToLastScreen();
   }
@@ -402,5 +420,28 @@ class HabitWithoutCue_PageState extends State<HabitWithoutCue_Page> {
     });
     debugPrint(logexist.toString() + '---------------/////////////');
     return logexist;
+  }
+
+  void addFakeData() async {
+    debugPrint("in adff func");
+    // Habit_without_Cue_log habit1 =
+    //     Habit_without_Cue_log(habitInfo.id, "1400/3/6", 0);
+    // Habit_without_Cue_log habit2 =
+    //     Habit_without_Cue_log(habitInfo.id, "1400/3/7", 0);
+    // Habit_without_Cue_log habit3 =
+    //     Habit_without_Cue_log(habitInfo.id, "1400/3/8", 1);
+    // Habit_without_Cue_log habit4 =
+    //     Habit_without_Cue_log(habitInfo.id, "1400/3/9", 0);
+    // Habit_without_Cue_log habit5 =
+    //     Habit_without_Cue_log(habitInfo.id, "1400/3/10", 1);
+    // int res;
+    // res = await helper.insertHabitLog(habit1);
+    // res = await helper.insertHabitLog(habit2);
+    // res = await helper.insertHabitLog(habit3);
+    // res = await helper.insertHabitLog(habit4);
+    // res = await helper.insertHabitLog(habit5);
+    var r = await helper.deleteHabitLogs(habitInfo.id);
+    debugPrint("after deleter");
+    return r;
   }
 }
