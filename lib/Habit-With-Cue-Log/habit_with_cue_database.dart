@@ -17,6 +17,7 @@ class HabitWithCueLog_DBHelper {
   String colCue = 'cue';
 
   HabitWithCueLog_DBHelper._createInstance();
+
   factory HabitWithCueLog_DBHelper() {
     if (_habitWithCueLog_DBHelper == null) {
       _habitWithCueLog_DBHelper = HabitWithCueLog_DBHelper._createInstance();
@@ -101,6 +102,7 @@ class HabitWithCueLog_DBHelper {
     }
     return habitList;
   }
+
   //
   // Future<List<Map<String, Object>>> exist(Habit_with_Cue_log H) async {
   //   debugPrint("in exist");
@@ -124,15 +126,82 @@ class HabitWithCueLog_DBHelper {
     Database db = await this.database;
     debugPrint("before query");
     var result = await db.rawQuery(
-        'SELECT $colID from $habitwithCueTable WHERE $colDate = $hdate AND $colHabitID = $hid ');
+        'SELECT $colID from $habitwithCueTable WHERE $colDate = "$hdate" AND $colHabitID = "$hid"');
     debugPrint('after query');
-    debugPrint(result[0].values.first.toString() + '....');
+    // if (result != null)
+    //   debugPrint('id=' + result[0].values.first.toString() + '....');
     // int logID = int.parse(result[0].values.toString()[1]);
     // debugPrint(logID.toString());
-    int logID = await int.parse(result[0].values.first.toString());
-    debugPrint('id' + logID.toString());
+    // int logID = await int.parse(result[0].values.first.toString());
+    // debugPrint('id' + logID.toString());
     // debugPrint(result.toString());
     debugPrint('brefore return id value');
-    return await logID;
+    if (result.length != 0) {
+      return await result[0].values.first;
+    } else
+      return -1;
   }
+
+  Future<List<Map<String, Object>>> getHabitLogsMap(int habitID) async {
+    //Future<List<Map<String, Object>>>
+    debugPrint("in getHabitLogs");
+    Database db = await this.database;
+    debugPrint("before query");
+    var result = await db.rawQuery(
+        'SELECT $colDate AS DATE,$colCue AS CUE from $habitwithCueTable WHERE $colHabitID="$habitID"');
+    debugPrint('after query');
+    debugPrint(result.toString());
+    debugPrint('before return id value');
+    debugPrint(result.toList().toString());
+    debugPrint('wwwwwwww');
+    return result.toList();
+  }
+
+  Future<List<Habit_with_Cue_log>> getHabitLogsList(int habitID) async {
+    debugPrint("in");
+    var habitLogsList = await getHabitLogsMap(habitID);
+    debugPrint(habitLogsList.toString());
+    int count = habitLogsList.length;
+    List<Habit_with_Cue_log> habitList = List<Habit_with_Cue_log>();
+    for (int i = 0; i < count; i++) {
+      habitList.add(Habit_with_Cue_log.fromMapObject(habitLogsList[i]));
+    }
+    return habitList;
+  }
+
+  Future<void> deleteHabitLogs(int habitID) async {
+    debugPrint("in Delete fun");
+    Database db = await this.database;
+    db.rawDelete('DELETE FROM $habitwithCueTable WHERE $colHabitID="$habitID"');
+    debugPrint("Deleted.");
+  }
+// Future<List<>>> getHabitLogsList(int habitID) async {
+//   debugPrint("in getHabitLogs");
+//   Database db = await this.database;
+//   debugPrint("before query");
+//   var result = await db.rawQuery(
+//       'SELECT $colDate AS DATE,$colCue AS CUE from $habitwithCueTable WHERE $colHabitID="$habitID"');
+//   debugPrint('after query');
+//   debugPrint(result.toString());
+//   debugPrint('before return id value');
+//   debugPrint(result.values.toList()[0].toString());
+//   debugPrint('wwwwwwww');
+//   return result;
+//   debugPrint("in get log list");
+//   var habitogsList = await getHabitLogsMap(habitID);
+//   debugPrint(habitogsList.toString());
+//   // var counter = await _database.rawQuery(
+//   //     'SELECT  COUNT(*) FROM $habitTable WHERE $colCategory="$category"');
+//   // debugPrint(counter[0].values.single.toString());
+//   // var num = counter[0].values.single;
+//   // var habitMapList = await getHabitMapList();
+//   //
+//   // int count = habitogsList.length;
+//   //
+//   // List<Map<String, String>> habitList = List<Map<String, String>>();
+//   // for (int i = 0; i < count; i++) {
+//   //   habitList.add(Map<String, String>.fromMapObject(habitogsList[i]));
+//   // }
+//   // return habitList;
+// }
 }

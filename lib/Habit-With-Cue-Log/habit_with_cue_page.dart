@@ -9,8 +9,15 @@ import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 // ignore: camel_case_types
 class HabitWithCue_Page extends StatefulWidget {
   final String appBarTitle;
-  final Habit_with_Cue_log habitLog;
+  final Habit_with_Cue_log habitLog; //final
   final Habit habitInfo;
+  // void navigateToLogs(Habit habitinfo, String title) async {
+  //   bool result =
+  //       await Navigator.push(context, MaterialPageRoute(builder: (context) {
+  //     return Habit_with_Cue_log(habitInfo, title);
+  //   }));
+  // }
+//  HabitWithCue_Page(this.habitLog, this.habitInfo, this.appBarTitle);
   HabitWithCue_Page(this.habitLog, this.habitInfo, this.appBarTitle);
 
   @override
@@ -40,7 +47,7 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
   HabitWithCue_PageState(this.habitLog, this.habitInfo, this.appBarTitle);
 //log exist in table or not
   bool doesExist;
-  int id;
+  // int id;
   // debugPrint("in page bulder");
   // TextStyle textStyle = Theme.of(context).textTheme.title;
   // TextEditingController cueController = TextEditingController();
@@ -48,23 +55,33 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
   Widget build(BuildContext context) => FutureBuilder(
         future: getid(),
         builder: (context, AsyncSnapshot<int> snapshot) {
-          debugPrint("in page bulder");
+          debugPrint("in page builder");
           debugPrint(habitLog.habitID.toString());
           TextStyle textStyle = Theme.of(context).textTheme.title;
           TextEditingController cueController = TextEditingController();
           if (snapshot.hasData) {
             debugPrint('Step 3, build widget:s ${snapshot.data}');
-            debugPrint(snapshot.data.toString());
-            id = snapshot.data;
+            debugPrint("data:" + snapshot.data.toString());
+            if (snapshot.data != -1) {
+              habitLog.id = snapshot.data;
+            }
+            // id = snapshot.data;
+            // if (id != null) {
+            //   // habitLog = Habit_with_Cue_log.withID(id, habitInfo.id, todayDate);
+            //   debugPrint("in table");
+            //   doesExist = true;
+            //   // habitLog.id = id;
+            // } else {
+            //   // habitLog = Habit_with_Cue_log(habitInfo.id, todayDate);
+            // }
+            // cueController.text = id.toString();
             // Build the widget with data.
             // Center(
             //   child: Container(child: Text('hasData: ${snapshot.data}')));
-            debugPrint("in table");
-            doesExist = true;
           }
           //else
           else {
-            id = null;
+            // id = null;
             // debugPrint('Step 1, build loading widget ...waiting');
             if (AsyncSnapshot.waiting() != null) {
               debugPrint('wait nist');
@@ -234,6 +251,8 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                           ),
                           onPressed: () {
                             setState(() {
+                              debugPrint(
+                                  'in set state =>' + habitLog.id.toString());
                               label = cueController.text;
                               _save();
                             });
@@ -241,6 +260,48 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                           },
                         ),
                       ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 40.0),
+                        margin: EdgeInsets.only(bottom: 0.0),
+                        child: CupertinoButton(
+                          child: Text("logs"),
+                          color: Colors.amber,
+                          onPressed: () {
+                            setState(() {
+                              AddFakeData();
+
+                              // navigateToLogs(habitInfo, "گزارش عادت");
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       // builder: (context) => BarChartSample1(),
+                              //       ),
+                              // );
+                              // debugPrint('goning to save:');
+                              // _save();
+                            });
+                          },
+                        ),
+                      ),
+                      // Container(
+                      //   padding: EdgeInsets.symmetric(horizontal: 40.0),
+                      //   margin: EdgeInsets.only(bottom: 0.0),
+                      //   child: CupertinoButton(
+                      //     child: Text("logs"),
+                      //     color: Colors.amber,
+                      //     onPressed: () {
+                      //       setState(() {
+                      //         // navigateToLogs(habitInfo, "گزارش عادت");
+                      //   //       Navigator.push(
+                      //   //           context,
+                      //   //           MaterialPageRoute(
+                      //   //               // builder: (context) => MyHomePage()));
+                      //   //       // debugPrint('goning to save:');
+                      //   //       // _save();
+                      //       });
+                      //     },
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -252,20 +313,25 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
 
   void _save() async {
     // moveToLastScreen();
+    // int hid = await getid();
+
     int result;
     debugPrint('save func');
-    debugPrint(
-        'id=' + id.toString() + ' log status:' + habitLog.cue.toString());
+    // debugPrint(hid.toString());
+    debugPrint('id=' +
+        habitLog.id.toString() +
+        ' log status:' +
+        habitLog.cue.toString());
 
-    if (id != null) {
+    if (habitLog.id != null) {
       debugPrint("habit.id != null");
       // result = await helper.updateHabitLog(habitLog);
       _update();
     } else {
       debugPrint("habit.id != null else");
-      debugPrint(habitLog.habitID.toString() +
-          habitLog.date +
-          habitLog.cue.toString());
+      // debugPrint(habitLog.habitID.toString() +
+      //     habitLog.date +
+      //     habitLog.cue.toString());
       result = await helper.insertHabitLog(habitLog);
       if (result != 0) {
         print(this.habitLog);
@@ -282,9 +348,10 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
     // int delete_result, save_result;
 
     // habitLog.id = id;
-    debugPrint(id.toString() + '  ' + habitLog.id.toString());
-    int delete_result = await helper.deleteHabitLog(id);
+    debugPrint(habitLog.id.toString());
+    int delete_result = await helper.deleteHabitLog(habitLog.id);
     int save_result = await helper.insertHabitLog(habitLog);
+
     if (delete_result != 0 && save_result != 0) {
       _showAlertDialog("گزارش با موفقیت به روز رسانی شد");
     } else {
@@ -295,7 +362,7 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
   void _delete() async {
     // moveToLastScreen();
     int result;
-    if (id == null) {
+    if (habitLog.id == null) {
       _showAlertDialog("لطفا مقدار رکورد را وارد کنید.");
       return;
     } else {}
@@ -358,7 +425,18 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
           'value return form exist in getId func----------------------------');
       return value;
     });
-    debugPrint(logexist.toString() + '---------------/////////////');
     return logexist;
+  }
+
+  void AddFakeData() async {
+    // var fd = await helper.insertHabitLog(Habit_with_Cue_log(1, "1400/3/6", 2));
+    // fd = await helper.insertHabitLog(Habit_with_Cue_log(5, "1400/3/7", 5));
+    // fd = await helper.insertHabitLog(Habit_with_Cue_log(2, "1400/3/9", 0));
+    // fd = await helper.insertHabitLog(Habit_with_Cue_log(3, "1400/3/10", 4));
+    var list = helper.getHabitLogsList(habitInfo.id).then((value) {
+      return value;
+    });
+    debugPrint("in page");
+    debugPrint(list.toString());
   }
 }
