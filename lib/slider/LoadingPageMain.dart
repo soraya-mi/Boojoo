@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:boojoo/slider/slideLoadingScreen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'dart:async';
+import 'package:boojoo/Challenge/homepage.dart';
 // void main(){
 //   runApp(LoadingPageApp());
 // }
@@ -36,14 +37,14 @@ class _HomeState extends State<HomeLoading> {
     // TODO: implement initState
     super.initState();
     slides=getSlides();
-    // Timer(Duration(seconds: 3),
-    //         ()=>Navigator.pushReplacement(context,
-    //         MaterialPageRoute(builder:
-    //             (context) =>
-    //             homepage()
-    //         )
-    //     )
-    // );
+    Timer(Duration(seconds: 3),
+            ()=>Navigator.pushReplacement(context,
+            MaterialPageRoute(builder:
+                (context) =>
+                App()
+            )
+        )
+    );
   }
 
 
