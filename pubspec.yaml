@@ -32,6 +32,10 @@ dependencies:
   flutter_onboard: any
   animated_text_kit: ^4.2.1
 
+  auto_direction: ^0.0.5
+  video_player: ^2.1.1
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
