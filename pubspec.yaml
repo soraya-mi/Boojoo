@@ -30,8 +30,13 @@ dependencies:
   after_layout: ^1.1.0
   flutter_onboard: any
   animated_text_kit: ^4.2.1
+  
+  auto_direction: ^0.0.5
+  video_player: ^2.1.1
+  
   fl_chart: ^0.36.1
   pie_chart: ^5.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
