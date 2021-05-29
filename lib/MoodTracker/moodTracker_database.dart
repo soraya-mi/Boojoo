@@ -96,6 +96,7 @@ class MoodTrackerDataBaseHelper {
     List<Map<String, dynamic>> x =
         await db.rawQuery('SELECT COUNT (*) from $moodTrackerTable');
     int result = Sqflite.firstIntValue(x);
+    debugPrint("res:" + result.toString());
     return result;
   }
 
@@ -111,5 +112,39 @@ class MoodTrackerDataBaseHelper {
       return await result[0].values.first;
     } else
       return -1;
+  }
+
+//will return a list that everey element is a map and have number of all logs with dame mood group by mood
+  Future<List<Map<String, dynamic>>> getAllLogsMap() async {
+    debugPrint("get all logs");
+    Database db = await this.database;
+    var x = await db.rawQuery(
+        'SELECT COUNT (*) AS COUNT from $moodTrackerTable group by $colMood ');
+    // int result = Sqflite.;//.firstIntValue(x)
+    // debugPrint("res:" + result.toString());
+    debugPrint("x=" + x[0].toString());
+    return x;
+  }
+
+  // Future<List<MoodTracker>> getAllLogsList() async {
+  //   debugPrint("get all logs");
+  //   var map = await this.getAllLogsMap();
+  //   int count = map.length;
+  //
+  //   List<MoodTracker> LogsList = List<MoodTracker>();
+  //   for (int i = 0; i < count; i++) {
+  //     LogsList.add(MoodTracker.fromMapObject(map[i]));
+  //   }
+  //   return LogsList;
+  //
+  // }
+  //Argument should have format like "2021/5/" or "2021/10/5"
+  Future<List<Map<String, dynamic>>> getMonthlyLog(String LogDate) async {
+    debugPrint("infff");
+    Database db = await this.database;
+    List<Map<String, dynamic>> x = await db.rawQuery(
+        'SELECT * from $moodTrackerTable WHERE $colDate LIKE "$LogDate%"');
+    debugPrint(LogDate + "loggggg" + x.toString());
+    return x;
   }
 }
