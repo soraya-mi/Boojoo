@@ -147,4 +147,14 @@ class MoodTrackerDataBaseHelper {
     debugPrint(LogDate + "loggggg" + x.toString());
     return x;
   }
+
+  //Argument should have format like "2021/" or "2022/"
+  Future<List<Map<String, dynamic>>> getYearyLog(String LogDate) async {
+    debugPrint("infff");
+    Database db = await this.database;
+    List<Map<String, dynamic>> x = await db.rawQuery(
+        'SELECT * from $moodTrackerTable WHERE $colDate LIKE "$LogDate%"');
+    debugPrint(LogDate + "loggggg" + x.toString());
+    return x;
+  }
 }
