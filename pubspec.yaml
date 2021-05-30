@@ -28,7 +28,12 @@ dependencies:
   persian_datetime_picker: 2.1.1
   numberpicker: ^2.1.1
   shared_preferences: any
-
+  flutter_circular_chart: any
+  font_awesome_flutter: any
+  flutter_rating_bar: ^4.0.0
+  flutter_statusbarcolor: ^0.2.3
+  path: ^1.8.0
+  toggle_switch: ^0.1.9
   after_layout: ^1.1.0
   flutter_onboard: any
   animated_text_kit: ^4.2.1

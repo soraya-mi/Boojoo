@@ -7,15 +7,14 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:boojoo/slider/SliderModel.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:boojoo/slider/slideLoadingScreen.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:boojoo/slider/OnBoardScreenMain.dart';
+import 'package:boojoo/Challenge/Challenge_Service.dart';
+import 'package:get_it/get_it.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+
 void setupLocator(){
-  //GetIt.I.registerLazySingleton(() => challengeservice());
+  GetIt.I.registerLazySingleton(() => challengeservice());
 
 }
 
@@ -34,6 +33,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      localizationsDelegates: [
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale("fa", "IR"), // OR Locale('ar', 'AE') OR Other RTL locales
+      ],
       color: Colors.white,
       home: new Splash(),
       debugShowCheckedModeBanner: false,

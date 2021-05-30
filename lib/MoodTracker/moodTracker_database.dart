@@ -157,3 +157,4 @@ class MoodTrackerDataBaseHelper {
     return x;
   }
 }
+

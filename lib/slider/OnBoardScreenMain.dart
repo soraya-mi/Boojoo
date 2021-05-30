@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:boojoo/slider/SliderModel.dart';
+import 'package:boojoo/Challenge/homepage.dart';
 
 // void main(){
 //   runApp(OnBoarApp());
@@ -122,10 +123,10 @@ class _HomeState extends State<HomeOnBoarding> {
         child: InkWell(
           onTap:  (){
             setState(()  {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => homepage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => App()),
+              );
 
             });
           },
