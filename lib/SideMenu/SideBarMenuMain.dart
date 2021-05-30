@@ -7,6 +7,9 @@ import 'package:boojoo/SideMenu/ReportsPage_Main.dart';
 import 'package:boojoo/SideMenu/Setting_Main.dart';
 import 'package:boojoo/SideMenu/logInsigUpbutton.dart';
 
+import 'package:boojoo/MoodTracker/MoodTracker_Main.dart';
+
+
 void main() {
   runApp(SideMunuDrawer());
 }
@@ -57,6 +60,19 @@ class _SideMeunPageState extends State<SideMeunPage> {
                       MaterialPageRoute(
                           builder: (context) =>
                               entrancePage())
+                  ),
+                },
+              ),
+              Divider(),
+              ListTile(
+                title: Text('مودترکر',textAlign: TextAlign.right,style: TextStyle(fontSize: 20)),
+                trailing: Icon(Icons.mood_sharp, color: Colors.teal,size:50),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MoodTrackere())
                   ),
                 },
               ),
