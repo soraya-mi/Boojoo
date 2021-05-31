@@ -6,6 +6,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:boojoo/Habit/habbit-list.dart';
 import 'package:boojoo/Task/task-list.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 // void setupLocator(){
 //   GetIt.I.registerLazySingleton(() => challengeservice());
@@ -21,6 +22,14 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale("fa", "IR"), // OR Locale('ar', 'AE') OR Other RTL locales
+      ],
       title: '',
       theme: ThemeData(
         primarySwatch: Colors.amber,
@@ -106,10 +115,10 @@ class _ButtomNavyBarState extends State<ButtomNavyBar> {
 
   
   List<NavigationItem> items = [
-    NavigationItem(Icon(Icons.home), Text('خانه'), Colors.amber),
-    NavigationItem(Icon(Icons.person), Text('پروفایل'), Colors.blueAccent),
-    NavigationItem(Icon(Icons.add_alarm_outlined), Text('عادت'), Colors.purpleAccent),
-    NavigationItem(Icon(Icons.settings), Text('چالش'), Colors.teal)
+    NavigationItem(Icon(Icons.home), Text('    خانه'), Colors.amber),
+    NavigationItem(Icon(Icons.person), Text('    پروفایل'), Colors.blueAccent),
+    NavigationItem(Icon(Icons.add_alarm_outlined), Text('    عادت'), Colors.purpleAccent),
+    NavigationItem(Icon(Icons.settings), Text('    چالش'), Colors.teal)
   ];
   
   Widget _buildItem(NavigationItem item, bool IsSelected){

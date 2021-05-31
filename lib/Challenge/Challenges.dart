@@ -18,7 +18,7 @@ class MyChallenges extends StatelessWidget {
         likenumber: 2023,
         startdate: DateTime.parse('1390-08-02'),
         enddate: null,
-        icon: 'images/1.jpg',
+        icon: 'assets/1.jpg',
         private_pub: 'pu'
     ),
 
@@ -28,7 +28,7 @@ class MyChallenges extends StatelessWidget {
         likenumber: 1022,
         startdate: DateTime.parse('1395-11-21'),
         enddate: null,
-        icon: 'images/2.jpg',
+        icon: 'assets/2.jpg',
         private_pub: 'pu'
     )
   ];
@@ -112,7 +112,7 @@ class MyChallenges extends StatelessWidget {
             ),
 
             Container(
-              padding: EdgeInsets.only(left:0, bottom: 19, right: 200),
+              padding: EdgeInsets.only(left:200, bottom: 19, ),
               child: RaisedButton(
                 color: Colors.amber,
                 disabledColor: Colors.lightBlueAccent,
