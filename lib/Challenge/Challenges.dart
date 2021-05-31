@@ -8,6 +8,8 @@ import 'package:boojoo/Challenge/Challenge_List.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 
+import 'challenge_group.dart';
+
 class MyChallenges extends StatelessWidget {
 
   final List<challenge_for_list> recommend = [
@@ -115,10 +117,10 @@ class MyChallenges extends StatelessWidget {
               padding: EdgeInsets.only(left:0, bottom: 19, right: 200),
               child: RaisedButton(
                 color: Colors.amber,
-                disabledColor: Colors.lightBlueAccent,
+                disabledColor: Colors.amber,
                 onPressed: (){
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) =>   challengelist()));
+                      MaterialPageRoute(builder: (_) =>   TabBarchallengeGroup()));
                 },
                 child: new Text('مشاهده چالش ها'),
               ),
