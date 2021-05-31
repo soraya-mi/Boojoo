@@ -22,6 +22,15 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale("fa", "IR"), // OR Locale('ar', 'AE') OR Other RTL locales
+      ],
       title: '',
       theme: ThemeData(
         primarySwatch: Colors.amber,
@@ -107,10 +116,10 @@ class _ButtomNavyBarState extends State<ButtomNavyBar> {
 
   
   List<NavigationItem> items = [
-    NavigationItem(Icon(Icons.home), Text('    خانه'), Colors.amber),
-    NavigationItem(Icon(Icons.person), Text('    پروفایل'), Colors.blueAccent),
-    NavigationItem(Icon(Icons.add_alarm_outlined), Text('    عادت'), Colors.purpleAccent),
-    NavigationItem(Icon(Icons.settings), Text('    چالش'), Colors.teal)
+    NavigationItem(Icon(Icons.group), Text('   چالش'), Colors.amber),
+    NavigationItem(Icon(Icons.add_alarm_outlined), Text('   عادت'), Colors.amber),
+    NavigationItem(Icon(Icons.calendar_today), Text('   وظایف'), Colors.amber),
+    NavigationItem(Icon(Icons.person), Text('   پروفایل'), Colors.amber)
   ];
   
   Widget _buildItem(NavigationItem item, bool IsSelected){

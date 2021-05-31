@@ -14,10 +14,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  http: ^0.12.0+2
-  ant_icons: any
-  icon_picker: ^2.0.0
-  multi_select_flutter: ^4.0.0
+
   cupertino_icons: ^1.0.2
   get_it: ^3.0.3
   persian_datepicker: ^0.2.1
@@ -31,7 +28,12 @@ dependencies:
   persian_datetime_picker: 2.1.1
   numberpicker: ^2.1.1
   shared_preferences: any
-
+  flutter_circular_chart: any
+  font_awesome_flutter: any
+  flutter_rating_bar: ^4.0.0
+  flutter_statusbarcolor: ^0.2.3
+  path: ^1.8.0
+  toggle_switch: ^0.1.9
   after_layout: ^1.1.0
   flutter_onboard: any
   animated_text_kit: ^4.2.1
@@ -41,6 +43,17 @@ dependencies:
   
   fl_chart: ^0.36.1
   pie_chart: ^5.0.0
+
+  http: ^0.12.0+2
+  ant_icons: any
+  icon_picker: ^2.0.0
+  multi_select_flutter: ^4.0.0
+
+  connectivity: ^3.0.6
+  another_flushbar: ^1.10.22
+
+  flutter_rating_bar: ^4.0.0
+  flutter_statusbarcolor: ^0.2.3
 
 dev_dependencies:
   flutter_test:
