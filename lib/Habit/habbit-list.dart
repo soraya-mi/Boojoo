@@ -27,90 +27,9 @@ class _HabitListState extends State<HabitList> {
   HabitWithCueLog_DBHelper cueLogHelper = HabitWithCueLog_DBHelper();
   List<Habit> habitList;
   int count = 0;
-
-  void navigateToDetail(Habit habit, String title) async {
-    debugPrint(habit.title);
-    bool result =
-        await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return HabitDetail(habit, title);
-    }));
-    if (result == true) {
-      updateListView();
-    } else if (result == null) {
-      Text("عادتی برای نمایش وجود ندارد. یک عادت جدید ایجاد کنید.");
-    }
-  }
-
-  void navigateToLog(
-      Habit_without_Cue_log habitLog, Habit habitinfo, String title) async {
-    debugPrint("navigate to page in list called");
-
-    bool result;
-    result =
-        await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      // return HabitWithoutCue_Page(habitLog, habitinfo, "title");
-      return HabitWithoutCue_Page(habitLog, habitinfo, "   گزارش عادت   ");
-      // HabitWithoutCue_Page(habitLog, habitinfo, "   گزارش عادت   ");
-    }));
-    if (result == true) {
-      updateListView();
-    } else if (result == null) {
-      debugPrint("خطا");
-    }
-  }
-
-  void navigateToCueLog(
-      Habit_with_Cue_log habitLog, Habit habitinfo, String title) async {
-    debugPrint("navigate to cue page in list called");
-
-    bool result;
-    result =
-        await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      // return HabitWithoutCue_Page(habitLog, habitinfo, "title");
-      return HabitWithCue_Page(
-          habitLog, habitinfo, "   گزارش عادت   "); //habitLog,
-    }));
-    if (result == true) {
-      updateListView();
-    } else if (result == null) {
-      debugPrint("خطا");
-    }
-  }
-
-  void updateListView() {
-    final Future<Database> dbFuture = databaseHelper.initalizeHabitDatabase();
-    dbFuture.then((database) {
-      Future<List<Habit>> habitListFuture = databaseHelper.getHabitList();
-      // Future<List<Habit>> habitListFuture = databaseHelper.getHabitList();
-      habitListFuture.then((habitList) {
-        debugPrint('...');
-        setState(() {
-          this.habitList = habitList;
-          this.count = habitList.length;
-        });
-      });
-    });
-  }
-
-  void updateListViewByCategory(String category) {
-    final Future<Database> dbFuture = databaseHelper.initalizeHabitDatabase();
-    dbFuture.then((database) {
-      Future<List<Habit>> habitListFuture =
-          databaseHelper.getHabitByCategoryList(category);
-      // Future<List<Habit>> habitListFuture = databaseHelper.getHabitList();
-      habitListFuture.then((habitList) {
-        debugPrint('...');
-        setState(() {
-          this.habitList = habitList;
-          this.count = habitList.length;
-        });
-      });
-    });
-  }
-
+  String _chosenValue = 'همه';
   @override
   Widget build(BuildContext context) {
-    String _chosenValue = 'همه';
     debugPrint("****");
     if (habitList == null) {
       habitList = List<Habit>();
@@ -190,7 +109,6 @@ class _HabitListState extends State<HabitList> {
                         'سلامتی',
                         'کار',
                         'درس',
-                        '1',
                         'شخصی',
                       ].map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
@@ -241,6 +159,86 @@ class _HabitListState extends State<HabitList> {
         ),
       ),
     );
+  }
+
+  void navigateToDetail(Habit habit, String title) async {
+    debugPrint(habit.title);
+    bool result =
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return HabitDetail(habit, title);
+    }));
+    if (result == true) {
+      updateListView();
+    } else if (result == null) {
+      Text("عادتی برای نمایش وجود ندارد. یک عادت جدید ایجاد کنید.");
+    }
+  }
+
+  void navigateToLog(
+      Habit_without_Cue_log habitLog, Habit habitinfo, String title) async {
+    debugPrint("navigate to page in list called");
+
+    bool result;
+    result =
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      // return HabitWithoutCue_Page(habitLog, habitinfo, "title");
+      return HabitWithoutCue_Page(habitLog, habitinfo, "   گزارش عادت   ");
+      // HabitWithoutCue_Page(habitLog, habitinfo, "   گزارش عادت   ");
+    }));
+    if (result == true) {
+      updateListView();
+    } else if (result == null) {
+      debugPrint("خطا");
+    }
+  }
+
+  void navigateToCueLog(
+      Habit_with_Cue_log habitLog, Habit habitinfo, String title) async {
+    debugPrint("navigate to cue page in list called");
+
+    bool result;
+    result =
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      // return HabitWithoutCue_Page(habitLog, habitinfo, "title");
+      return HabitWithCue_Page(
+          habitLog, habitinfo, "   گزارش عادت   "); //habitLog,
+    }));
+    if (result == true) {
+      updateListView();
+    } else if (result == null) {
+      debugPrint("خطا");
+    }
+  }
+
+  void updateListView() {
+    final Future<Database> dbFuture = databaseHelper.initalizeHabitDatabase();
+    dbFuture.then((database) {
+      Future<List<Habit>> habitListFuture = databaseHelper.getHabitList();
+      // Future<List<Habit>> habitListFuture = databaseHelper.getHabitList();
+      habitListFuture.then((habitList) {
+        debugPrint('...');
+        setState(() {
+          this.habitList = habitList;
+          this.count = habitList.length;
+        });
+      });
+    });
+  }
+
+  void updateListViewByCategory(String category) {
+    final Future<Database> dbFuture = databaseHelper.initalizeHabitDatabase();
+    dbFuture.then((database) {
+      Future<List<Habit>> habitListFuture =
+          databaseHelper.getHabitByCategoryList(category);
+      // Future<List<Habit>> habitListFuture = databaseHelper.getHabitList();
+      habitListFuture.then((habitList) {
+        debugPrint('...');
+        setState(() {
+          this.habitList = habitList;
+          this.count = habitList.length;
+        });
+      });
+    });
   }
 
   ListView getHabitListView() {

@@ -375,7 +375,6 @@ class HabitDetailState extends State<HabitDetail> {
                                       'کار',
                                       'درس',
                                       'شخصی',
-                                      '1',
                                       ' ',
                                     ].map<DropdownMenuItem<String>>(
                                         (String value) {
