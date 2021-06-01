@@ -23,6 +23,7 @@ class TaskDetailState extends State<TaskDetail> {
   TaskDataBaseHelper helper = TaskDataBaseHelper();
   String appBarTitle;
   Task task;
+  String _chosenValue = ' ';
   //---
   String label;
 
@@ -39,6 +40,7 @@ class TaskDetailState extends State<TaskDetail> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController completedController = TextEditingController(); //why??
+
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.title;
@@ -212,6 +214,65 @@ class TaskDetailState extends State<TaskDetail> {
                         });
                       },
                       child: Text('زمان پایان '),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("دسته بندی"),
+                    ),
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(0.0),
+                        width: 100.0,
+                        child: DropdownButtonHideUnderline(
+                          child: ButtonTheme(
+                            alignedDropdown: true,
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              iconSize: 20.0,
+                              dropdownColor: Colors.amber[100],
+                              itemHeight: 50.0,
+                              focusColor: Colors.white,
+                              value: _chosenValue,
+                              // elevation: 5,
+                              style: TextStyle(color: Colors.white),
+                              iconEnabledColor: Colors.black,
+                              items: <String>[
+                                'سلامتی',
+                                'کار',
+                                'درس',
+                                'شخصی',
+                                ' ',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                );
+                              }).toList(),
+                              hint: Text(
+                                "لطفا یک دسته را انتخاب کنید",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              onChanged: (String value) {
+                                setState(() {
+                                  _chosenValue = value;
+                                  task.category = value;
+                                  if (value == ' ') task.category = null;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
