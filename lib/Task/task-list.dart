@@ -87,7 +87,7 @@ class _TaskListState extends State<TaskList> {
             "لیست وظایف",
             style: TextStyle(color: Colors.black),
           ),
-          backgroundColor: Colors.amber,
+          // backgroundColor: Colors.amber,
           // backgroundColor: Color.fromARGB(a, r, g, b),
         ),
         body: Padding(
@@ -245,7 +245,7 @@ class _TaskListState extends State<TaskList> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.amber,
+          // backgroundColor: Colors.amber,
           child: Icon(Icons.add),
           onPressed: () {
             navigateToDetail(Task("", "", "", "", 2), "اضافه کردن وظیفه");
@@ -265,12 +265,14 @@ class _TaskListState extends State<TaskList> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
+
+          color: Colors.lightBlue[300], //fromARGB(255, 159, 231, 245),
           color: this.Complpeted[position]
               ? Colors.green
               : Colors.amber, //fromARGB(255, 159, 231, 245),
           //this.Complpeted[position]
           //               ? Colors.amber[300]
-          //               :
+
           elevation: 4.0, shadowColor: Colors.white,
           child: ListTile(
             // leading: CircleAvatar(
@@ -327,11 +329,11 @@ class _TaskListState extends State<TaskList> {
                               Navigator.pop(context, false),
                               Complpeted[position] = false,
                             },
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                Colors.amber,
-                              ),
-                            ),
+                            // style: ButtonStyle(
+                            //   backgroundColor: MaterialStateProperty.all<Color>(
+                            //      Colors.amber,
+                            //   ),
+                            // ),
 
                             // color: Colors.green,
                           ),
@@ -357,10 +359,10 @@ class _TaskListState extends State<TaskList> {
                               Complpeted[position] = true,
                             },
                             // Navigator.pop(context, true),
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.amber),
-                            ),
+                            // style: ButtonStyle(
+                            //   backgroundColor: MaterialStateProperty.all<Color>(
+                            //        Colors.amber),
+                            // ),
                           ),
                         ],
                       ),

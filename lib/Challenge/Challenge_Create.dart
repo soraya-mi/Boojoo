@@ -123,7 +123,8 @@ class _challenge_createState extends State<challenge_create> {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: Text(IsEditing ? 'edit challenge' : 'new challenge'),
-      backgroundColor: Colors.amber,),
+      // backgroundColor: Colors.amber,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -154,13 +155,13 @@ class _challenge_createState extends State<challenge_create> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget> [
                         new RaisedButton(
-                          color: Colors.amber ,
-                          disabledColor: Colors.amber,
+                          // color: Colors.amber ,
+                          // disabledColor: Colors.amber,
                           onPressed: null,
                           child: new Text('شروع چالش'),
                         ),
                         new RaisedButton(
-                          color: Colors.amber ,
+                          // color: Colors.amber ,
                           onPressed: _selectDate2,
                           child: new Text(' پایان چالش '),
                         ),
@@ -215,8 +216,8 @@ class _challenge_createState extends State<challenge_create> {
                     padding: EdgeInsets.all(0.0),
                     margin: EdgeInsets.only(left:0.0),
                     child: DropdownButton<ListItem>(
-                        dropdownColor: Colors.amber,
-                        iconEnabledColor: Colors.amber ,
+                        // dropdownColor: Colors.amber,
+                        // iconEnabledColor: Colors.amber ,
                         value: _selectedItem,
                         items: _dropdownMenuItems,
                         onChanged: (value) {
