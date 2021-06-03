@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'subTask.dart';
 import '../Task/task-database.dart';
-import '../Task//task.dart';
+import '../Task/task.dart';
 import 'package:sqflite/sqflite.dart';
 import 'subTask_database.dart';
 
