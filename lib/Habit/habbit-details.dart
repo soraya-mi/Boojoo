@@ -65,7 +65,7 @@ class HabitDetailState extends State<HabitDetail> {
         backgroundColor: Colors.teal[50],
         appBar: AppBar(
           title: Text(appBarTitle),
-          backgroundColor: Colors.amber,
+          // backgroundColor: Colors.amber,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             // padding: EdgeInsets.only(right: 200),
@@ -232,7 +232,7 @@ class HabitDetailState extends State<HabitDetail> {
                           });
                         },
                         value: a,
-                        hoverColor: Colors.yellow,
+                        hoverColor: Colors.indigoAccent,
                       ),
                       Text("تکمیل کردنی"),
                       Checkbox(

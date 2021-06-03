@@ -1,3 +1,5 @@
+import 'package:boojoo/ui/home/home_page2.dart';
+import 'package:boojoo/ui/home/home_page_body.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -39,9 +41,9 @@ class TabBarchallengeGroup extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              challengelist(),
-              challengelist(),
-              challengelist(),
+              HomePage2(),
+              HomePage2(),
+              HomePage2(),
             ],
           ),
         ),

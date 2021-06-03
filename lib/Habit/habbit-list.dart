@@ -130,11 +130,11 @@ class _HabitListState extends State<HabitList> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("لیست عادت ها"),
-          backgroundColor: Colors.amber,
+          // backgroundColor: Colors.amber,
         ),
         body: getHabitListView(),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.amber,
+          // backgroundColor: Colors.amber,
           child: Icon(Icons.add),
           onPressed: () {
             navigateToDetail(Habit("", "", "", 1, 0), "اضافه کردن عادت");
@@ -153,7 +153,7 @@ class _HabitListState extends State<HabitList> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          color: Colors.amber[
+          color: Colors.lightBlue[
               300], //        backgroundColor: Color.fromARGB(100, 255, 192, 7),
 
           elevation: 4.0,
