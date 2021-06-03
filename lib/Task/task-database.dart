@@ -143,24 +143,26 @@ class TaskDataBaseHelper {
     return habitList;
   }
 
-  // Future<List<Map<String, dynamic>>> getTodayTasksMap(String today) async {
-  //   debugPrint('++++.....+++++');
-  //   Database db = await this.database;
-  //   var result = await _database
-  //       .rawQuery('SELECT *  FROM $taskTable WHERE $colDate="$today"');
-  //   return result;
-  // }
+  Future<List<Map<String, dynamic>>> getTodayTasksMap(String today) async {
+    debugPrint('++++.....+++++');
+    Database db = await this.database;
+    var result = await _database
+        .rawQuery('SELECT *  FROM $taskTable WHERE $colDate="$today"');
+    debugPrint(result.toString());
+    return result;
+  }
 
-  // Future<List<Task>> getTodayTasksList(String today) async {
-  //   debugPrint("in");
-  //   var todayTaskList = await getTodayTasksMap(today);
-  //   debugPrint(todayTaskList.toString());
-  //   int count = todayTaskList.length;
-  //
-  //   List<Task> habitList = List<Task>();
-  //   for (int i = 0; i < count; i++) {
-  //     habitList.add(Task.fromMapObject(todayTaskList[i]));
-  //   }
-  //   return habitList;
-  // }
+  Future<List<Task>> getTodayTasksList(String today) async {
+    debugPrint("inkbkg");
+    var todayTaskList = await getTodayTasksMap(today);
+    debugPrint(todayTaskList.toString());
+    int count = todayTaskList.length;
+
+    List<Task> taskList = List<Task>();
+    for (int i = 0; i < count; i++) {
+      taskList.add(Task.fromMapObject(todayTaskList[i]));
+    }
+    debugPrint(taskList.toString());
+    return taskList;
+  }
 }

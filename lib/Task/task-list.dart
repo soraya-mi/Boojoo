@@ -21,8 +21,10 @@ class _TaskListState extends State<TaskList> {
   List<Task> taskList;
   int count = 0;
   String _chosenValue = 'همه';
+  String _chosenDate = 'همه';
   List<bool> Complpeted = new List();
-
+  String label;
+  String selectedDate = Jalali.now().formatFullDate();
   @override
   Widget build(BuildContext context) {
     debugPrint("****");
@@ -36,105 +38,232 @@ class _TaskListState extends State<TaskList> {
     }
 
     // TODO: implement build
-    return WillPopScope(
-      onWillPop: _onBackPressed,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "لیست وظایف",
-            style: TextStyle(color: Colors.black),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: WillPopScope(
+        onWillPop: _onBackPressed,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "لیست وظایف",
+              style: TextStyle(color: Colors.black),
+            ),
+            backgroundColor: Colors.amber,
+            // backgroundColor: Color.fromARGB(a, r, g, b),
           ),
-          backgroundColor: Colors.amber,
-          // backgroundColor: Color.fromARGB(a, r, g, b),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            // alignment: WrapAlignment.end,
-            children: [
-              Container(
-                alignment: Alignment.topRight,
-                padding: const EdgeInsets.only(right: 20.0),
-                width: 100.0,
-                child: DropdownButtonHideUnderline(
-                  child: ButtonTheme(
-                    colorScheme: ColorScheme.light(
-                      background: Colors.green,
-                    ),
-                    buttonColor: Colors.green,
-                    hoverColor: Colors.grey,
-                    child: DropdownButton<String>(
-                      isExpanded: true,
-                      iconSize: 20.0,
-                      dropdownColor: Colors.amber[100],
-                      itemHeight: 50.0,
-                      focusColor: Colors.black,
-                      value: _chosenValue,
-                      elevation: 5,
-                      style: TextStyle(color: Colors.black),
-                      iconEnabledColor: Colors.black,
-                      items: <String>[
-                        'همه',
-                        'سلامتی',
-                        'کار',
-                        'درس',
-                        'شخصی',
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          onTap: () {
-                            debugPrint("value" + value + _chosenValue);
-                            setState(() {
-                              _chosenValue = value;
-                            });
-                            debugPrint(value + " " + _chosenValue);
-                          },
-                          child: Text(
-                            value,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        );
-                      }).toList(),
-                      hint: Text(
-                        "لطفا یک دسته را انتخاب کنید",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500),
+          body: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              // alignment: WrapAlignment.end,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      "دسته",
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
                       ),
-                      onChanged: (String value) {
-                        setState(() {
-                          taskList.forEach((element) {
-                            void f(item) {
-                              debugPrint('++' + element.category);
-                              // _chosenValue = value;
-                              debugPrint("/././." + value);
-                            }
-                          });
-                          _chosenValue = value;
-                          // helper.getHabitByCategoryList(value);
-                          if (value != 'همه') {
-                            debugPrint("in hame");
-                            // updateListView();
-                            updateListViewByCategory(value);
-                          } else
-                            updateListView();
-                        });
-                      },
                     ),
-                  ),
+                    SizedBox(
+                      height: 5.0,
+                      width: 10.0,
+                    ),
+                    Container(
+                      alignment: Alignment.topRight,
+                      padding: const EdgeInsets.only(right: 20.0),
+                      width: 90.0,
+                      child: DropdownButtonHideUnderline(
+                        child: ButtonTheme(
+                          colorScheme: ColorScheme.light(
+                            background: Colors.green,
+                          ),
+                          buttonColor: Colors.green,
+                          hoverColor: Colors.grey,
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            iconSize: 25.0,
+                            dropdownColor: Colors.amber[100],
+                            itemHeight: 50.0,
+                            focusColor: Colors.black,
+                            value: _chosenValue,
+                            elevation: 3,
+                            style: TextStyle(color: Colors.black),
+                            iconEnabledColor: Colors.black,
+                            items: <String>[
+                              'همه',
+                              'سلامتی',
+                              'کار',
+                              'درس',
+                              'شخصی',
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                onTap: () {
+                                  debugPrint("value" + value + _chosenValue);
+                                  setState(() {
+                                    _chosenValue = value;
+                                  });
+                                  debugPrint(value + " " + _chosenValue);
+                                },
+                                child: Text(
+                                  value,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              );
+                            }).toList(),
+                            hint: Text(
+                              "لطفا یک دسته را انتخاب کنید",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            onChanged: (String value) {
+                              setState(() {
+                                taskList.forEach((element) {
+                                  void f(item) {
+                                    debugPrint('++' + element.category);
+                                    // _chosenValue = value;
+                                    debugPrint("/././." + value);
+                                  }
+                                });
+                                _chosenValue = value;
+                                // helper.getHabitByCategoryList(value);
+                                if (value != 'همه') {
+                                  debugPrint("in hame");
+                                  // updateListView();
+                                  updateListViewByCategory(value);
+                                } else
+                                  updateListView();
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      "تاریخ",
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.topRight,
+                      padding: const EdgeInsets.only(right: 20.0),
+                      width: 90.0,
+                      child: DropdownButtonHideUnderline(
+                        child: ButtonTheme(
+                          colorScheme: ColorScheme.light(
+                            background: Colors.green,
+                          ),
+                          buttonColor: Colors.green,
+                          hoverColor: Colors.grey,
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            iconSize: 25.0,
+                            dropdownColor: Colors.amber[100],
+                            itemHeight: 50.0,
+                            focusColor: Colors.black,
+                            value: _chosenDate,
+                            elevation: 3,
+                            style: TextStyle(color: Colors.black),
+                            iconEnabledColor: Colors.black,
+                            items: <String>[
+                              'همه',
+                              'امروز',
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                onTap: () {
+                                  debugPrint("value" + value + _chosenDate);
+                                  setState(() {
+                                    _chosenDate = value;
+                                  });
+                                  debugPrint(value + " " + _chosenDate);
+                                },
+                                child: Text(
+                                  value,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              );
+                            }).toList(),
+                            hint: Text(
+                              "لطفا یک تاریخ را انتخاب کنید",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            onChanged: (String value) {
+                              setState(() {
+                                taskList.forEach((element) {
+                                  void f(item) {
+                                    // debugPrint('++' + element.category);
+                                    // _chosenValue = value;
+                                    // debugPrint("/././." + value);
+                                  }
+                                });
+                                _chosenDate = value;
+                                // helper.getHabitByCategoryList(value);
+                                if (value != 'همه') {
+                                  debugPrint("in hame");
+                                  // updateListView();
+                                  String today = Jalali.now().year.toString() +
+                                      '/' +
+                                      Jalali.now().month.toString() +
+                                      '/' +
+                                      Jalali.now().day.toString();
+                                  debugPrint(today);
+                                  updateListViewByDate(today);
+                                } else
+                                  updateListView();
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: ElevatedButton(
+                        // color: Colors.teal,
+                        onPressed: () async {
+                          Jalali picked = await showPersianDatePicker(
+                            context: context,
+                            initialDate: Jalali.now(),
+                            firstDate: Jalali(1385, 8),
+                            lastDate: Jalali(1450, 9),
+                          );
+                          if (picked != null && picked != selectedDate)
+                            setState(() {
+                              label = picked.formatFullDate();
+                              String today = picked.year.toString() +
+                                  '/' +
+                                  picked.month.toString() +
+                                  '/' +
+                                  picked.day.toString();
+                              updateListViewByDate(today);
+                            });
+                        },
+                        child: Text('تاریخ '),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              getTaskListView(),
-            ],
+                getTaskListView(),
+              ],
+            ),
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.amber,
-          child: Icon(Icons.add),
-          onPressed: () {
-            navigateToDetail(Task("", "", "", "", 2), "اضافه کردن وظیفه");
-          },
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.amber,
+            child: Icon(Icons.add),
+            onPressed: () {
+              navigateToDetail(Task("", "", "", "", 2), "اضافه کردن وظیفه");
+            },
+          ),
         ),
       ),
     );
@@ -306,6 +435,22 @@ class _TaskListState extends State<TaskList> {
           databaseHelper.getTaskByCategoryList(category);
       // Future<List<Habit>> habitListFuture = databaseHelper.getHabitList();
       habitListFuture.then((taskList) {
+        debugPrint('...');
+        setState(() {
+          this.taskList = taskList;
+          this.count = taskList.length;
+        });
+      });
+    });
+  }
+
+  void updateListViewByDate(String Date) {
+    final Future<Database> dbFuture = databaseHelper.initalizeTaskDatabase();
+    dbFuture.then((database) {
+      Future<List<Task>> taskListFuture =
+          databaseHelper.getTodayTasksList(Date);
+      // Future<List<Habit>> habitListFuture = databaseHelper.getHabitList();
+      taskListFuture.then((taskList) {
         debugPrint('...');
         setState(() {
           this.taskList = taskList;
