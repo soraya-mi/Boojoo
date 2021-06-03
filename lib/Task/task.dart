@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Task {
   int _id;
   int _priority;
@@ -107,6 +105,6 @@ class Task {
     this._startTime = map['starttime'];
     this._endTime = map['endtime'];
     this._completed = map['completed'];
-    this.category = map['category'];
+    this._category = map['category'];
   }
 }

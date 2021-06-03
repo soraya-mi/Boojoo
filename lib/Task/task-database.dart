@@ -54,14 +54,6 @@ class TaskDataBaseHelper {
         'CREATE TABLE $taskTable($colID INTEGER PRIMARY KEY AUTOINCREMENT,  $colTitle TEXT, $colDescription TEXT, $colPriority INTEGER, $colDate TEXT,$colstartTime TEXT,$colendTime TEXT,$colCompleted INTEGER,$colCategory TEXT)');
   }
 
-  Future<List<Map<String, dynamic>>> getTaskMapList() async {
-    Database db = await this.database;
-    //optional
-    // var result = await db.rawQuery('SELECT * from $taskTable order by $colPriority ASC');
-    var result = await db.query(taskTable, orderBy: '$colPriority ASC');
-    return result;
-  }
-
   Future<int> insertTask(Task task) async {
     debugPrint("insert");
     Database db = await this.database;
@@ -92,11 +84,19 @@ class TaskDataBaseHelper {
     return result;
   }
 
+  Future<List<Map<String, dynamic>>> getTaskMapList() async {
+    debugPrint("get task map");
+    Database db = await this.database;
+    //optional
+    // var result = await db.rawQuery('SELECT * from $taskTable order by $colPriority ASC');
+    var result = await db.query(taskTable, orderBy: '$colPriority ASC');
+    debugPrint(result.toString());
+    return result;
+  }
+
   Future<List<Task>> getTaskList() async {
     var taskMapList = await getTaskMapList();
-
     int count = taskMapList.length;
-
     List<Task> taskList = List<Task>();
     for (int i = 0; i < count; i++) {
       taskList.add(Task.fromMapObject(taskMapList[i]));
@@ -131,36 +131,36 @@ class TaskDataBaseHelper {
   }
 
   Future<List<Task>> getTaskByCategoryList(String category) async {
-    debugPrint("in");
     var taskListbyCategory = await getTaskListMapByCategory(category);
-    debugPrint(taskListbyCategory.toString());
+
     int count = taskListbyCategory.length;
 
     List<Task> habitList = List<Task>();
     for (int i = 0; i < count; i++) {
       habitList.add(Task.fromMapObject(taskListbyCategory[i]));
     }
+
     return habitList;
   }
 
-  Future<List<Map<String, dynamic>>> getTodayTasksMap(String today) async {
-    debugPrint('++++.....+++++');
-    Database db = await this.database;
-    var result = await _database
-        .rawQuery('SELECT *  FROM $taskTable WHERE $colDate="$today"');
-    return result;
-  }
+  // Future<List<Map<String, dynamic>>> getTodayTasksMap(String today) async {
+  //   debugPrint('++++.....+++++');
+  //   Database db = await this.database;
+  //   var result = await _database
+  //       .rawQuery('SELECT *  FROM $taskTable WHERE $colDate="$today"');
+  //   return result;
+  // }
 
-  Future<List<Task>> getTodayTasksList(String today) async {
-    debugPrint("in");
-    var todayTaskList = await getTodayTasksMap(today);
-    debugPrint(todayTaskList.toString());
-    int count = todayTaskList.length;
-
-    List<Task> habitList = List<Task>();
-    for (int i = 0; i < count; i++) {
-      habitList.add(Task.fromMapObject(todayTaskList[i]));
-    }
-    return habitList;
-  }
+  // Future<List<Task>> getTodayTasksList(String today) async {
+  //   debugPrint("in");
+  //   var todayTaskList = await getTodayTasksMap(today);
+  //   debugPrint(todayTaskList.toString());
+  //   int count = todayTaskList.length;
+  //
+  //   List<Task> habitList = List<Task>();
+  //   for (int i = 0; i < count; i++) {
+  //     habitList.add(Task.fromMapObject(todayTaskList[i]));
+  //   }
+  //   return habitList;
+  // }
 }
