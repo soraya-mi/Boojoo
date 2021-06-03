@@ -51,6 +51,7 @@ class _TaskListState extends State<TaskList> {
             backgroundColor: Colors.amber,
             // backgroundColor: Color.fromARGB(a, r, g, b),
           ),
+
           body: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
@@ -65,6 +66,7 @@ class _TaskListState extends State<TaskList> {
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                       ),
+
                     ),
                     SizedBox(
                       height: 5.0,
@@ -279,7 +281,9 @@ class _TaskListState extends State<TaskList> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
+
           color: Colors.amber[300], //fromARGB(255, 159, 231, 245),
+
           elevation: 4.0, shadowColor: Colors.white,
           child: ListTile(
             leading: CircleAvatar(
@@ -335,11 +339,11 @@ class _TaskListState extends State<TaskList> {
                                   this.taskList[position].completed.toString()),
                               Navigator.pop(context, false),
                             },
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                Colors.amber,
-                              ),
-                            ),
+                            // style: ButtonStyle(
+                            //   backgroundColor: MaterialStateProperty.all<Color>(
+                            //      Colors.amber,
+                            //   ),
+                            // ),
 
                             // color: Colors.green,
                           ),
@@ -364,10 +368,10 @@ class _TaskListState extends State<TaskList> {
                               Navigator.pop(context, true),
                             },
                             // Navigator.pop(context, true),
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.amber),
-                            ),
+                            // style: ButtonStyle(
+                            //   backgroundColor: MaterialStateProperty.all<Color>(
+                            //        Colors.amber),
+                            // ),
                           ),
                         ],
                       ),

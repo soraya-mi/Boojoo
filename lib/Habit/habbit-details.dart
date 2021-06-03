@@ -66,6 +66,33 @@ class HabitDetailState extends State<HabitDetail> {
   List<bool> isSelected;
   int sat = 0, sun = 0, mon = 0, tue = 0, wed = 0, thu = 0, fri = 0;
   @override
+
+  Widget build(BuildContext context) {
+    if (this.habit.type == 1) {
+      a = false;
+      b = true;
+    } else {
+      a = true;
+      b = false;
+    }
+    TextStyle textStyle = Theme.of(context).textTheme.title;
+    titleController.text = habit.title;
+    descriptionController.text = habit.description;
+    // if (habit.cue != Null) cueController.text = habit.cue.toString();
+    return WillPopScope(
+      onWillPop: () {
+        moveToLastScreen();
+      },
+      child: Scaffold(
+        backgroundColor: Colors.teal[50],
+        appBar: AppBar(
+          title: Text(appBarTitle),
+          // backgroundColor: Colors.amber,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            // padding: EdgeInsets.only(right: 200),
+            onPressed: () {
+
   Widget build(BuildContext context) => FutureBuilder(
         future: getHabitDaysID(),
         builder: (context, AsyncSnapshot<int> snapshot) {
@@ -84,6 +111,7 @@ class HabitDetailState extends State<HabitDetail> {
           // if (habit.cue != Null) cueController.text = habit.cue.toString();
           return WillPopScope(
             onWillPop: () {
+
               moveToLastScreen();
             },
             child: Scaffold(
@@ -254,6 +282,20 @@ class HabitDetailState extends State<HabitDetail> {
                           // ),
                         ],
                       ),
+
+                      Checkbox(
+                        onChanged: (bool value) {
+                          setState(() {
+                            // this.habit.type = 0;
+                            updateType(0);
+                            // print(this.habit.type);
+                            // print("0--------------");
+                            a = value;
+                          });
+                        },
+                        value: a,
+                        hoverColor: Colors.indigoAccent,
+
                       //Cue text field
                       Padding(
                         padding: EdgeInsets.only(top: 0.0),
@@ -294,6 +336,7 @@ class HabitDetailState extends State<HabitDetail> {
                             Text("هدف گذاری"),
                           ],
                         ),
+
                       ),
 
                       Padding(

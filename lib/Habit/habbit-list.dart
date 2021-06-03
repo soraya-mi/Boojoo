@@ -225,6 +225,65 @@ class _HabitListState extends State<HabitList> {
     });
   }
 
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint("****");
+    if (habitList == null) {
+      habitList = List<Habit>();
+      updateListView();
+      debugPrint("null");
+    }
+    Future<bool> _onBackPressed() {
+      Navigator.pop(context, false);
+      // return showDialog(
+      //   context: context,
+      //   // builder: (context) => AlertDialog(
+      //   //   title: Text("آیا میخواهید خارج شوید؟"),
+      //   //   actions: <Widget>[
+      //   //     FlatButton(
+      //   //         child: Text(
+      //   //           "خیر",
+      //   //           style: TextStyle(
+      //   //             color: Colors.white,
+      //   //           ),
+      //   //         ),
+      //   //         onPressed: () => Navigator.pop(context, false),
+      //   //         color: Colors.green),
+      //   //     FlatButton(
+      //   //       child: Text(
+      //   //         "بله",
+      //   //         style: TextStyle(
+      //   //           color: Colors.white,
+      //   //         ),
+      //   //       ),
+      //   //       onPressed: () => Navigator.pop(context, true),
+      //   //       color: Colors.redAccent,
+      //   //     ),
+      //   //   ],
+      //   // ),
+      // );
+    }
+
+    // TODO: implement build
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("لیست عادت ها"),
+          // backgroundColor: Colors.amber,
+        ),
+        body: getHabitListView(),
+        floatingActionButton: FloatingActionButton(
+          // backgroundColor: Colors.amber,
+          child: Icon(Icons.add),
+          onPressed: () {
+            navigateToDetail(Habit("", "", "", 1, 0), "اضافه کردن عادت");
+            debugPrint("back");
+          },
+        ),
+      ),
+    );
   void updateListViewByCategory(String category) {
     final Future<Database> dbFuture = databaseHelper.initalizeHabitDatabase();
     dbFuture.then((database) {
@@ -250,7 +309,7 @@ class _HabitListState extends State<HabitList> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          color: Colors.amber[
+          color: Colors.lightBlue[
               300], //        backgroundColor: Color.fromARGB(100, 255, 192, 7),
 
           elevation: 4.0,
