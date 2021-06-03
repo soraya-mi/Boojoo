@@ -429,10 +429,10 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
   }
 
   void AddFakeData() async {
-    // var fd = await helper.insertHabitLog(Habit_with_Cue_log(1, "1400/3/6", 2));
-    // fd = await helper.insertHabitLog(Habit_with_Cue_log(5, "1400/3/7", 5));
-    // fd = await helper.insertHabitLog(Habit_with_Cue_log(2, "1400/3/9", 0));
-    // fd = await helper.insertHabitLog(Habit_with_Cue_log(3, "1400/3/10", 4));
+    var fd = await helper.insertHabitLog(Habit_with_Cue_log(1, "1400/3/6", 2));
+    fd = await helper.insertHabitLog(Habit_with_Cue_log(5, "1400/3/7", 5));
+    fd = await helper.insertHabitLog(Habit_with_Cue_log(2, "1400/3/9", 0));
+    fd = await helper.insertHabitLog(Habit_with_Cue_log(3, "1400/3/10", 4));
     var list = helper.getHabitLogsList(habitInfo.id).then((value) {
       return value;
     });
