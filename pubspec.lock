@@ -147,7 +147,9 @@ packages:
       name: ffi
       url: "https://pub.dartlang.org"
     source: hosted
+
     version: "1.1.2"
+
   file:
     dependency: transitive
     description:
@@ -200,6 +202,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.0"
+
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -207,6 +210,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
+
   flutter_rating_bar:
     dependency: "direct main"
     description:
@@ -279,6 +283,7 @@ packages:
       name: image_picker_for_web
       url: "https://pub.dartlang.org"
     source: hosted
+
     version: "2.0.0"
   image_picker_platform_interface:
     dependency: transitive
@@ -455,6 +460,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.3.3"
+
   random_color:
     dependency: "direct main"
     description:
@@ -462,6 +468,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+
   rounded_loading_button:
     dependency: "direct main"
     description:
