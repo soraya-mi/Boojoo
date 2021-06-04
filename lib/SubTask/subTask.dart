@@ -2,6 +2,7 @@ class SubTask {
   int _id;
   int _taskId;
   String _name;
+  // int _done;
   SubTask(this._taskId, this._name);
   //This is during editing(Called with Id)
   SubTask.withId(this._id, this._taskId, this._name);
@@ -13,7 +14,7 @@ class SubTask {
 
   int get taskId => _taskId;
   String get name => _name;
-
+  // int get done => _done;
 //These are all the Setters
   set name(String newName) {
     if (newName.length <= 255) {
@@ -24,6 +25,10 @@ class SubTask {
   set taskId(int newTaskId) {
     this._taskId = newTaskId;
   }
+
+  // set done(int newStatus) {
+  //   this._done = newStatus;
+  // }
 
 //Used to Save and Retrive from the Database
 //Converting the Note Object into Map Object
@@ -36,6 +41,7 @@ class SubTask {
     }
     map['taskId'] = _taskId;
     map['name'] = _name;
+    // map['done'] = _done;
     return map;
   }
 
@@ -43,5 +49,6 @@ class SubTask {
     this._id = map['id'];
     this._taskId = map['taskId'];
     this._name = map['name'];
+    // this._done = map['done'];
   }
 }

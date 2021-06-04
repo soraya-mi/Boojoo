@@ -137,9 +137,10 @@ class subTaskListState extends State<subTaskList> {
                             debugPrint("Save button clicked");
                             setState(() {
                               debugPrint("Save button clicked");
-                              if (newSubTask != null) {
+                              if (newSubTask != "") {
                                 saveSubTask(SubTask(this.task.id, newSubTask));
                                 updateListView();
+                                newSubTask = "";
                               } else {
                                 _showAlertDialog(
                                     "لطفا نام زیر وظیفه را وارد کنید");
@@ -189,18 +190,18 @@ class subTaskListState extends State<subTaskList> {
               padding: const EdgeInsets.all(3.0),
               child: Dismissible(
                 key: Key(item.name),
-                direction: DismissDirection.startToEnd,
+                direction: DismissDirection.endToStart,
+                onDismissed: (direction) {
+                  // Remove the item from the data source.+
+                  updateListView();
+                  setState(() {});
+                },
                 confirmDismiss: (direction) async {
                   // this.subTaskList[position].completed = 1;
                   // _delete(subTaskList[position]);
                   _delete(this.subTaskList[position]);
                   updateListView();
                   return true;
-                },
-                onDismissed: (direction) {
-                  // Remove the item from the data source.+
-                  updateListView();
-                  setState(() {});
                 },
                 background: Container(
                   color: Colors.redAccent[100],
