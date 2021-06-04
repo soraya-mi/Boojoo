@@ -69,83 +69,95 @@ class _TaskListState extends State<TaskList> {
                     Text(
                       "دسته",
                       style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       ),
-                    ),
-                    SizedBox(
-                      height: 5.0,
-                      width: 10.0,
                     ),
                     Container(
                       alignment: Alignment.topRight,
                       padding: const EdgeInsets.only(right: 20.0),
-                      width: 90.0,
-                      child: DropdownButtonHideUnderline(
-                        child: ButtonTheme(
-                          colorScheme: ColorScheme.light(
-                            background: Colors.green,
-                          ),
-                          buttonColor: Colors.green,
-                          hoverColor: Colors.grey,
-                          child: DropdownButton<String>(
-                            isExpanded: true,
-                            iconSize: 25.0,
-                            dropdownColor: Colors.amber[100],
-                            itemHeight: 50.0,
-                            focusColor: Colors.black,
-                            value: _chosenValue,
-                            elevation: 3,
-                            style: TextStyle(color: Colors.black),
-                            iconEnabledColor: Colors.black,
-                            items: <String>[
-                              'همه',
-                              'سلامتی',
-                              'کار',
-                              'درس',
-                              'شخصی',
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                onTap: () {
-                                  debugPrint("value" + value + _chosenValue);
-                                  setState(() {
-                                    _chosenValue = value;
-                                  });
-                                  debugPrint(value + " " + _chosenValue);
-                                },
-                                child: Text(
-                                  value,
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              );
-                            }).toList(),
-                            hint: Text(
-                              "لطفا یک دسته را انتخاب کنید",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30.0),
+                        color: Colors.black,
+                      ),
+                      width: 100.0,
+                      child: Container(
+                        width: 100.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.black,
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: ButtonTheme(
+                            minWidth: 40.0,
+                            colorScheme: ColorScheme.light(
+                              background: Colors.green,
                             ),
-                            onChanged: (String value) {
-                              setState(() {
-                                taskList.forEach((element) {
-                                  void f(item) {
-                                    debugPrint('++' + element.category);
-                                    // _chosenValue = value;
-                                    debugPrint("/././." + value);
-                                  }
+                            buttonColor: Colors.green,
+                            hoverColor: Colors.grey,
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              iconSize: 30.0,
+                              icon: Icon(
+                                Icons.arrow_drop_down_rounded,
+                                // Icons.arrow_drop_down_circle,
+                              ),
+                              iconEnabledColor: Colors.white,
+                              dropdownColor: Colors.black,
+                              itemHeight: 50.0,
+                              focusColor: Colors.black,
+                              value: _chosenValue,
+                              elevation: 5,
+                              style: TextStyle(color: Colors.black),
+                              items: <String>[
+                                'همه',
+                                'سلامتی',
+                                'کار',
+                                'درس',
+                                'شخصی',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  onTap: () {
+                                    debugPrint("value" + value + _chosenValue);
+                                    setState(() {
+                                      _chosenValue = value;
+                                    });
+                                    debugPrint(value + " " + _chosenValue);
+                                  },
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                              hint: Text(
+                                "لطفا یک دسته را انتخاب کنید",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              onChanged: (String value) {
+                                setState(() {
+                                  taskList.forEach((element) {
+                                    void f(item) {
+                                      // _chosenValue = value;
+                                    }
+                                  });
+                                  _chosenValue = value;
+                                  // helper.getHabitByCategoryList(value);
+                                  if (value != 'همه') {
+                                    debugPrint("in hame");
+                                    // updateListView();
+                                    updateListViewByCategory(value);
+                                  } else
+                                    updateListView();
                                 });
-                                _chosenValue = value;
-                                // helper.getHabitByCategoryList(value);
-                                if (value != 'همه') {
-                                  debugPrint("in hame");
-                                  // updateListView();
-                                  updateListViewByCategory(value);
-                                } else
-                                  updateListView();
-                              });
-                            },
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -153,112 +165,47 @@ class _TaskListState extends State<TaskList> {
                     Text(
                       "تاریخ",
                       style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Container(
-                      alignment: Alignment.topRight,
-                      padding: const EdgeInsets.only(right: 20.0),
-                      width: 90.0,
-                      child: DropdownButtonHideUnderline(
-                        child: ButtonTheme(
-                          colorScheme: ColorScheme.light(
-                            background: Colors.green,
-                          ),
-                          buttonColor: Colors.green,
-                          hoverColor: Colors.grey,
-                          child: DropdownButton<String>(
-                            isExpanded: true,
-                            iconSize: 25.0,
-                            dropdownColor: Colors.amber[100],
-                            itemHeight: 50.0,
-                            focusColor: Colors.black,
-                            value: _chosenDate,
-                            elevation: 3,
-                            style: TextStyle(color: Colors.black),
-                            iconEnabledColor: Colors.black,
-                            items: <String>[
-                              'همه',
-                              'امروز',
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                onTap: () {
-                                  debugPrint("value" + value + _chosenDate);
-                                  setState(() {
-                                    _chosenDate = value;
-                                  });
-                                  debugPrint(value + " " + _chosenDate);
-                                },
-                                child: Text(
-                                  value,
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              );
-                            }).toList(),
-                            hint: Text(
-                              "لطفا یک تاریخ را انتخاب کنید",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            onChanged: (String value) {
-                              setState(() {
-                                taskList.forEach((element) {
-                                  void f(item) {
-                                    // debugPrint('++' + element.category);
-                                    // _chosenValue = value;
-                                    // debugPrint("/././." + value);
-                                  }
-                                });
-                                _chosenDate = value;
-                                // helper.getHabitByCategoryList(value);
-                                if (value != 'همه') {
-                                  debugPrint("in hame");
-                                  // updateListView();
-                                  String today = Jalali.now().year.toString() +
-                                      '/' +
-                                      Jalali.now().month.toString() +
-                                      '/' +
-                                      Jalali.now().day.toString();
-                                  debugPrint(today);
-                                  updateListViewByDate(today);
-                                } else
-                                  updateListView();
-                              });
-                            },
-                          ),
+                    RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      color: Colors.black,
+                      onPressed: () async {
+                        Jalali picked = await showPersianDatePicker(
+                          context: context,
+                          initialDate: Jalali.now(),
+                          firstDate: Jalali(1385, 8),
+                          lastDate: Jalali(1450, 9),
+                        );
+                        if (picked != null && picked != selectedDate)
+                          setState(() {
+                            label = picked.formatFullDate();
+                            String today = picked.year.toString() +
+                                '/' +
+                                picked.month.toString() +
+                                '/' +
+                                picked.day.toString();
+                            updateListViewByDate(today);
+                          });
+                      },
+                      child: Text(
+                        'تاریخ ',
+                        style: TextStyle(
+                          color: Colors.white,
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20.0),
-                      child: ElevatedButton(
-                        // color: Colors.teal,
-                        onPressed: () async {
-                          Jalali picked = await showPersianDatePicker(
-                            context: context,
-                            initialDate: Jalali.now(),
-                            firstDate: Jalali(1385, 8),
-                            lastDate: Jalali(1450, 9),
-                          );
-                          if (picked != null && picked != selectedDate)
-                            setState(() {
-                              label = picked.formatFullDate();
-                              String today = picked.year.toString() +
-                                  '/' +
-                                  picked.month.toString() +
-                                  '/' +
-                                  picked.day.toString();
-                              updateListViewByDate(today);
-                            });
-                        },
-                        child: Text('تاریخ '),
-                      ),
-                    ),
                   ],
+                ),
+                Divider(
+                  color: Colors.black,
+                ),
+                SizedBox(
+                  height: 10.0,
                 ),
                 getTaskListView(),
               ],
@@ -282,20 +229,18 @@ class _TaskListState extends State<TaskList> {
       itemCount: count,
       shrinkWrap: true,
       itemBuilder: (context, position) {
+        // final item = taskList[position];
+
         return Card(
+          margin: EdgeInsets.symmetric(horizontal: 0.0, vertical: 2.5),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
           color: this.taskList[position].completed == 1
               ? Colors.green
-              : Colors.amber[100],
-          // this.Complpeted[position] ? Colors.green : Colors.amber[300],
-          // this.Complpeted[position]
-          //     ? Colors.green
-          //     : Colors.amber[300], //fromARGB(255, 159, 231, 245),
-          //this.Complpeted[position]
-          //               ? Colors.green
-          elevation: 4.0, shadowColor: Colors.white,
+              : Colors.amber,
+          elevation: 4.0,
+          shadowColor: Colors.white,
           child: ListTile(
             // leading: CircleAvatar(
             //     backgroundImage:
@@ -434,6 +379,24 @@ class _TaskListState extends State<TaskList> {
     }
   }
 
+  void _delete(Task task) async {
+    // moveToLastScreen();
+    debugPrint(task.id.toString());
+    // if (task.id == null) {
+    //   _showAlertDialog("لطفا عنوان وظیفه را وارد کنید");
+    //   return;
+    // }
+    int result = await helper.deleteTask(task.id);
+    int deleteSubTasks =
+        await subTaskdatabaseHelper.deleteAllSubTasksOfTask(task.id);
+    if (result != 0 && deleteSubTasks != 0) {
+      _showAlertDialog("وظیفه با موفقیت حذف شد");
+      updateListView();
+    } else {
+      _showAlertDialog("متاسفانه خطایی رخ داد");
+    }
+  }
+
   void navigateToSubTask(Task task) async {
     debugPrint(task.title);
     bool result =
@@ -451,11 +414,13 @@ class _TaskListState extends State<TaskList> {
     final Future<Database> dbFuture = databaseHelper.initalizeTaskDatabase();
     dbFuture.then((database) {
       Future<List<Task>> taskListFuture = databaseHelper.getTaskList();
+
       taskListFuture.then((taskList) {
         debugPrint('...');
         setState(() {
           this.taskList = taskList;
           this.count = taskList.length;
+          debugPrint("error?");
           // debugPrint("//////////////////////");
           // debugPrint(taskList.toString());
           // for (int i = 0; i < count; i++) {
@@ -468,6 +433,7 @@ class _TaskListState extends State<TaskList> {
           // debugPrint(Complpeted.toString());
         });
       });
+      debugPrint(count.toString());
     });
   }
 
@@ -502,6 +468,14 @@ class _TaskListState extends State<TaskList> {
       });
     });
   }
+
+  void _showAlertDialog(String message) {
+    AlertDialog alertDialog = AlertDialog(
+      // title: Text(title),
+      content: Text(message),
+    );
+    showDialog(context: context, builder: (_) => alertDialog);
+  }
 }
 // return showDialog(
 //   context: context,
@@ -530,3 +504,147 @@ class _TaskListState extends State<TaskList> {
 //   //   ],
 //   // ),
 // );
+//dismissable
+// return Dismissible(
+// key: Key(item.id.toString()),
+// direction: DismissDirection.endToStart,
+// confirmDismiss: (direction) async {
+// // this.subTaskList[position].completed = 1;
+// // _delete(subTaskList[position]);
+// // taskList.remove(taskList[position]);
+// // int p = position;
+// // _delete(this.taskList[position]);
+// // taskList.removeAt(p);
+// debugPrint("confdis");
+// updateListView();
+// setState(() {
+// // if (p != 0) {
+// //   debugPrint("000000000000000");
+// //   updateListView();
+// // }
+// });
+// return true;
+// },
+// onDismissed: (direction) {
+// if (direction == DismissDirection.endToStart) {
+// setState(() {
+// _delete(taskList[position]);
+// });
+// // Remove the item from the data source.+
+// debugPrint("dis");
+// updateListView();
+// }
+// ;
+// },
+// background: Container(
+// margin: EdgeInsets.symmetric(
+// vertical: 2.7,
+// ),
+// color: Colors.redAccent[100],
+// // padding: EdgeInsets.only(left: 16),
+// child: Align(
+// child: Icon(
+// Icons.delete_rounded,
+// color: Colors.black,
+// ),
+// alignment: Alignment.centerLeft,
+// ),
+// ),
+//pick PDatePickerEntryMode
+// Container(
+//   alignment: Alignment.topRight,
+//   padding: const EdgeInsets.only(right: 20.0),
+//   width: 90.0,
+//   child: DropdownButtonHideUnderline(
+//     child: ButtonTheme(
+//       colorScheme: ColorScheme.light(
+//         background: Colors.green,
+//       ),
+//       buttonColor: Colors.green,
+//       hoverColor: Colors.grey,
+//       child: DropdownButton<String>(
+//         isExpanded: true,
+//         iconSize: 25.0,
+//         dropdownColor: Colors.amber[100],
+//         itemHeight: 50.0,
+//         focusColor: Colors.black,
+//         value: _chosenDate,
+//         elevation: 3,
+//         style: TextStyle(color: Colors.black),
+//         iconEnabledColor: Colors.black,
+//         items: <String>[
+//           'همه',
+//           'امروز',
+//         ].map<DropdownMenuItem<String>>((String value) {
+//           return DropdownMenuItem<String>(
+//             value: value,
+//             onTap: () {
+//               debugPrint("value" + value + _chosenDate);
+//               setState(() {
+//                 _chosenDate = value;
+//               });
+//               debugPrint(value + " " + _chosenDate);
+//             },
+//             child: Text(
+//               value,
+//               style: TextStyle(color: Colors.black),
+//             ),
+//           );
+//         }).toList(),
+//         hint: Text(
+//           "لطفا یک تاریخ را انتخاب کنید",
+//           style: TextStyle(
+//               color: Colors.black,
+//               fontSize: 14,
+//               fontWeight: FontWeight.w500),
+//         ),
+//         onChanged: (String value) {
+//           setState(() {
+//             taskList.forEach((element) {
+//               void f(item) {
+//                 // debugPrint('++' + element.category);
+//                 // _chosenValue = value;
+//                 // debugPrint("/././." + value);
+//               }
+//             });
+//             _chosenDate = value;
+//             // helper.getHabitByCategoryList(value);
+//             if (value != 'همه') {
+//               debugPrint("in hame");
+//               // updateListView();
+//               String today = Jalali.now().year.toString() +
+//                   '/' +
+//                   Jalali.now().month.toString() +
+//                   '/' +
+//                   Jalali.now().day.toString();
+//               debugPrint(today);
+//               updateListViewByDate(today);
+//             } else
+//               updateListView();
+//           });
+//         },
+//       ),
+//     ),
+//   ),
+// ),
+// Padding(
+//   padding: const EdgeInsets.only(right: 20.0),
+//   child: RaisedButton(
+//     shape: RoundedRectangleBorder(
+//       borderRadius: BorderRadius.circular(30),
+//     ),
+//     color: Colors.amber,
+//     onPressed: () async {
+//       setState(() {
+//         String today = Jalali.now().year.toString() +
+//             '/' +
+//             Jalali.now().month.toString() +
+//             '/' +
+//             Jalali.now().day.toString();
+//         debugPrint(today);
+//         updateListViewByDate(today);
+//       });
+//     },
+//     child: Text('امروز'),
+//   ),
+// ),
