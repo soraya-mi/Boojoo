@@ -288,7 +288,7 @@ class _TaskListState extends State<TaskList> {
           ),
           color: this.taskList[position].completed == 1
               ? Colors.green
-              : Colors.amber[300],
+              : Colors.amber[100],
           // this.Complpeted[position] ? Colors.green : Colors.amber[300],
           // this.Complpeted[position]
           //     ? Colors.green
@@ -370,7 +370,7 @@ class _TaskListState extends State<TaskList> {
                               ),
                             ),
                             onPressed: () => {
-                              // debugPrint("fffffff"),
+                              debugPrint("fffffff"),
                               this.taskList[position].completed = 1.toInt(),
                               // debugPrint(this.taskList[position].title.toString()),
                               updateListView(),
@@ -379,6 +379,7 @@ class _TaskListState extends State<TaskList> {
                               Navigator.pop(context, true),
                             },
                             // Navigator.pop(context, true),
+
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Colors.amber),
@@ -390,6 +391,10 @@ class _TaskListState extends State<TaskList> {
                   ],
                 ),
               );
+            },
+            onLongPress: () {
+              debugPrint("long");
+              navigateToSubTask(taskList[position]);
             },
           ),
         );
@@ -421,6 +426,19 @@ class _TaskListState extends State<TaskList> {
     bool result =
         await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return TaskDetail(task, title);
+    }));
+    if (result == true) {
+      updateListView();
+    } else if (result == null) {
+      Text("وظیفه ای برای نمایش وجود ندارد");
+    }
+  }
+
+  void navigateToSubTask(Task task) async {
+    debugPrint(task.title);
+    bool result =
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return subTaskList(task);
     }));
     if (result == true) {
       updateListView();
