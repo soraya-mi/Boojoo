@@ -38,124 +38,131 @@ class _HabitListState extends State<HabitList> {
     }
     Future<bool> _onBackPressed() {
       Navigator.pop(context, false);
-      // return showDialog(
-      //   context: context,
-      //   // builder: (context) => AlertDialog(
-      //   //   title: Text("آیا میخواهید خارج شوید؟"),
-      //   //   actions: <Widget>[
-      //   //     FlatButton(
-      //   //         child: Text(
-      //   //           "خیر",
-      //   //           style: TextStyle(
-      //   //             color: Colors.white,
-      //   //           ),
-      //   //         ),
-      //   //         onPressed: () => Navigator.pop(context, false),
-      //   //         color: Colors.green),
-      //   //     FlatButton(
-      //   //       child: Text(
-      //   //         "بله",
-      //   //         style: TextStyle(
-      //   //           color: Colors.white,
-      //   //         ),
-      //   //       ),
-      //   //       onPressed: () => Navigator.pop(context, true),
-      //   //       color: Colors.redAccent,
-      //   //     ),
-      //   //   ],
-      //   // ),
-      // );
     }
 
     // TODO: implement build
-    return WillPopScope(
-      onWillPop: _onBackPressed,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("لیست عادت ها"),
-          backgroundColor: Colors.amber,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Wrap(
-            alignment: WrapAlignment.end,
-            children: [
-              Container(
-                // color: Colors.black,
-                alignment: Alignment.topRight,
-                padding: const EdgeInsets.only(right: 20.0),
-                width: 100.0,
-                child: DropdownButtonHideUnderline(
-                  child: ButtonTheme(
-                    // splashColor: Colors.white,
-                    // highlightColor: Colors.white,
-                    // buttonColor: Colors.white,
-                    hoverColor: Colors.grey,
-                    // padding: EdgeInsets.all(35.0),
-                    // alignedDropdown: true,
-                    // materialTapTargetSize: MaterialTapTargetSize.padded,
-                    child: DropdownButton<String>(
-                      isExpanded: true,
-                      iconSize: 20.0,
-                      dropdownColor: Colors.amber[100],
-                      itemHeight: 50.0,
-                      focusColor: Colors.black,
-                      value: _chosenValue,
-                      elevation: 5,
-                      style: TextStyle(color: Colors.black),
-                      iconEnabledColor: Colors.black,
-                      items: <String>[
-                        'همه',
-                        'سلامتی',
-                        'کار',
-                        'درس',
-                        'شخصی',
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        );
-                      }).toList(),
-                      hint: Text(
-                        "لطفا یک دسته را انتخاب کنید",
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: WillPopScope(
+        onWillPop: _onBackPressed,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("لیست عادت ها"),
+            backgroundColor: Colors.amber,
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Wrap(
+              alignment: WrapAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "دسته",
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500),
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      onChanged: (String value) {
-                        setState(() {
-                          habitList.forEach((element) {
-                            void f(item) {
-                              debugPrint(element.category);
-                            }
-                          });
-                          _chosenValue = value;
-                          // helper.getHabitByCategoryList(value);
-                          if (value != 'همه')
-                            updateListViewByCategory(value);
-                          else
-                            (updateListView());
-                        });
-                      },
-                    ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.black,
+                        ),
+                        // color: Colors.black,
+                        alignment: Alignment.topRight,
+                        padding: const EdgeInsets.only(right: 20.0),
+                        width: 100.0,
+                        child: DropdownButtonHideUnderline(
+                          child: ButtonTheme(
+                            // splashColor: Colors.white,
+                            // highlightColor: Colors.white,
+                            // buttonColor: Colors.white,
+                            hoverColor: Colors.grey,
+                            // padding: EdgeInsets.all(35.0),
+                            // alignedDropdown: true,
+                            // materialTapTargetSize: MaterialTapTargetSize.padded,
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              iconSize: 30.0,
+                              icon: Icon(
+                                Icons.arrow_drop_down_rounded,
+                                // Icons.arrow_drop_down_circle,
+                              ),
+                              iconEnabledColor: Colors.white,
+                              dropdownColor: Colors.black,
+                              itemHeight: 50.0,
+                              focusColor: Colors.black,
+                              value: _chosenValue,
+                              elevation: 5,
+                              style: TextStyle(color: Colors.white),
+                              items: <String>[
+                                'همه',
+                                'سلامتی',
+                                'کار',
+                                'درس',
+                                'شخصی',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                );
+                              }).toList(),
+                              hint: Text(
+                                "لطفا یک دسته را انتخاب کنید",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              onChanged: (String value) {
+                                setState(() {
+                                  habitList.forEach((element) {
+                                    void f(item) {
+                                      debugPrint(element.category);
+                                    }
+                                  });
+                                  _chosenValue = value;
+                                  // helper.getHabitByCategoryList(value);
+                                  if (value != 'همه')
+                                    updateListViewByCategory(value);
+                                  else
+                                    (updateListView());
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              getHabitListView(),
-            ],
+                Divider(
+                  color: Colors.black,
+                ),
+                getHabitListView(),
+              ],
+            ),
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.amber,
-          child: Icon(Icons.add),
-          onPressed: () {
-            navigateToDetail(Habit("", "", "", 1, 0), "اضافه کردن عادت");
-            debugPrint("back");
-          },
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.amber,
+            child: Icon(Icons.add),
+            onPressed: () {
+              navigateToDetail(Habit("", "", "", 1, 0), "اضافه کردن عادت");
+              debugPrint("back");
+            },
+          ),
         ),
       ),
     );
@@ -360,3 +367,30 @@ class _HabitListState extends State<HabitList> {
     }
   }
 }
+// return showDialog(
+//   context: context,
+//   // builder: (context) => AlertDialog(
+//   //   title: Text("آیا میخواهید خارج شوید؟"),
+//   //   actions: <Widget>[
+//   //     FlatButton(
+//   //         child: Text(
+//   //           "خیر",
+//   //           style: TextStyle(
+//   //             color: Colors.white,
+//   //           ),
+//   //         ),
+//   //         onPressed: () => Navigator.pop(context, false),
+//   //         color: Colors.green),
+//   //     FlatButton(
+//   //       child: Text(
+//   //         "بله",
+//   //         style: TextStyle(
+//   //           color: Colors.white,
+//   //         ),
+//   //       ),
+//   //       onPressed: () => Navigator.pop(context, true),
+//   //       color: Colors.redAccent,
+//   //     ),
+//   //   ],
+//   // ),
+// );
