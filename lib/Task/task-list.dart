@@ -31,6 +31,13 @@ class _TaskListState extends State<TaskList> {
     if (taskList == null) {
       taskList = List<Task>();
       updateListView();
+      debugPrint("****//");
+      debugPrint(this.count.toString());
+      for (int i = 0; i < this.count; i++) {
+        debugPrint("//****//");
+        debugPrint(i.toString());
+        // this.Complpeted.add(this.taskList[i].completed == 0 ? true : false);
+      }
       debugPrint("null");
     }
     Future<bool> _onBackPressed() {
@@ -279,12 +286,20 @@ class _TaskListState extends State<TaskList> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          color: Colors.amber[300], //fromARGB(255, 159, 231, 245),
+          color: this.taskList[position].completed == 1
+              ? Colors.green
+              : Colors.amber[300],
+          // this.Complpeted[position] ? Colors.green : Colors.amber[300],
+          // this.Complpeted[position]
+          //     ? Colors.green
+          //     : Colors.amber[300], //fromARGB(255, 159, 231, 245),
+          //this.Complpeted[position]
+          //               ? Colors.green
           elevation: 4.0, shadowColor: Colors.white,
           child: ListTile(
-            leading: CircleAvatar(
-                backgroundImage:
-                    NetworkImage("https://learncodeonline.in/mascot.png")),
+            // leading: CircleAvatar(
+            //     backgroundImage:
+            //         NetworkImage("https://learncodeonline.in/mascot.png")),
             title: Text(
               this.taskList[position].title,
               style: TextStyle(
@@ -423,6 +438,16 @@ class _TaskListState extends State<TaskList> {
         setState(() {
           this.taskList = taskList;
           this.count = taskList.length;
+          // debugPrint("//////////////////////");
+          // debugPrint(taskList.toString());
+          // for (int i = 0; i < count; i++) {
+          //   Complpeted[i] = (taskList[i].completed == 1 ? true : false);
+          //   // debugPrint(Task.fromMapObject(taskMapList[i]).toString());
+          // }
+          // debugPrint("))))))))))");
+          // debugPrint(Complpeted.toString());
+          // debugPrint(count.toString());
+          // debugPrint(Complpeted.toString());
         });
       });
     });
