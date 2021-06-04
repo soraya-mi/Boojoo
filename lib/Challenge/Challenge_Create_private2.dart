@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:boojoo/Challenge/Challenge_Create.dart';
+import 'package:boojoo/Challenge/Challenge_Create_private.dart';
 import 'package:boojoo/Challenge/Challenge_Detail.dart';
 import 'package:boojoo/Challenge/Challenge_Service.dart';
 import 'package:flutter/painting.dart';
@@ -12,7 +12,7 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 
 
-class challenge_create2 extends StatefulWidget {
+class challenge_create_private2 extends StatefulWidget {
 
   final String challengeid;
   final String title;
@@ -21,15 +21,15 @@ class challenge_create2 extends StatefulWidget {
   final String start;
   final String end;
   final String p_or_p;
-  const challenge_create2({Key key,this.challengeid, this.title, this.descrip, this.like, this.start,
+  const challenge_create_private2({Key key,this.challengeid, this.title, this.descrip, this.like, this.start,
   this.end, this.p_or_p}): super (key: key);
 
   @override
-  _challenge_create2State createState() => _challenge_create2State();
+  _challenge_create_private2State createState() => _challenge_create_private2State();
 
 }
 
-class _challenge_create2State extends State<challenge_create2> {
+class _challenge_create_private2State extends State<challenge_create_private2> {
 
   bool get IsEditing => widget.challengeid != null;
   challengeservice get ch_detail_service => GetIt.I<challengeservice>();

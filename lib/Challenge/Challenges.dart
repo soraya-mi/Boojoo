@@ -1,4 +1,4 @@
-import 'package:boojoo/Challenge/Challenge_Create.dart';
+import 'package:boojoo/Challenge/Challenge_Create_private.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:boojoo/Challenge/Challenge_for_list.dart';
@@ -46,7 +46,7 @@ class MyChallenges extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) =>   challenge_create()));
+                MaterialPageRoute(builder: (_) =>   challenge_create_private()));
           },
 
           child: Icon(Icons.add),

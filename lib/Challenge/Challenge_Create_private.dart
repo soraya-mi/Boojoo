@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:boojoo/Challenge/Challenge_Create2.dart';
+import 'package:boojoo/Challenge/Challenge_Create_private2.dart';
 import 'package:boojoo/Challenge/Challenge_Detail.dart';
 import 'package:jalali_calendar/jalali_calendar.dart';
 import 'package:boojoo/Challenge/Challenge_for_list.dart';
@@ -13,18 +13,18 @@ import 'package:get_it/get_it.dart';
 import 'package:icon_picker/icon_picker.dart';
 import 'package:ant_icons/ant_icons.dart';
 
-class challenge_create extends StatefulWidget {
+class challenge_create_private extends StatefulWidget {
 
   final String challengeid;
 
-  challenge_create ({this.challengeid});
+  challenge_create_private ({this.challengeid});
 
 
   @override
-  _challenge_createState createState() => _challenge_createState();
+  _challenge_create_privateState createState() => _challenge_create_privateState();
 }
 
-class _challenge_createState extends State<challenge_create> {
+class _challenge_create_privateState extends State<challenge_create_private> {
 
   GlobalKey<FormState> _oFormKey = GlobalKey<FormState>();
   TextEditingController  _controller;
@@ -52,6 +52,7 @@ class _challenge_createState extends State<challenge_create> {
 
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptioncontroller = TextEditingController();
+  TextEditingController _passwordcontroller = TextEditingController();
 
   bool _isLoading = false;
 
@@ -78,7 +79,7 @@ class _challenge_createState extends State<challenge_create> {
     String picked = await jalaliCalendarPicker(
         context: context,
         convertToGregorian: false,
-        showTimePicker: false,
+        showTimePicker: true,
         hore24Format: false);
     if (picked != null) setState(() => _value2 = picked);
   }
@@ -122,7 +123,7 @@ class _challenge_createState extends State<challenge_create> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: Text(IsEditing ? 'edit challenge' : 'new challenge'),
+      appBar: AppBar(title: Text(IsEditing ? 'ویرایش چالش' : 'چالش جدید'),
       backgroundColor: Colors.amber,),
       body: SingleChildScrollView(
         child: Padding(
@@ -144,6 +145,12 @@ class _challenge_createState extends State<challenge_create> {
               ),
 
 
+              TextFormField(
+                controller: _passwordcontroller,
+                decoration: InputDecoration(
+                    hintText: '  رمز :'
+                ),
+              ),
 
 
 
@@ -167,20 +174,20 @@ class _challenge_createState extends State<challenge_create> {
                       ],
                     ),
 
-                      Container(width: 50,
+                      Container(width: 60,
                         ),
 
                       Container(
-                        padding: EdgeInsets.only(top: 30, ),
+                        padding: EdgeInsets.only(top: 35, ),
                         child: Column(
                         children: <Widget>[
                           Container(width: 59,),
                           Text(
-                            selectedDate.toString().substring(0,10),
+                            selectedDate.toString().substring(0,20),
                             textAlign: TextAlign.center,
                           ),
                           Divider(),
-                          Container(width: 50,),
+                          Container(height: 10,),
                           Text(
                             _value2,
                             textAlign: TextAlign.center,
@@ -207,35 +214,36 @@ class _challenge_createState extends State<challenge_create> {
               ),
 
 
-              Container(height: 1, color: Colors.black38,),
-
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(0.0),
-                    margin: EdgeInsets.only(left:0.0),
-                    child: DropdownButton<ListItem>(
-                        dropdownColor: Colors.amber,
-                        iconEnabledColor: Colors.amber ,
-                        value: _selectedItem,
-                        items: _dropdownMenuItems,
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedItem = value;
-                            if(value.value==0)
-                              _temp = "PU";
-                            else
-                              _temp = "PR";
-                          });
-                        }),
-                    //  _type = _selectedItem[1]
-                  ),
-
-                  Container(width: 180,),
-
-                  Text(' : نوع چالش '),
-                ],
-              ),
+              Container(height: 18),
+              Container(height: 1, color: Colors.black26,),
+              Container(height: 18,),
+              // Row(
+              //   children: [
+              //     // Container(
+              //     //   padding: EdgeInsets.all(0.0),
+              //     //   margin: EdgeInsets.only(left:0.0),
+              //     //   child: DropdownButton<ListItem>(
+              //     //       dropdownColor: Colors.amber,
+              //     //       iconEnabledColor: Colors.amber ,
+              //     //       value: _selectedItem,
+              //     //       items: _dropdownMenuItems,
+              //     //       onChanged: (value) {
+              //     //         setState(() {
+              //     //           _selectedItem = value;
+              //     //           if(value.value==0)
+              //     //             _temp = "PU";
+              //     //           else
+              //     //             _temp = "PR";
+              //     //         });
+              //     //       }),
+              //     //   //  _type = _selectedItem[1]
+              //     // ),
+              //
+              //     Container(width: 180,),
+              //
+              //     Text(' : نوع چالش '),
+              //   ],
+              // ),
 
 
               Form(
@@ -302,14 +310,14 @@ class _challenge_createState extends State<challenge_create> {
                         Navigator.push(context,
                             MaterialPageRoute(
                                 builder: (_) =>
-                                    challenge_create2(
+                                    challenge_create_private2(
                                       title: _titleController.toString(),
                                       descrip: _descriptioncontroller
                                           .toString(),
                                       like: 0,
                                       start: selectedDate.toString(),
                                       end: "1391-10-9",
-                                      p_or_p: _temp,
+                                      p_or_p: "PR",
                                     )
                             )
                         );
