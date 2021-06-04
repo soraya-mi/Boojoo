@@ -13,12 +13,62 @@ import 'package:flutter/widgets.dart';
 import 'package:boojoo/SideMenu//SharedPref_Class.dart';
 import 'dart:core';
 
+final ProfilePrefs= MySharedPreferences.instance;
+int flag=0;
+String tmp1="",tmp2="" , tmpUserName="usrname",tmpEmail="email";
+String hintTextDefiner_Username(){
 
+  Timer(Duration(seconds: 2), ()async {
+    final String returnie=await ProfilePrefs.getStringValuesSF("username_SHP");
+    print(" timer1 for gettings username");
+    print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRrusername");
+    print(returnie);
+    tmpUserName = returnie;
+  }
+  );
+  Timer(Duration(seconds: 4), () async{
+    print(" timer2 for printting username");
+    print(tmpUserName);
+    print("LLLLLLLLLLLLLLLLLLLLLL username");
+
+    return tmpUserName;
+
+  }
+  );
+}
+
+String hintTextDefiner_Email(){
+
+  Timer(Duration(seconds: 0), ()async {
+    final String returnie=await ProfilePrefs.getStringValuesSF("email_SHP");
+    print(" timer1 for gettings email");
+    print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRr email");
+    print(returnie);
+    tmpUserName = returnie;
+  }
+  );
+
+  Timer(Duration(seconds: 2), ()async {
+
+    print(" timer2 for printting email");
+    print(tmpUserName);
+    print("LLLLLLLLLLLLLLLLLLLLLL email");
+
+    return tmpUserName;
+
+  }
+  );
+}
+
+// String tmp1=hintTextDefiner_Username();
+// String tmp2=hintTextDefiner_Email();
 int pictureCounter=0;
 int back_answer_edit_profile_code;
 String back_answer_edit_profile_message;
-String tmpUserName,tmpEmail;
+// String tmpUserName=hintTextDefiner_Username();
+// String tmpEmail=hintTextDefiner_Email();
 Future<AlbumEditProfile>CreatAlbumProfile(String UserName,String Email)async{
+
   final http.Response ResponseEditProfile= await http.post(Uri.http('37.152.182.36:8000','api/rest-auth/login/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -52,18 +102,25 @@ class AlbumEditProfile{
 // void main(){
 //   runApp(profile());
 // }
+
+
 class profile extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    //print("HELLO");
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:profilePage_Main(),
+      home: profilePage_Main(),
     );
   }
 }
 class profilePage_Main extends StatefulWidget {
   @override
-  _profilePage_MainState createState() => _profilePage_MainState();
+
+  _profilePage_MainState createState()=>_profilePage_MainState();
+
+
 }
 
 class _profilePage_MainState extends State<profilePage_Main> {
@@ -71,7 +128,7 @@ class _profilePage_MainState extends State<profilePage_Main> {
   final TextEditingController EditEmail=TextEditingController();
   Future<AlbumEditProfile> _futureAlbumEditProfile;//this is for sending
   Future<AlbumEditProfile> futureAlbumEditProfile;//this is for fetching
-  final ProfilePrefs= MySharedPreferences.instance;
+
   RandomColor _randomColor=RandomColor();
   Color _color= RandomColor().randomColor(colorBrightness: ColorBrightness.light);
   File _image;//creat an object of file
@@ -81,8 +138,8 @@ class _profilePage_MainState extends State<profilePage_Main> {
     setState(() {
       _image=File(image.path);
     });
-    ProfilePrefs.addStringToSF("PathProfilePicture", _image.path);
-    pictureCounter+=1;
+   ProfilePrefs.addStringToSF("PathProfilePicture", _image.path);
+   pictureCounter+=1;
     ProfilePrefs.addIntToSF("pictureCount", pictureCounter);
   }
   String imageDefiner(){
@@ -95,66 +152,24 @@ class _profilePage_MainState extends State<profilePage_Main> {
       tmpPath = returnie;
     }
     );
-    Timer(Duration(seconds: 4), () {
+    Timer(Duration(seconds: 4), () async{
       print(" timer2 for  cheking path");
       print(tmpPath);
       print("LLLLLLLLLLLLLLLLLLLLLL path");
 
-      if(tmpPath==null){
-        return 'assets/software-engineer.png';
-      }
-      else{
-        return tmpPath;
-      }
+     if(tmpPath==null){
+       return 'assets/software-engineer.png';
+     }
+     else{
+       return tmpPath;
+     }
 
     }
     );
 
   }
   //get from shared prefrences
-  String hintTextDefiner_Username(){
 
-    Timer(Duration(seconds: 2), ()async {
-      final String returnie=await ProfilePrefs.getStringValuesSF("username_SHP");
-      print(" timer1 for gettings username");
-      print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRrusername");
-      print(returnie);
-      tmpUserName = returnie;
-    }
-    );
-    Timer(Duration(seconds: 4), () {
-      print(" timer2 for printting username");
-      print(tmpUserName);
-      print("LLLLLLLLLLLLLLLLLLLLLL username");
-
-      return tmpUserName;
-
-    }
-    );
-  }
-
-  String hintTextDefiner_Email(){
-
-    Timer(Duration(seconds: 2), ()async {
-      final String returnie=await ProfilePrefs.getStringValuesSF("email_SHP");
-      print(" timer1 for gettings email");
-      print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRr email");
-      print(returnie);
-      tmpUserName = returnie;
-    }
-    );
-
-    Timer(Duration(seconds: 4), () {
-
-      print(" timer2 for printting email");
-      print(tmpUserName);
-      print("LLLLLLLLLLLLLLLLLLLLLL email");
-
-      return tmpUserName;
-
-    }
-    );
-  }
 
 
   // hintTextDefiner_Email()async{
@@ -193,8 +208,24 @@ class _profilePage_MainState extends State<profilePage_Main> {
 
   @override
 
+  void initState() {
+    tmp1=hintTextDefiner_Username();
+    tmp2=hintTextDefiner_Email();
+    super.initState();
+
+  }
+
   Widget build(BuildContext context) {
+    tmp1=hintTextDefiner_Username();
+    tmp2=hintTextDefiner_Email();
+    // tmpUserName=hintTextDefiner_Username();
+    // tmpEmail=hintTextDefiner_Email();
+    // print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd");
+    // print(tmp1);
+    // print(tmpEmail);
+    // print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
     return Scaffold(
+
       appBar: AppBar(
           brightness: Brightness.light,
           backgroundColor: Colors.transparent,
@@ -234,7 +265,14 @@ class _profilePage_MainState extends State<profilePage_Main> {
                 child:Stack(
                   fit:StackFit.expand,
                   children: <Widget>[
+                    GestureDetector(
+                    onTap: () {
+              setState(() {
+                flag=1;
 
+              });
+              }
+                    ),
                     ClipRRect(
                       //Image.file(_image)
                       child:CircleAvatar(
@@ -279,11 +317,12 @@ class _profilePage_MainState extends State<profilePage_Main> {
                     ),
                     controller: EditedUserName,
                     decoration: InputDecoration (
-                        hintText:hintTextDefiner_Username(),
+                       hintText:tmp1==""?tmp1:tmpUserName,
                         border: InputBorder.none
                     ),
                   ),
                   leading:  Icon(
+
                     Icons.edit,
                     color: Colors.grey,
                   ),
@@ -318,6 +357,7 @@ class _profilePage_MainState extends State<profilePage_Main> {
 
               SizedBox(height: 30),
               Container(
+
                 child:ListTile(
 
                   trailing:  Icon(
@@ -332,7 +372,8 @@ class _profilePage_MainState extends State<profilePage_Main> {
                     ),
                     controller: EditEmail,
                     decoration: InputDecoration(
-                        hintText:hintTextDefiner_Email(),
+
+                        hintText:tmp2==""?tmp2:tmpEmail,
                         border: InputBorder.none
                     ),
                   ),
@@ -369,6 +410,7 @@ class _profilePage_MainState extends State<profilePage_Main> {
 
                   onTap: () {
                     setState(() {
+
                       Timer(Duration(seconds: 2), () {
                         print(" This line is execute after 5 seconds");
 
@@ -414,7 +456,7 @@ class _profilePage_MainState extends State<profilePage_Main> {
                   title:Text( "خروج",textAlign: TextAlign.right,),
 
                   onTap: () => {
-                    ProfilePrefs.removeAll(),
+                  ProfilePrefs.removeAll(),
                     // Navigator.push(
                     //     context,
                     //     MaterialPageRoute(
@@ -447,4 +489,3 @@ class _profilePage_MainState extends State<profilePage_Main> {
     );
   }
 }
-
