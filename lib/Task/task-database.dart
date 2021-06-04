@@ -90,17 +90,23 @@ class TaskDataBaseHelper {
     //optional
     // var result = await db.rawQuery('SELECT * from $taskTable order by $colPriority ASC');
     var result = await db.query(taskTable, orderBy: '$colPriority ASC');
-    debugPrint(result.toString());
+    // debugPrint(result.toString());
     return result;
   }
 
   Future<List<Task>> getTaskList() async {
     var taskMapList = await getTaskMapList();
     int count = taskMapList.length;
+    debugPrint(taskMapList.toString());
+    Task a = await Task.fromMapObject(taskMapList[0]);
+    debugPrint(a.toString());
     List<Task> taskList = List<Task>();
     for (int i = 0; i < count; i++) {
       taskList.add(Task.fromMapObject(taskMapList[i]));
+      // debugPrint(Task.fromMapObject(taskMapList[i]).toString());
     }
+    debugPrint("list");
+    debugPrint(taskList.toString());
     return taskList;
   }
 
