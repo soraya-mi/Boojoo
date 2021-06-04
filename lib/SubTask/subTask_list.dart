@@ -191,17 +191,17 @@ class subTaskListState extends State<subTaskList> {
               child: Dismissible(
                 key: Key(item.name),
                 direction: DismissDirection.endToStart,
+                onDismissed: (direction) {
+                  // Remove the item from the data source.+
+                  updateListView();
+                  setState(() {});
+                },
                 confirmDismiss: (direction) async {
                   // this.subTaskList[position].completed = 1;
                   // _delete(subTaskList[position]);
                   _delete(this.subTaskList[position]);
                   updateListView();
-                  // return true;
-                },
-                onDismissed: (direction) {
-                  // Remove the item from the data source.+
-                  updateListView();
-                  setState(() {});
+                  return true;
                 },
                 background: Container(
                   color: Colors.redAccent[100],
