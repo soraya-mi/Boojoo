@@ -1,3 +1,4 @@
+import 'package:boojoo/Habit-With-Cue-Log/report-page.dart';
 import 'package:flutter/cupertino.dart';
 import '../Habit/habit.dart';
 import 'package:flutter/widgets.dart';
@@ -51,6 +52,14 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
   // debugPrint("in page bulder");
   // TextStyle textStyle = Theme.of(context).textTheme.title;
   // TextEditingController cueController = TextEditingController();
+  void navigateToLogs(Habit habitinfo, String title) async {
+    debugPrint("afadfsdf");
+    bool result =
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return cueReportPage(habitInfo, title);
+    }));
+  }
+
   @override
   Widget build(BuildContext context) => FutureBuilder(
         future: getid(),
@@ -268,8 +277,8 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                           color: Colors.amber,
                           onPressed: () {
                             setState(() {
-                              AddFakeData();
-
+                              // AddFakeData();
+                              navigateToLogs(habitInfo, "گزارش عادت");
                               // navigateToLogs(habitInfo, "گزارش عادت");
                               // Navigator.push(
                               //   context,
@@ -428,15 +437,16 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
     return logexist;
   }
 
-  void AddFakeData() async {
-    var fd = await helper.insertHabitLog(Habit_with_Cue_log(1, "1400/3/6", 2));
-    fd = await helper.insertHabitLog(Habit_with_Cue_log(5, "1400/3/7", 5));
-    fd = await helper.insertHabitLog(Habit_with_Cue_log(2, "1400/3/9", 0));
-    fd = await helper.insertHabitLog(Habit_with_Cue_log(3, "1400/3/10", 4));
-    var list = helper.getHabitLogsList(habitInfo.id).then((value) {
-      return value;
-    });
-    debugPrint("in page");
-    debugPrint(list.toString());
-  }
+  // void AddFakeData() async {
+  //   var fd = await helper.insertHabitLog(Habit_with_Cue_log(1, "1400/3/6", 2));
+  //   fd = await helper.insertHabitLog(Habit_with_Cue_log(5, "1400/3/7", 5));
+  //   fd = await helper.insertHabitLog(Habit_with_Cue_log(2, "1400/3/9", 0));
+  //   fd = await helper.insertHabitLog(Habit_with_Cue_log(3, "1400/3/10", 4));
+  //   var list = helper.getHabitLogsList(habitInfo.id).then((value) {
+  //     return value;
+  //   });
+  //   debugPrint("in page");
+  //   debugPrint(list.toString());
+  // }
+
 }
