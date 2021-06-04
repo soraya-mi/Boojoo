@@ -28,7 +28,7 @@ List<SliderModelLoading>getSlides(){
   List<SliderModelLoading>slideLoadingScreen=new List<SliderModelLoading>();
   SliderModelLoading loadingScrenn=new SliderModelLoading();
   //first slide is the todolist
-  loadingScrenn.SetImageAssetPath('assets/bozhoo.png');
+  loadingScrenn.SetImageAssetPath("assets/bozhoo.png");
   loadingScrenn.Settitle('بوژووو');
   loadingScrenn.Setdescription('!...ّبولت ژورنال شخصی شما');
   slideLoadingScreen.add(loadingScrenn);//add first slide to the set of slides

@@ -45,13 +45,20 @@ dependencies:
   fl_chart: ^0.36.1
   pie_chart: ^5.0.0
 
-  http: ^0.12.0+2
+  http: ^0.13.0
   ant_icons: any
   icon_picker: ^2.0.0
   multi_select_flutter: ^4.0.0
 
   connectivity: ^3.0.6
   another_flushbar: ^1.10.22
+
+
+  image_picker: ^0.7.5+3
+  random_color: ^1.0.5
+
+
+
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +81,7 @@ flutter:
      - assets/img/mercury.png
      - assets/img/ic_distance.png
      - assets/img/ic_gravity.png
+     - assets/
 #   fonts:
 #     - family: calibri
 #       fonts:
