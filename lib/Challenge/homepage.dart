@@ -1,10 +1,8 @@
-   import 'dart:ui';
-
+import 'dart:ui';
 import 'package:boojoo/Challenge/Challenge_Service.dart';
 import 'package:boojoo/Challenge/Challenges.dart';
-import 'package:boojoo/ui/home/home_page.dart';
-import 'package:boojoo/ui/home/home_page_body.dart';
-import 'package:boojoo/ui/home/home_page_body2.dart';
+import 'package:boojoo/ui/home/home_page_mychallenges.dart';
+import 'package:boojoo/ui/home/home_page_body_mychallenges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -113,7 +111,7 @@ class _ButtomNavyBarState extends State<ButtomNavyBar> {
   Color backgroundColor = Colors.white;
 
   PageController _pageController = PageController();
-  List<Widget> _screens = [HomePage(), HabitList(), TaskList(),  ];
+  List<Widget> _screens = [HomePageMyChallenges(), HabitList(), TaskList(),  ];
   void _onPageChanged(int index){
     index = index;
   }

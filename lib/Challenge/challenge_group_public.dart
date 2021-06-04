@@ -1,11 +1,12 @@
-import 'package:boojoo/ui/home/home_page2.dart';
-import 'package:boojoo/ui/home/home_page_body.dart';
+import 'package:boojoo/ui/home/home_page_totall_public-health.dart';
+import 'package:boojoo/ui/home/home_page_totall_public-life.dart';
+import 'package:boojoo/ui/home/home_page_totall_public-sport.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Challenge_List.dart';
 
-class TabBarchallengeGroup extends StatelessWidget {
+class TabBarchallengePublicGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new DefaultTabController(
@@ -41,9 +42,9 @@ class TabBarchallengeGroup extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              HomePage2(),
-              HomePage2(),
-              HomePage2(),
+              HomePagePublicLife(),
+              HomePagePublicHealth(),
+              HomePagePublicSport(),
             ],
           ),
         ),

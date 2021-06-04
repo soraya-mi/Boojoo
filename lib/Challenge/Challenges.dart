@@ -7,7 +7,8 @@ import 'package:boojoo/Challenge/Challenge_Delete.dart';
 import 'package:boojoo/Challenge/Challenge_List.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
-import 'challenge_group.dart';
+import 'Challenge_group_private.dart';
+import 'challenge_group_public.dart';
 /////////////////////////////////////////////////////////useless!!!!!!!!!!!!!!!////////////////////////////////////////////////
 
 class MyChallenges extends StatelessWidget {
@@ -114,7 +115,7 @@ class MyChallenges extends StatelessWidget {
                 // disabledColor: Colors.amber,
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => TabBarchallengeGroup()));
+                      builder: (_) => TabBarchallengePrivateGroup()));
                 },
                 child: new Text('مشاهده چالش ها'),
               ),
