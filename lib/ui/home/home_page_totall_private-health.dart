@@ -1,13 +1,15 @@
 import 'package:boojoo/Challenge/Challenge_Create.dart';
-import 'package:boojoo/Challenge/challenge_group.dart';
-import 'package:boojoo/ui/home/home_page_body2.dart';
+import 'package:boojoo/Challenge/challenge_group_public.dart';
+import 'package:boojoo/ui/home/home_page_body-public-health.dart';
+import 'package:boojoo/ui/home/home_page_body_mychallenges.dart';
 import 'package:flutter/material.dart';
 import 'package:boojoo/ui/text_style.dart';
 
 import '../text_style.dart';
-import 'home_page_body.dart';
+import 'home_page_body-private-health.dart';
 
-class HomePage2 extends StatelessWidget {
+
+class HomePagePrivateHealth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -24,7 +26,7 @@ class HomePage2 extends StatelessWidget {
       ),
       body: new Column(
         children: <Widget>[
-          new HomePageBody(),
+          new HomePageBodyHealthPrivate(),
         ],
       ),
 

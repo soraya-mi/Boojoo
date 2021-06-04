@@ -1,13 +1,14 @@
+import 'package:boojoo/ui/common/plannet_summary3.dart';
 import 'package:flutter/material.dart';
 import 'package:boojoo/model/planets.dart';
 import 'package:boojoo/ui/common/plannet_summary.dart';
 
-class HomePageBody extends StatefulWidget {
+class HomePageBodyHealthPrivate extends StatefulWidget {
   @override
-  _HomePageBodyState createState() => _HomePageBodyState();
+  _HomePageBodyHealthPrivateState createState() => _HomePageBodyHealthPrivateState();
 }
 
-class _HomePageBodyState extends State<HomePageBody> {
+class _HomePageBodyHealthPrivateState extends State<HomePageBodyHealthPrivate> {
   @override
   Widget build(BuildContext context) {
     return new Expanded(
@@ -21,7 +22,7 @@ class _HomePageBodyState extends State<HomePageBody> {
               padding: const EdgeInsets.symmetric(vertical: 24.0),
               sliver: new SliverList(
                 delegate: new SliverChildBuilderDelegate(
-                    (context, index) => new PlanetSummary(planets[index]),
+                      (context, index) => new PlanetSummary(planets[index]),
                   childCount: planets.length,
                 ),
               ),

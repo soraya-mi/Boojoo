@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:boojoo/model/planets.dart';
 import 'package:boojoo/ui/common/plannet_summary.dart';
 
-class HomePageBody2 extends StatefulWidget {
+class HomePageBodyMyCallenges extends StatefulWidget {
   @override
-  _HomePageBody2State createState() => _HomePageBody2State();
+  _HomePageBodyMyCallengesState createState() => _HomePageBodyMyCallengesState();
 }
 
-class _HomePageBody2State extends State<HomePageBody2> {
+class _HomePageBodyMyCallengesState extends State<HomePageBodyMyCallenges> {
   @override
   Widget build(BuildContext context) {
     return new Expanded(

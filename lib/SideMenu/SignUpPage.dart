@@ -5,18 +5,25 @@ import 'LoginPage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
-
-
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:boojoo/SideMenu//SharedPref_Class.dart';
+import 'package:another_flushbar/flushbar.dart';
+import 'package:connectivity/connectivity.dart';
 //import 'home-page.dart';
 int messageStatusCode=-1;
 String tmpUsername="";
 String backAnswer="";
 String errorTeller="کاربر گرامی خطایی رخ داده است. \n نام کاربری نباید تکراری باشد  همچنین رمز عبور باید حداقل شامل 10 کاراکتر از جمله حروف و اعداد باشد";
+String AccessTokenSignUp="";
+String RefreshTokenSignUp="";
+String UsernNameFromTokenSignUp="";
+String EmailFromTokenSignUp="";
+String PKTokenSignUp="";
+
 // ignore: missing_return
 Future<AlbumSignUp> createAlbumSigUp(String username,String email,String password1, String password2) async {
   final http.Response response1 = await http.post(
-    Uri.http('37.152.182.36:8000', 'api/rest-auth/registration/'),
+    Uri.http('185.235.43.184', '/auth/registration/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -28,15 +35,27 @@ Future<AlbumSignUp> createAlbumSigUp(String username,String email,String passwor
     }),
   );
   print("ddd");
+  print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   print(response1.statusCode);
+  print(response1.body);
+  print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   tmpUsername=username;
   backAnswer=response1.body;
   messageStatusCode=response1.statusCode;
-  /*if (response1.statusCode == 201) {
-    return AlbumSignUp.fromJson(jsonDecode(response1.body));
-  } else {
-    throw Exception('Failed to create album.');
-  }*/
+
+  List<String>ServerResponseInListS=backAnswer.split(",");
+  List<String>accesstokenS=ServerResponseInListS[0].split(":");
+  List<String>refreshtokenS=ServerResponseInListS[1].split(":");
+  List<String>pktokenS=ServerResponseInListS[2].split(":");
+  List<String>usernametokenS=ServerResponseInListS[3].split(":");
+  List<String>emailtokenS=ServerResponseInListS[4].split(":");
+  AccessTokenSignUp=accesstokenS[1].substring(1,accesstokenS[1].length-1);
+  RefreshTokenSignUp=refreshtokenS[1].substring(1,refreshtokenS[1].length-1);
+  UsernNameFromTokenSignUp=usernametokenS[1].substring(1,usernametokenS[1].length-1);
+  EmailFromTokenSignUp=emailtokenS[1].substring(1,emailtokenS[1].length-1);
+  PKTokenLogIn=pktokenS[2];
+
+
 }
 class AlbumSignUp {
   final String username;
@@ -81,7 +100,33 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController usernameController=TextEditingController();
   final TextEditingController password1Controller=TextEditingController();
   final TextEditingController password2Controller=TextEditingController();
+  final SignUpPrefs = MySharedPreferences.instance;
   Future<AlbumSignUp> _futureAlbumSignUp;
+  void showFlushBar(BuildContext context,String Message){
+    Flushbar(
+      //message:Message ,
+
+      //icon:,
+      leftBarIndicatorColor: Colors.amber,
+      messageText: Text(Message,textAlign: TextAlign.right,style: TextStyle(color: Colors.white,fontSize: 20),),
+      //brar icon , inas,
+      messageSize: 20,
+      backgroundColor: Colors.black,
+      borderColor: Colors.amber,
+      messageColor: Colors.white,
+      duration: Duration(seconds: 2),
+    )..show(context);
+
+  }
+
+  void isInternetConnected()async{
+    var result=await Connectivity().checkConnectivity();
+    if(result==ConnectivityResult.none)
+    {
+      print("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw");
+      showFlushBar(context, "اینترنت متصل نیست");
+    }
+  }
   bool hidePwd = true;
   @override
   Widget build(BuildContext context) {
@@ -301,68 +346,51 @@ class _SignUpPageState extends State<SignUpPage> {
                         onTap: () {
                           setState(() {
 
+
                             Timer(Duration(seconds: 5), () {
-                              //print(" This line is execute after 5 seconds");
 
                               if (messageStatusCode == 201) {
+                                print(" This line is execute after 5 seconds");
                                 // Navigator.push(
                                 //   context,
                                 //   MaterialPageRoute(
                                 //       builder: (context) =>
                                 //           MyHomePage()), //NoteList()),
                                 // );
-                                final snackBar1 = SnackBar(content: Text(
-                                    " .عزیز حساب کاربری شما ساخته شد  " + /*usernameController.text*/
-                                        tmpUsername,
-                                    textAlign: TextAlign.right));
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    snackBar1);
+
+                                showFlushBar(context,  " .عزیز حساب کاربری شما ساخته شد  " + tmpUsername);
                                 print("sign up");
+                                SignUpPrefs.addStringToSF("username_SHP_SI", UsernNameFromTokenSignUp);
+                                SignUpPrefs.addStringToSF("access token_SHP_SI", AccessTokenSignUp);
+                                SignUpPrefs.addStringToSF("refresh token_SHP_SI", RefreshTokenSignUp);
+                                SignUpPrefs.addStringToSF("email_SHP_SI", EmailFromTokenSignUp);
+                                SignUpPrefs.addStringToSF("PK_SHP_SI", PKTokenSignUp);
+
                               }
 
                               else {
 
                                 if (backAnswer.contains("password") ) {
-                                  final snackBar2 = SnackBar(content: Text(
-                                      ".رمز عبور باید حداقل شامل 10 کاراکتر حرف و عدد باشد",
-                                      textAlign: TextAlign.right));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      snackBar2);
+                                  showFlushBar(context, ".رمز عبور باید حداقل شامل 10 کاراکتر حرف و عدد باشد");
                                   print("error password");
                                 }
                                 if (backAnswer.contains("username")) {
-                                  final snackBar2 = SnackBar(content: Text(
-                                      ".نام کاربری مورد نظر قبلا انتخاب شده است",
-                                      textAlign: TextAlign.right));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      snackBar2);
+                                 showFlushBar(context, ".نام کاربری مورد نظر قبلا انتخاب شده است");
                                   print("error username");
                                 }
                                 if (backAnswer.contains("email")) {
-                                  final snackBar2 = SnackBar(content: Text(
-                                      ".ایمیل مورد نظر اکانت دارد. لطفا با یک ایمیل دیگر اقدام کنید",
-                                      textAlign: TextAlign.right));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      snackBar2);
+                                  showFlushBar(context,  ".ایمیل مورد نظر اکانت دارد. لطفا با یک ایمیل دیگر اقدام کنید");
                                   print("error email");
                                 }
                               }
                             });
 
-                            /*else
-                            {
-                              final snackBar3 =  SnackBar(content: Text(" .لطفا صبر کنید ",textAlign: TextAlign.right));
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar3);
-                            }*/
+                            print("on tap");
+                            _futureAlbumSignUp =  createAlbumSigUp(usernameController.text,emailController.text,
+                                password1Controller.text,password2Controller.text);
+                            showFlushBar(context, "لطفا صبر کنید");
                           });
-                          print("on tap");
-                          _futureAlbumSignUp =  createAlbumSigUp(usernameController.text,emailController.text,
-                              password1Controller.text,password2Controller.text);
-                          Timer(Duration(seconds: 5), () {
-                            print(" This line is execute after 5 seconds");
-                          });
-                          final snackBar3 =  SnackBar(content: Text(" .لطفا صبر کنید ",textAlign: TextAlign.right));
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar3);
+
                         },
 
 
@@ -413,3 +441,8 @@ class _SignUpPageState extends State<SignUpPage> {
     });
   }
 }
+
+
+
+
+//commnt for test
