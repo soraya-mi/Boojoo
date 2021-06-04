@@ -243,7 +243,7 @@ class _profilePage_MainState extends State<profilePage_Main> {
                         backgroundColor:_color,
 
                         //child: _image==null ?Image.asset('assets/software-engineer.png'): FileImage(_image),
-                        backgroundImage: _image==null ?AssetImage(/*'assets/software-engineer.png'*/imageDefiner()): FileImage(_image/*imageDefiner()*/),
+                        backgroundImage: _image==null ?AssetImage('assets/software-engineer.png'): FileImage(_image/*imageDefiner()*/),
                         //backgroundImage: imageFile==null ?AssetImage('assets/software-engineer.png'): Image.file(File(imageFile.path)),
                       ),
                     ),
