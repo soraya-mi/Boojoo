@@ -1,11 +1,17 @@
+   import 'dart:ui';
+
 import 'package:boojoo/Challenge/Challenge_Service.dart';
 import 'package:boojoo/Challenge/Challenges.dart';
+import 'package:boojoo/ui/home/home_page.dart';
+import 'package:boojoo/ui/home/home_page_body.dart';
+import 'package:boojoo/ui/home/home_page_body2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:boojoo/Habit/habbit-list.dart';
 import 'package:boojoo/Task/task-list.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 // void setupLocator(){
 //   GetIt.I.registerLazySingleton(() => challengeservice());
@@ -21,10 +27,18 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(primaryColor: Colors.lightBlue , fontFamily: 'calibri'),
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale("fa", "IR"), // OR Locale('ar', 'AE') OR Other RTL locales
+      ],
       title: '',
-      theme: ThemeData(
-        primarySwatch: Colors.amber,
-      ),
+
       home: MyHomePage(),
     );
   }
@@ -99,18 +113,28 @@ class _ButtomNavyBarState extends State<ButtomNavyBar> {
   Color backgroundColor = Colors.white;
 
   PageController _pageController = PageController();
-  List<Widget> _screens = [MyChallenges(), HabitList(), TaskList(),  ];
+  List<Widget> _screens = [HomePage(), HabitList(), TaskList(),  ];
   void _onPageChanged(int index){
     index = index;
   }
 
   
   List<NavigationItem> items = [
-    NavigationItem(Icon(Icons.home), Text('خانه'), Colors.amber),
-    NavigationItem(Icon(Icons.person), Text('پروفایل'), Colors.blueAccent),
-    NavigationItem(Icon(Icons.add_alarm_outlined), Text('عادت'), Colors.purpleAccent),
-    NavigationItem(Icon(Icons.settings), Text('چالش'), Colors.teal)
+    NavigationItem(Icon(Icons.group), Text('   چالش'),Colors.blue),
+    NavigationItem(Icon(Icons.add_alarm_outlined), Text('   عادت'),Colors.blue),
+    NavigationItem(Icon(Icons.calendar_today), Text('   وظایف'), Colors.blue),
+    NavigationItem(Icon(Icons.person), Text('   پروفایل'),Colors.blue)
   ];
+  // gradient: new LinearGradient(
+  // colors: [
+  // const Color(0xFF3366FF),
+  // const Color(0xFF00CCFF)
+  // ],
+  // begin: const FractionalOffset(0.0, 0.0),
+  // end: const FractionalOffset(1.0, 0.0),
+  // stops: [0.0, 1.0],
+  // tileMode: TileMode.clamp
+  // ),
   
   Widget _buildItem(NavigationItem item, bool IsSelected){
     return AnimatedContainer(
@@ -131,7 +155,7 @@ class _ButtomNavyBarState extends State<ButtomNavyBar> {
             children: <Widget>[
               IconTheme(data: IconThemeData(
                   size: 24,
-                  color: IsSelected ? backgroundColor : Colors.black
+                  color: IsSelected ? backgroundColor : Colors.lightBlueAccent
               ),
                   child: item.icon),
               Padding(padding: const EdgeInsets.only(left: 8),
@@ -165,7 +189,7 @@ class _ButtomNavyBarState extends State<ButtomNavyBar> {
         height: 56,
         padding: EdgeInsets.only(left: 8, right: 8, bottom: 4, top: 4),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.blue,
           boxShadow: [
             BoxShadow(
               color: Colors.black12,

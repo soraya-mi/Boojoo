@@ -21,6 +21,8 @@ class HabitDataBaseHelper {
   String colAlarm = 'Alarm';
   String colFinished = 'finished';
   String colCue = 'cue';
+  String colDays = 'days';
+  String colCategory = 'category';
 
   HabitDataBaseHelper._createInstance();
 
@@ -54,7 +56,7 @@ class HabitDataBaseHelper {
   void _createHabitDb(Database db, int newVersion) async {
     debugPrint('create*********');
     await db.execute(
-        'CREATE TABLE $habitTable($colID INTEGER PRIMARY KEY AUTOINCREMENT,$colTitle TEXT, $colStartDate TEXT,$colEndDate TEXT,$colPriority INTEGER,$colNumber INTEGER,$colType INTEGER,$colDescription TEXT,$colAlarm INTEGER,$colFinished INTEGER,$colCue INTEGER)');
+        'CREATE TABLE $habitTable($colID INTEGER PRIMARY KEY AUTOINCREMENT,$colTitle TEXT, $colStartDate TEXT,$colEndDate TEXT,$colPriority INTEGER,$colNumber INTEGER,$colType INTEGER,$colDescription TEXT,$colAlarm INTEGER,$colFinished INTEGER,$colCue INTEGER,$colDays TEXT,$colCategory TEXT)');
   }
 
   Future<List<Map<String, dynamic>>> getHabitMapList() async {
@@ -104,6 +106,56 @@ class HabitDataBaseHelper {
     List<Habit> habitList = List<Habit>();
     for (int i = 0; i < count; i++) {
       habitList.add(Habit.fromMapObject(habitMapList[i]));
+    }
+    return habitList;
+  }
+
+  Future<List<Map<String, dynamic>>> getHabitListMapByCategory(
+      String category) async {
+    debugPrint('++++.....+++++');
+    Database db = await this.database;
+    debugPrint(category);
+    // debugPrint(_database.);
+    // var count = await _database.rawQuery(
+    //     'SELECT  COUNT(*) FROM $habitTable WHERE $colCategory="$category"');
+    // debugPrint(count[0].values.single.toString());
+    // var num = count[0].values.single;
+    var result = await _database.rawQuery(
+        'SELECT *  FROM $habitTable WHERE $colCategory="$category"'); //$colCategory = $category
+    // // debugPrint(result.toString());
+    // List<Habit> habitList = List<Habit>();
+    // // for (int i = 0; i < count; i++) {
+    // //   List.add(Habit.fromMapObject(habitMapList[i]));
+    // // }
+    // // debugPrint(list[0].values.single.toString());
+    // for (int i = 0; i < num; i++) {
+    //   var habit = await Habit.fromMapObject(result[i]);
+    //   habitList.add(habit);
+    //   debugPrint(habitList[i].toString());
+    //   // var h = result[i].values.iterator;
+    //   // debugPrint(h.toString() + ' ' + h.toString());
+    // }
+    //
+    // debugPrint(habitList.toString());
+    // debugPrint("//////////////");
+    return result;
+  }
+
+  Future<List<Habit>> getHabitByCategoryList(String category) async {
+    debugPrint("in");
+    var habitListbyCategory = await getHabitListMapByCategory(category);
+    debugPrint(habitListbyCategory.toString());
+    // var counter = await _database.rawQuery(
+    //     'SELECT  COUNT(*) FROM $habitTable WHERE $colCategory="$category"');
+    // debugPrint(counter[0].values.single.toString());
+    // var num = counter[0].values.single;
+    // var habitMapList = await getHabitMapList();
+
+    int count = habitListbyCategory.length;
+
+    List<Habit> habitList = List<Habit>();
+    for (int i = 0; i < count; i++) {
+      habitList.add(Habit.fromMapObject(habitListbyCategory[i]));
     }
     return habitList;
   }

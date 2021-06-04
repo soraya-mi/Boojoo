@@ -13,6 +13,8 @@ class Habit {
   String _startDate;
   String _endDate;
   int _type;
+  String _days = "0000000";
+  String _category;
   // String _created_at;
   // String _updated_at;
 
@@ -27,6 +29,8 @@ class Habit {
     this._hasAlarm,
     this._number,
     this._cue,
+    this._days,
+    this._category,
   ]);
   //This is during editing(Called with Id)
   Habit.withId(
@@ -40,6 +44,8 @@ class Habit {
     this._hasAlarm,
     this._number,
     this._cue,
+    this._days,
+    this._category,
   ]);
   // Habit.withId(this._id, this._title, this._startDate, this._endDate,
   //     this._priority, this._type, this._finished,
@@ -60,6 +66,9 @@ class Habit {
   int get hasAlarm => _hasAlarm;
   int get finished => _finished;
   int get cue => _cue;
+  String get days => _days;
+  String get category => _category;
+
 //These are all the Setters
   set title(String newTitle) {
     if (newTitle.length <= 255) {
@@ -111,6 +120,14 @@ class Habit {
     this._cue = newCue;
   }
 
+  set category(String newCategory) {
+    this._category = newCategory;
+  }
+
+  set days(String Days) {
+    this._category = Days;
+  }
+
 //Used to Save and Retrive from the Database
 //Converting the Habit Object into Map Object
   Map<String, dynamic> toMap() {
@@ -130,6 +147,8 @@ class Habit {
     map['alarm'] = _hasAlarm;
     map['finished'] = _finished;
     map['cue'] = _cue;
+    map['days'] = _days;
+    map['category'] = _category;
     return map;
   }
 
@@ -142,8 +161,10 @@ class Habit {
     this._type = map['type'];
     this._number = map['number'];
     this._description = map['description'];
-    this.hasAlarm = map['alarm'];
-    this.finished = map['finished'];
+    this._hasAlarm = map['alarm'];
+    this._finished = map['finished'];
     this._cue = map['cue'];
+    this._days = map['days'];
+    this._category = map['category'];
   }
 }

@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:boojoo/Challenge/Challenge_Create2.dart';
 import 'package:boojoo/Challenge/Challenge_Detail.dart';
 import 'package:jalali_calendar/jalali_calendar.dart';
-//import 'package:persian_datepicker/persian_datepicker.dart/persian_date.dart';
 import 'package:boojoo/Challenge/Challenge_for_list.dart';
 import 'package:boojoo/Challenge/Challenge_Service.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,7 +10,8 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
-
+import 'package:icon_picker/icon_picker.dart';
+import 'package:ant_icons/ant_icons.dart';
 
 class challenge_create extends StatefulWidget {
 
@@ -26,7 +26,13 @@ class challenge_create extends StatefulWidget {
 
 class _challenge_createState extends State<challenge_create> {
 
-  String _type;
+  GlobalKey<FormState> _oFormKey = GlobalKey<FormState>();
+  TextEditingController  _controller;
+  //String _initialValue;
+  String _valueChanged = '';
+  String _valueToValidate = '';
+  String _valueSaved = '';
+
 
   List<ListItem> _dropdownItems = [
     ListItem(1, "عمومی"),
@@ -83,10 +89,21 @@ class _challenge_createState extends State<challenge_create> {
   void initState() {
     super.initState();
 
+    _controller = TextEditingController(text: 'home');
+    _getValue();
 
     _dropdownMenuItems = buildDropDownMenuItems(_dropdownItems);
     _selectedItem = _dropdownMenuItems[0].value;
   }
+  Future<void> _getValue() async {
+    await Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        //_initialValue = 'favorite';
+        _controller?.text = 'favorite';
+      });
+    });
+  }
+
 
   List<DropdownMenuItem<ListItem>> buildDropDownMenuItems(List listItems) {
     List<DropdownMenuItem<ListItem>> items = List();
@@ -106,7 +123,8 @@ class _challenge_createState extends State<challenge_create> {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: Text(IsEditing ? 'edit challenge' : 'new challenge'),
-      backgroundColor: Colors.amber,),
+      // backgroundColor: Colors.amber,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -137,12 +155,13 @@ class _challenge_createState extends State<challenge_create> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget> [
                         new RaisedButton(
-                          color: Colors.amber ,
-                          onPressed: _selectDate1,
+                          // color: Colors.amber ,
+                          // disabledColor: Colors.amber,
+                          onPressed: null,
                           child: new Text('شروع چالش'),
                         ),
                         new RaisedButton(
-                          color: Colors.amber ,
+                          // color: Colors.amber ,
                           onPressed: _selectDate2,
                           child: new Text(' پایان چالش '),
                         ),
@@ -158,14 +177,10 @@ class _challenge_createState extends State<challenge_create> {
                         children: <Widget>[
                           Container(width: 59,),
                           Text(
-                            _value1,
+                            selectedDate.toString().substring(0,10),
                             textAlign: TextAlign.center,
                           ),
                           Divider(),
-                          Text(
-                            _valuePiker1,
-                            textAlign: TextAlign.center,
-                          ),
                           Container(width: 50,),
                           Text(
                             _value2,
@@ -201,8 +216,8 @@ class _challenge_createState extends State<challenge_create> {
                     padding: EdgeInsets.all(0.0),
                     margin: EdgeInsets.only(left:0.0),
                     child: DropdownButton<ListItem>(
-                        dropdownColor: Colors.amber,
-                        iconEnabledColor: Colors.amber ,
+                        // dropdownColor: Colors.amber,
+                        // iconEnabledColor: Colors.amber ,
                         value: _selectedItem,
                         items: _dropdownMenuItems,
                         onChanged: (value) {
@@ -224,6 +239,58 @@ class _challenge_createState extends State<challenge_create> {
               ),
 
 
+              Form(
+                key: _oFormKey,
+                child: Column(
+                  children: <Widget>[
+                    IconPicker(
+                      controller: _controller,
+                      //initialValue: _initialValue,
+                      icon: Icon(AntIcons.ant_cloud),
+                      labelText: "Icon",
+                      enableSearch: true,
+                      onChanged: (val) => setState(() => _valueChanged = val),
+                      validator: (val) {
+                        setState(() => _valueToValidate = val ?? '');
+                        return null;
+                      },
+                      onSaved: (val) => setState(() => _valueSaved = val ?? ''),
+                    ),
+                    SizedBox(height: 25),
+                    // SelectableText(_valueChanged),
+                    Row(
+                      children: <Widget>[
+                        ElevatedButton(
+                          onPressed: () {
+                            final loForm = _oFormKey.currentState;
+
+                            if (loForm?.validate() == true) {
+                              loForm?.save();
+                            }
+                          },
+                          child: Text('Submit'),
+                        ),
+                        SizedBox(width: 50,),
+                        // SelectableText(_valueToValidate),
+                        // SelectableText(_valueSaved),
+                        ElevatedButton(
+                          onPressed: () {
+                            final loForm = _oFormKey.currentState;
+                            loForm?.reset();
+
+                            setState(() {
+                              _valueChanged = '';
+                              _valueToValidate = '';
+                              _valueSaved = '';
+                            });
+                          },
+                          child: Text('Reset'),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
 
               Column(
                 children: [
@@ -241,7 +308,7 @@ class _challenge_createState extends State<challenge_create> {
                                       descrip: _descriptioncontroller
                                           .toString(),
                                       like: 0,
-                                      start: "1391-4-9",
+                                      start: selectedDate.toString(),
                                       end: "1391-10-9",
                                       p_or_p: _temp,
                                     )

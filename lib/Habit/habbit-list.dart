@@ -11,6 +11,10 @@ import 'habit.dart';
 import 'habbit-details.dart';
 import 'package:sqflite/sqflite.dart';
 import '../Habit-With-Cue-Log/habit_with_cue_page.dart';
+import 'dart:async';
+import 'habbit-details.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 class HabitList extends StatefulWidget {
   @override
@@ -20,71 +24,10 @@ class HabitList extends StatefulWidget {
 class _HabitListState extends State<HabitList> {
   HabitDataBaseHelper databaseHelper = HabitDataBaseHelper();
   HabitDataBaseHelper helper = HabitDataBaseHelper();
+  HabitWithCueLog_DBHelper cueLogHelper = HabitWithCueLog_DBHelper();
   List<Habit> habitList;
   int count = 0;
-
-  void navigateToDetail(Habit habit, String title) async {
-    debugPrint(habit.title);
-    bool result =
-        await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return HabitDetail(habit, title);
-    }));
-    if (result == true) {
-      updateListView();
-    } else if (result == null) {
-      Text("عادتی برای نمایش وجود ندارد. یک عادت جدید ایجاد کنید.");
-    }
-  }
-
-  void navigateToLog(
-      Habit_without_Cue_log habitLog, Habit habitinfo, String title) async {
-    debugPrint("navigate to page in list called");
-
-    bool result;
-    result =
-        await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      // return HabitWithoutCue_Page(habitLog, habitinfo, "title");
-      return HabitWithoutCue_Page(habitLog, habitinfo, "   گزارش عادت   ");
-      // HabitWithoutCue_Page(habitLog, habitinfo, "   گزارش عادت   ");
-    }));
-    if (result == true) {
-      updateListView();
-    } else if (result == null) {
-      debugPrint("خطا");
-    }
-  }
-
-  void navigateToCueLog(
-      Habit_with_Cue_log habitLog, Habit habitinfo, String title) async {
-    debugPrint("navigate to cue page in list called");
-
-    bool result;
-    result =
-        await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      // return HabitWithoutCue_Page(habitLog, habitinfo, "title");
-      return HabitWithCue_Page(habitLog, habitinfo, "   گزارش عادت   ");
-    }));
-    if (result == true) {
-      updateListView();
-    } else if (result == null) {
-      debugPrint("خطا");
-    }
-  }
-
-  void updateListView() {
-    final Future<Database> dbFuture = databaseHelper.initalizeHabitDatabase();
-    dbFuture.then((database) {
-      Future<List<Habit>> habitListFuture = databaseHelper.getHabitList();
-      habitListFuture.then((habitList) {
-        debugPrint('...');
-        setState(() {
-          this.habitList = habitList;
-          this.count = habitList.length;
-        });
-      });
-    });
-  }
-
+  String _chosenValue = 'همه';
   @override
   Widget build(BuildContext context) {
     debugPrint("****");
@@ -132,7 +75,80 @@ class _HabitListState extends State<HabitList> {
           title: Text("لیست عادت ها"),
           backgroundColor: Colors.amber,
         ),
-        body: getHabitListView(),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Wrap(
+            alignment: WrapAlignment.end,
+            children: [
+              Container(
+                // color: Colors.black,
+                alignment: Alignment.topRight,
+                padding: const EdgeInsets.only(right: 20.0),
+                width: 100.0,
+                child: DropdownButtonHideUnderline(
+                  child: ButtonTheme(
+                    // splashColor: Colors.white,
+                    // highlightColor: Colors.white,
+                    // buttonColor: Colors.white,
+                    hoverColor: Colors.grey,
+                    // padding: EdgeInsets.all(35.0),
+                    // alignedDropdown: true,
+                    // materialTapTargetSize: MaterialTapTargetSize.padded,
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      iconSize: 20.0,
+                      dropdownColor: Colors.amber[100],
+                      itemHeight: 50.0,
+                      focusColor: Colors.black,
+                      value: _chosenValue,
+                      elevation: 5,
+                      style: TextStyle(color: Colors.black),
+                      iconEnabledColor: Colors.black,
+                      items: <String>[
+                        'همه',
+                        'سلامتی',
+                        'کار',
+                        'درس',
+                        'شخصی',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        );
+                      }).toList(),
+                      hint: Text(
+                        "لطفا یک دسته را انتخاب کنید",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      onChanged: (String value) {
+                        setState(() {
+                          habitList.forEach((element) {
+                            void f(item) {
+                              debugPrint(element.category);
+                            }
+                          });
+                          _chosenValue = value;
+                          // helper.getHabitByCategoryList(value);
+                          if (value != 'همه')
+                            updateListViewByCategory(value);
+                          else
+                            (updateListView());
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              getHabitListView(),
+            ],
+          ),
+        ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.amber,
           child: Icon(Icons.add),
@@ -145,22 +161,56 @@ class _HabitListState extends State<HabitList> {
     );
   }
 
+  void updateListView() {
+    final Future<Database> dbFuture = databaseHelper.initalizeHabitDatabase();
+    dbFuture.then((database) {
+      Future<List<Habit>> habitListFuture = databaseHelper.getHabitList();
+      // Future<List<Habit>> habitListFuture = databaseHelper.getHabitList();
+      habitListFuture.then((habitList) {
+        debugPrint('...');
+        setState(() {
+          this.habitList = habitList;
+          this.count = habitList.length;
+        });
+      });
+      debugPrint('.............4');
+    });
+  }
+
+  void updateListViewByCategory(String category) {
+    final Future<Database> dbFuture = databaseHelper.initalizeHabitDatabase();
+    dbFuture.then((database) {
+      Future<List<Habit>> habitListFuture =
+          databaseHelper.getHabitByCategoryList(category);
+      // Future<List<Habit>> habitListFuture = databaseHelper.getHabitList();
+      habitListFuture.then((habitList) {
+        debugPrint('...');
+        setState(() {
+          this.habitList = habitList;
+          this.count = habitList.length;
+        });
+      });
+    });
+  }
+
   ListView getHabitListView() {
     return ListView.builder(
+      shrinkWrap: true,
       itemCount: count,
       itemBuilder: (context, position) {
         return Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          color: Colors.amber[
-              300], //        backgroundColor: Color.fromARGB(100, 255, 192, 7),
+          color: Colors.amber[300],
+          //        backgroundColor: Color.fromARGB(100, 255, 192, 7),
 
           elevation: 4.0,
           child: ListTile(
-            leading: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://image.flaticon.com/icons/png/128/3260/3260291.png")),
+            // leading: CircleAvatar(
+            //   backgroundImage: NetworkImage(
+            //       "https://image.flaticon.com/icons/png/128/3260/3260291.png"),
+            // ),
             title: Text(
               this.habitList[position].title,
               style: TextStyle(
@@ -185,16 +235,21 @@ class _HabitListState extends State<HabitList> {
                 navigateToDetail(this.habitList[position], "ویرایش");
               },
             ),
-            onTap: () {
+            onTap: () async {
               debugPrint("pressed");
               Habit currentHabit = this.habitList[position];
               //create date format
-              DateTime now = new DateTime.now();
-              DateTime date = new DateTime(now.year, now.month, now.day);
-              String today = date.year.toString() +
-                  date.month.toString() +
-                  date.day.toString();
-              debugPrint(today);
+              // DateTime now = new DateTime.now();
+              // DateTime date = new DateTime(now.year, now.month, now.day);
+              // String today = date.year.toString() +
+              //     date.month.toString() +
+              //     date.day.toString();
+              String today = Jalali.now().year.toString() +
+                  '/' +
+                  Jalali.now().month.toString() +
+                  '/' +
+                  Jalali.now().day.toString();
+              int HabitLogID = await getid(currentHabit.id, today);
               //create habit log object
               debugPrint("on top in habit list");
               debugPrint(currentHabit.type.toString());
@@ -203,14 +258,23 @@ class _HabitListState extends State<HabitList> {
                     Habit_without_Cue_log(currentHabit.id, today);
                 navigateToLog(habitlog, currentHabit, "گزارش عادت");
               } else {
-                Habit_with_Cue_log habitCuelog =
-                    Habit_with_Cue_log(currentHabit.id, today);
-                navigateToCueLog(habitCuelog, currentHabit, "گزارش عادت");
+                if (HabitLogID != -1) {
+                  debugPrint("Habit_with_Cue_log.withID");
+                  Habit_with_Cue_log habitCuelog = Habit_with_Cue_log.withID(
+                      HabitLogID, currentHabit.id, today);
+                  navigateToCueLog(habitCuelog, currentHabit, "گزارش عادت");
+                } else {
+                  debugPrint("Habit_with_Cue_log");
+                  Habit_with_Cue_log habitCuelog =
+                      Habit_with_Cue_log(currentHabit.id, today);
+                  navigateToCueLog(habitCuelog, currentHabit, "گزارش عادت");
+                }
               }
             },
           ),
         );
       },
+      scrollDirection: Axis.vertical,
     );
   }
 
@@ -231,5 +295,68 @@ class _HabitListState extends State<HabitList> {
     // } else {
     //   // _showAlertDialog("متاسفانه هنگام ذخیره سازی خطایی رخ داد");
     // }
+  }
+
+  Future<int> getid(int id, String Date) async {
+    debugPrint('in get id func');
+    int logexist = await cueLogHelper.getID(id, Date).then((value) {
+      debugPrint(value.toString() +
+          'value return form exist in getId func----------------------------');
+      return value;
+    });
+    // var result = await helper.getHabitLogsMap(habitInfo.id);
+    // debugPrint(logexist.toString() + '---------------/////////////');
+    // return logexist;
+    debugPrint(logexist.toString());
+    return logexist;
+  }
+
+  void navigateToDetail(Habit habit, String title) async {
+    debugPrint(habit.title);
+    bool result =
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return HabitDetail(habit, title);
+    }));
+    if (result == true) {
+      updateListView();
+    } else if (result == null) {
+      Text("عادتی برای نمایش وجود ندارد. یک عادت جدید ایجاد کنید.");
+    }
+  }
+
+  void navigateToLog(
+      Habit_without_Cue_log habitLog, Habit habitinfo, String title) async {
+    debugPrint("navigate to page in list called");
+
+    bool result;
+    result =
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      // return HabitWithoutCue_Page(habitLog, habitinfo, "title");
+      return HabitWithoutCue_Page(habitLog, habitinfo, "   گزارش عادت   ");
+      // HabitWithoutCue_Page(habitLog, habitinfo, "   گزارش عادت   ");
+    }));
+    if (result == true) {
+      updateListView();
+    } else if (result == null) {
+      debugPrint("خطا");
+    }
+  }
+
+  void navigateToCueLog(
+      Habit_with_Cue_log habitLog, Habit habitinfo, String title) async {
+    debugPrint("navigate to cue page in list called");
+
+    bool result;
+    result =
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      // return HabitWithoutCue_Page(habitLog, habitinfo, "title");
+      return HabitWithCue_Page(
+          habitLog, habitinfo, "   گزارش عادت   "); //habitLog,
+    }));
+    if (result == true) {
+      updateListView();
+    } else if (result == null) {
+      debugPrint("خطا");
+    }
   }
 }
