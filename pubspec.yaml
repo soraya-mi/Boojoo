@@ -10,7 +10,6 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  flutter_speed_dial: ^1.2.5
   rounded_loading_button: ^2.0.3
   flutter:
     sdk: flutter
@@ -65,23 +64,23 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
-   uses-material-design: true
-   fonts:
-     - family: calibri
-       fonts:
-         - asset: assets/fonts/calibrib.ttf
-           weight: 600
-         - asset: assets/fonts/calibril.ttf
-           weight: 400
-   assets:
-     - assets/img/mars.png
-     - assets/img/neptune.png
-     - assets/img/moon.png
-     - assets/img/earth.png
-     - assets/img/mercury.png
-     - assets/img/ic_distance.png
-     - assets/img/ic_gravity.png
-     - assets/
+  uses-material-design: true
+  fonts:
+    - family: calibri
+      fonts:
+        - asset: assets/fonts/calibrib.ttf
+          weight: 600
+        - asset: assets/fonts/calibril.ttf
+          weight: 400
+  assets:
+    - assets/img/mars.png
+    - assets/img/neptune.png
+    - assets/img/moon.png
+    - assets/img/earth.png
+    - assets/img/mercury.png
+    - assets/img/ic_distance.png
+    - assets/img/ic_gravity.png
+    - assets/
 #   fonts:
 #     - family: calibri
 #       fonts:
@@ -90,7 +89,6 @@ flutter:
 ##         - asset: fonts/calibril.ttf
 ##         - asset: fonts/calibrili.ttf
 ##         - asset: fonts/calibriz.ttf
-
 
 
 
