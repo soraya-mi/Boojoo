@@ -125,6 +125,36 @@ class HabitWithoutCueLog_DBHelper {
     return await logID;
   }
 
+  Future<List<Map<String, Object>>> getLogMap(int hid, String hdate) async {
+    //Future<List<Map<String, Object>>>
+    debugPrint("in get Log func");
+    Database db = await this.database;
+    debugPrint("before query");
+    var result = await db.rawQuery(
+        'SELECT * from $habitwithoutCueTable WHERE $colDate = "$hdate" AND $colHabitID = "$hid"');
+    debugPrint('after query');
+    debugPrint(result.toString());
+    return result;
+  }
+
+  Future<Habit_without_Cue_log> getLogObject(int hid, String hdate) async {
+    debugPrint("ininnniin");
+    var habitMapList = await getLogMap(hid, hdate);
+    int count = habitMapList.length;
+    debugPrint(count.toString());
+    debugPrint(habitMapList[0].toString());
+    if (count != 0) {
+      debugPrint(count.toString());
+      Habit_without_Cue_log Log =
+          await Habit_without_Cue_log.fromMapObject(habitMapList[0]);
+      debugPrint(Log.toString());
+      debugPrint("ers     " + Log.toString());
+      return Log;
+    } else {
+      return Habit_without_Cue_log(-1, "-1");
+    }
+  }
+
   Future<List<Map<String, Object>>> getHabitLogsMap(int habitID) async {
     //Future<List<Map<String, Object>>>
     debugPrint("in getHabitLogs");
@@ -154,6 +184,7 @@ class HabitWithoutCueLog_DBHelper {
         'DELETE FROM $habitwithoutCueTable WHERE $colHabitID="$habitID"');
     debugPrint("Deleted.");
   }
+}
 // Future<List<Habit_without_Cue_log>> getHabitLogsList(int habitID) async {
 //   debugPrint("in");
 //   var habitListbyCategory = await getHabitLogsMap(habitID);
@@ -173,5 +204,3 @@ class HabitWithoutCueLog_DBHelper {
 //   }
 //   return habitList;
 // }
-
-}

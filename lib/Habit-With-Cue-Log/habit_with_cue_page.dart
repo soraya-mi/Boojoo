@@ -62,8 +62,8 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
-        future: getid(),
-        builder: (context, AsyncSnapshot<int> snapshot) {
+        future: getLog(),
+        builder: (context, AsyncSnapshot<Habit_with_Cue_log> snapshot) {
           debugPrint("in page builder");
           debugPrint(habitLog.habitID.toString());
           TextStyle textStyle = Theme.of(context).textTheme.title;
@@ -71,8 +71,10 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
           if (snapshot.hasData) {
             debugPrint('Step 3, build widget:s ${snapshot.data}');
             debugPrint("data:" + snapshot.data.toString());
-            if (snapshot.data != -1) {
-              habitLog.id = snapshot.data;
+            if (snapshot.data.id != -1) {
+              habitLog.id = snapshot.data.id;
+              debugPrint(snapshot.data.id.toString());
+              label = snapshot.data.cue.toString();
             }
             // id = snapshot.data;
             // if (id != null) {
@@ -359,6 +361,7 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
       if (result != 0) {
         print(this.habitLog);
         _showAlertDialog("با موفقیت ذخیره شد");
+        label = habitLog.cue.toString();
         print('thisssssss');
       } else {
         _showAlertDialog("متاسفانه هنگام ذخیره سازی خطایی رخ داد");
@@ -440,14 +443,15 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
   //   }
   // }
 
-  Future<int> getid() async {
+  Future<Habit_with_Cue_log> getLog() async {
     debugPrint('in get id func');
-    int logexist =
-        await helper.getID(habitInfo.id, habitLog.date).then((value) {
+    Habit_with_Cue_log logexist =
+        await helper.getLogObject(habitInfo.id, habitLog.date).then((value) {
       debugPrint(value.toString() +
           'value return form exist in getId func----------------------------');
       return value;
     });
+    debugPrint(logexist.toString());
     return logexist;
   }
 
