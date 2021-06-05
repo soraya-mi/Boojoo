@@ -158,7 +158,7 @@ class HabitDetailState extends State<HabitDetail> {
                           ),
                         ),
                       ),
-                      //third Element:priority
+                      //priority
                       Padding(
                         padding: EdgeInsets.only(top: 3.0, bottom: 5.0),
                         //dropdown menu
@@ -181,12 +181,15 @@ class HabitDetailState extends State<HabitDetail> {
                                       style: TextStyle(
                                           fontSize: 15.0,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.black)),
+                                          color: dropDownStringItem != "low"
+                                              ? Colors.red
+                                              : Colors.green)),
                                 );
                               }).toList(),
                               value: getPriorityAsString(habit.priority),
                               onChanged: (valueSelectedByUser) {
                                 setState(() {
+                                  debugPrint("p is" + valueSelectedByUser);
                                   updatePriorityAsInt(valueSelectedByUser);
                                 });
                               }),
@@ -209,77 +212,93 @@ class HabitDetailState extends State<HabitDetail> {
                               ),
                             ),
                           ),
-                          RaisedButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            color: Colors.amber,
-                            onPressed: () async {
-                              Jalali picked = await showPersianDatePicker(
-                                context: context,
-                                initialDate: Jalali.now(),
-                                firstDate: Jalali(1385, 8),
-                                lastDate: Jalali(1450, 9),
-                              );
-                              if (picked != null && picked != selectedDate)
-                                setState(() {
-                                  // label = picked.formatFullDate();
-                                  // this.habit.startDate = picked.toString();
+                          Container(
+                            width: 70.0,
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              color: Colors.amber,
+                              onPressed: () async {
+                                Jalali picked = await showPersianDatePicker(
+                                  context: context,
+                                  initialDate: Jalali.now(),
+                                  firstDate: Jalali(1385, 8),
+                                  lastDate: Jalali(1450, 9),
+                                );
+                                if (picked != null && picked != selectedDate)
+                                  setState(() {
+                                    // label = picked.formatFullDate();
+                                    // this.habit.startDate = picked.toString();
 
-                                  start = picked.year.toString() +
-                                      '/' +
-                                      picked.month.toString() +
-                                      '/' +
-                                      picked.day.toString();
-                                  updateStartDate(start);
-                                  // debugPrint(this.habit.startDate);
-                                });
-                            },
-                            child: Text('شروع '),
+                                    start = picked.year.toString() +
+                                        '/' +
+                                        picked.month.toString() +
+                                        '/' +
+                                        picked.day.toString();
+                                    updateStartDate(start);
+                                    // debugPrint(this.habit.startDate);
+                                  });
+                              },
+                              child: Text(
+                                'شروع ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 15.0),
+                            padding: const EdgeInsets.only(top: 10.0),
                             child: Text(
                               start,
-                              style: TextStyle(fontSize: 10.0),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.0,
+                              ),
                             ),
                           ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          RaisedButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            color: Colors.amber,
-                            onPressed: () async {
-                              Jalali picked = await showPersianDatePicker(
-                                context: context,
-                                initialDate: Jalali.now(),
-                                firstDate: Jalali(1385, 8),
-                                lastDate: Jalali(1450, 9),
-                              );
-                              if (picked != null && picked != selectedDate)
-                                setState(() {
-                                  // label = picked.formatFullDate();
-                                  // this.habit.endDate = picked.toString();
 
-                                  // debugPrint(this.habit.endDate);
-                                  end = picked.year.toString() +
-                                      '/' +
-                                      picked.month.toString() +
-                                      '/' +
-                                      picked.day.toString();
-                                  updateEndDate(end);
-                                });
-                            },
-                            child: Text('پایان '),
+                          Container(
+                            width: 70.0,
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              color: Colors.amber,
+                              onPressed: () async {
+                                Jalali picked = await showPersianDatePicker(
+                                  context: context,
+                                  initialDate: Jalali.now(),
+                                  firstDate: Jalali(1385, 8),
+                                  lastDate: Jalali(1450, 9),
+                                );
+                                if (picked != null && picked != selectedDate)
+                                  setState(() {
+                                    // label = picked.formatFullDate();
+                                    // this.habit.endDate = picked.toString();
+
+                                    // debugPrint(this.habit.endDate);
+                                    end = picked.year.toString() +
+                                        '/' +
+                                        picked.month.toString() +
+                                        '/' +
+                                        picked.day.toString();
+                                    updateEndDate(end);
+                                  });
+                              },
+                              child: Text('پایان '),
+                            ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 15.0),
+                            padding: const EdgeInsets.only(top: 10.0),
                             child: Text(
                               end,
-                              style: TextStyle(fontSize: 10.0),
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                           // SizedBox(
@@ -478,8 +497,12 @@ class HabitDetailState extends State<HabitDetail> {
                       ),
                       Divider(),
                       Center(
-                        child: Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.center,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          // alignment: WrapAlignment.start,
+                          // crossAxisAlignment: WrapCrossAlignment.center,
+                          // runAlignment: WrapAlignment.start,
                           // width: 10.0,
                           children: [
                             Text(
@@ -493,8 +516,8 @@ class HabitDetailState extends State<HabitDetail> {
                                 // borderRadius: BorderRadius.circular(5),
                                 border: Border.all(color: Colors.black26),
                                 shape: BoxShape.circle,
-                                color: Colors.black,
-                                backgroundBlendMode: BlendMode.darken,
+                                color: Colors.blue,
+                                backgroundBlendMode: BlendMode.lighten,
                                 // color: Colors.red,
                               ),
                               itemHeight: 50.0,
@@ -777,14 +800,18 @@ class HabitDetailState extends State<HabitDetail> {
   //Convert Priority to Int to Save it into Database
   void updatePriorityAsInt(String value) {
     switch (value) {
-      case "High":
+      case "high":
+        // debugPrint("adbc,dabf,jvadc");
         habit.priority = 1;
+        // debugPrint(habit.priority.toString());
         break;
-      case "Low":
+      case "low":
         habit.priority = 2;
+        // debugPrint(habit.priority.toString());
         break;
       default:
     }
+    // debugPrint("val" + value.toString());
   }
 
 //update fields functions
@@ -820,10 +847,12 @@ class HabitDetailState extends State<HabitDetail> {
   //DB functions
 
   void _save() async {
-    moveToLastScreen();
+    // moveToLastScreen();
     // note.date = DateFormat.yMMMd().format(DateTime.now());
     int result;
+    debugPrint("p" + habit.priority.toString());
     if (habit.id != null) {
+      print('tnnnnnnn');
       result = await helper.updateHabit(habit);
     } else {
       result = await helper.insertHabit(habit);
