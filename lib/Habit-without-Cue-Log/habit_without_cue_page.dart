@@ -58,15 +58,23 @@ class HabitWithoutCue_PageState extends State<HabitWithoutCue_Page> {
   @override
   Widget build(BuildContext context) => FutureBuilder(
         future: getid(),
-        builder: (context, AsyncSnapshot<int> snapshot) {
+        builder: (context, AsyncSnapshot<Habit_without_Cue_log> snapshot) {
           if (snapshot.hasData) {
             debugPrint('Step 3, build widget:s ${snapshot.data}');
             debugPrint(snapshot.data.toString());
-            id = snapshot.data;
+            id = snapshot.data.id;
             // Build the widget with data.
             // Center(
             //   child: Container(child: Text('hasData: ${snapshot.data}')));
             debugPrint("in table");
+            debugPrint(snapshot.data.status.toString());
+            if (snapshot.data.status == 1) {
+              complete = true;
+              fail = false;
+            } else {
+              complete = false;
+              fail = true;
+            }
             doesExist = true;
           }
           //else
@@ -131,45 +139,23 @@ class HabitWithoutCue_PageState extends State<HabitWithoutCue_Page> {
                       Divider(color: Colors.black),
                       //today
                       Container(
-                        decoration: BoxDecoration(
-                            color: Colors.orangeAccent[100],
-                            border: Border.all(
-                              color: Colors.orangeAccent[100],
-                            ),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        height: 40.0,
-                        margin: EdgeInsets.fromLTRB(70.0, 15.0, 70.0, 0.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "امروز",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        // color: Colors.orangeAccent[100],
-                        width: 40,
-                      ),
-                      //today date
-                      Container(
                         height: 40.0,
                         margin: EdgeInsets.symmetric(
                           horizontal: 70.0,
-                          vertical: 15.0,
+                          vertical: 20.0,
                         ),
                         alignment: Alignment.center,
                         child: Text(
-                          todayDate,
+                          "امروز : " + todayDate,
                           style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         decoration: BoxDecoration(
-                            color: Colors.orangeAccent[100],
+                            color: Colors.lightBlueAccent[100],
                             border: Border.all(
-                              color: Colors.orangeAccent[100],
+                              color: Colors.lightBlueAccent[100],
                             ),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
@@ -240,13 +226,13 @@ class HabitWithoutCue_PageState extends State<HabitWithoutCue_Page> {
                         ],
                       ),
                       //say good
-                      RaisedButton(
-                        onPressed: () {
-                          setState(() {
-                            addFakeData();
-                          });
-                        },
-                      ),
+                      // RaisedButton(
+                      //   onPressed: () {
+                      //     setState(() {
+                      //       addFakeData();
+                      //     });
+                      //   },
+                      // ),
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -260,61 +246,72 @@ class HabitWithoutCue_PageState extends State<HabitWithoutCue_Page> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
                       //save button
-                      Container(
-                        width: 10.0,
-                        margin: EdgeInsets.symmetric(
-                          horizontal: 100.0,
-                          vertical: 20.0,
-                        ),
-                        child: ElevatedButton(
-                          // textColor: Colors.white,
-                          // color: Colors.teal[300],
-                          // padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'ثبت',
-                            textScaleFactor: 1.5,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            width: 100.0,
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              color: Colors.lightBlueAccent,
+                              // textColor: Colors.white,
+                              // color: Colors.teal[300],
+                              // padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'ثبت',
+                                textScaleFactor: 1.5,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  debugPrint('goning to save:');
+                                  _save();
+                                });
+                              },
+                            ),
                           ),
-                          onPressed: () {
-                            setState(() {
-                              debugPrint('goning to save:');
-                              _save();
-                            });
-                          },
-                        ),
+                          Container(
+                            width: 100.0,
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              color: Colors.lightBlueAccent,
+                              // textColor: Colors.white,
+                              // color: Colors.teal[300],
+                              // padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'حذف',
+                                textScaleFactor: 1.5,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  debugPrint('gonign to delete');
+                                  _delete();
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       //delete button
+
                       Container(
-                        width: 10.0,
-                        margin: EdgeInsets.symmetric(
-                          horizontal: 100.0,
-                          vertical: 20.0,
-                        ),
-                        child: ElevatedButton(
-                          // textColor: Colors.white,
-                          // color: Colors.teal[300],
-                          // padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'حذف',
-                            textScaleFactor: 1.5,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              debugPrint('gonign to delete');
-                              _delete();
-                            });
-                          },
-                        ),
-                      ),
-                      Container(
+                        alignment: Alignment.bottomCenter,
                         padding: EdgeInsets.symmetric(horizontal: 40.0),
                         margin: EdgeInsets.only(bottom: 0.0),
                         child: CupertinoButton(
-                          child: Text("logs"),
-                          color: Colors.amber,
+                          child: Text("مشاهده گزارش کامل عادت"),
+                          // color: Colors.amber,
                           onPressed: () {
                             setState(() {
-                              navigateToLogs(habitInfo, "گزارش عادت");
+                              navigateToLogs(habitInfo, "گزارش کامل عادت");
                               // debugPrint('goning to save:');
                               // _save();
                             });
@@ -372,6 +369,8 @@ class HabitWithoutCue_PageState extends State<HabitWithoutCue_Page> {
 
     if (result != 0) {
       _showAlertDialog("گزارش با موفقیت حذف شد");
+      complete = false;
+      fail = false;
     } else {
       _showAlertDialog("متاسفانه خطایی رخ داد");
     }
@@ -410,10 +409,10 @@ class HabitWithoutCue_PageState extends State<HabitWithoutCue_Page> {
     this.habitLog.status = status;
   }
 
-  Future<int> getid() async {
+  Future<Habit_without_Cue_log> getid() async {
     debugPrint('in get id func');
-    int logexist =
-        await helper.exist(habitInfo.id, habitLog.date).then((value) {
+    Habit_without_Cue_log logexist =
+        await helper.getLogObject(habitInfo.id, habitLog.date).then((value) {
       debugPrint(value.toString() +
           'value return form exist in getId func----------------------------');
       return value;

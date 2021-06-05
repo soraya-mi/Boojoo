@@ -132,7 +132,7 @@ class HabitWithoutCue_LogPageState extends State<HabitWithoutCue_LogPage> {
               appBar: AppBar(
                 title: Row(
                   children: [
-                    Icon(Icons.description),
+                    // Icon(Icons.report),
                     Text(appBarTitle),
                   ],
                 ),
@@ -170,32 +170,36 @@ class HabitWithoutCue_LogPageState extends State<HabitWithoutCue_LogPage> {
                         // color: Colors.purpleAccent[100],
                         width: 20,
                       ),
+
                       Divider(color: Colors.black),
                       //today
 
                       //today date
                       Container(
+                        // padding: EdgeInsets.symmetric(
+                        //   horizontal: 5.0,
+                        // ),
                         height: 40.0,
                         margin: EdgeInsets.symmetric(
-                          horizontal: 70.0,
-                          vertical: 15.0,
+                          horizontal: 15.0,
+                          vertical: 18.0,
                         ),
                         alignment: Alignment.center,
                         child: Text(
-                          todayDate,
+                          " گزارش تا تاریخ:  " + todayDate,
                           style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         decoration: BoxDecoration(
-                            color: Colors.orangeAccent[100],
+                            color: Colors.lightBlueAccent[100],
                             border: Border.all(
-                              color: Colors.orangeAccent[100],
+                              color: Colors.lightBlueAccent[100],
                             ),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
-                        width: 40,
+                        width: 80,
                       ),
                       //ask "tasks completed?"
                       Center(

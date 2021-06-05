@@ -1,3 +1,4 @@
+import 'package:boojoo/Habit-With-Cue-Log/report-page.dart';
 import 'package:flutter/cupertino.dart';
 import '../Habit/habit.dart';
 import 'package:flutter/widgets.dart';
@@ -51,10 +52,18 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
   // debugPrint("in page bulder");
   // TextStyle textStyle = Theme.of(context).textTheme.title;
   // TextEditingController cueController = TextEditingController();
+  void navigateToLogs(Habit habitinfo, String title) async {
+    debugPrint("afadfsdf");
+    bool result =
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return cueReportPage(habitInfo, title);
+    }));
+  }
+
   @override
   Widget build(BuildContext context) => FutureBuilder(
-        future: getid(),
-        builder: (context, AsyncSnapshot<int> snapshot) {
+        future: getLog(),
+        builder: (context, AsyncSnapshot<Habit_with_Cue_log> snapshot) {
           debugPrint("in page builder");
           debugPrint(habitLog.habitID.toString());
           TextStyle textStyle = Theme.of(context).textTheme.title;
@@ -62,8 +71,10 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
           if (snapshot.hasData) {
             debugPrint('Step 3, build widget:s ${snapshot.data}');
             debugPrint("data:" + snapshot.data.toString());
-            if (snapshot.data != -1) {
-              habitLog.id = snapshot.data;
+            if (snapshot.data.id != -1) {
+              habitLog.id = snapshot.data.id;
+              debugPrint(snapshot.data.id.toString());
+              label = snapshot.data.cue.toString();
             }
             // id = snapshot.data;
             // if (id != null) {
@@ -105,7 +116,7 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                     Text(appBarTitle),
                   ],
                 ),
-                backgroundColor: Colors.amber,
+                backgroundColor: Colors.blue,
                 leading: IconButton(
                   icon: Icon(Icons.arrow_back),
                   // padding: EdgeInsets.only(right: 200),
@@ -142,27 +153,27 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                       SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.orangeAccent[100],
-                            border: Border.all(
-                              color: Colors.orangeAccent[100],
-                            ),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        height: 40.0,
-                        margin: EdgeInsets.fromLTRB(70.0, 15.0, 70.0, 0.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "امروز",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        // color: Colors.orangeAccent[100],
-                        width: 40,
-                      ),
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //       color: Colors.lightBlueAccent[100],
+                      //       border: Border.all(
+                      //         color: Colors.lightBlueAccent[100],
+                      //       ),
+                      //       borderRadius:
+                      //           BorderRadius.all(Radius.circular(20))),
+                      //   height: 40.0,
+                      //   margin: EdgeInsets.fromLTRB(70.0, 15.0, 70.0, 0.0),
+                      //   alignment: Alignment.center,
+                      //   child: Text(
+                      //     "امروز",
+                      //     style: TextStyle(
+                      //       fontSize: 20.0,
+                      //       fontWeight: FontWeight.bold,
+                      //     ),
+                      //   ),
+                      //   // color: Colors.orangeAccent[100],
+                      //   width: 40,
+                      // ),
                       Container(
                         height: 40.0,
                         margin: EdgeInsets.symmetric(
@@ -171,29 +182,33 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                         ),
                         alignment: Alignment.center,
                         child: Text(
-                          todayDate,
+                          "امروز : " + todayDate,
                           style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         decoration: BoxDecoration(
-                            color: Colors.orangeAccent[100],
+                            color: Colors.lightBlueAccent[100],
                             border: Border.all(
-                              color: Colors.orangeAccent[100],
+                              color: Colors.lightBlueAccent[100],
                             ),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
                         width: 40,
                       ),
                       Center(
-                          child: Text(
-                        "رکورد امروز: ",
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
+                        child: Text(
+                          "رکورد امروز: ",
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      )),
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(60.0, 0.0, 30, 0),
                         child: TextField(
@@ -214,13 +229,21 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                           },
                           decoration: InputDecoration(
                             labelText: label,
-                            labelStyle: textStyle,
+                            labelStyle: TextStyle(
+                              fontSize: 16.0,
+                            ),
+                            border: new OutlineInputBorder(
+                              borderRadius: new BorderRadius.circular(40.0),
+                            ),
                             icon: Padding(
                               padding: const EdgeInsets.only(right: 10.0),
                               child: Icon(Icons.accessibility_new_rounded),
                             ),
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
                       ),
                       Center(
                         child: Padding(
@@ -241,10 +264,11 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                           horizontal: 100.0,
                           vertical: 20.0,
                         ),
-                        child: ElevatedButton(
-                          // textColor: Colors.white,
-                          // color: Colors.teal[300],
-                          // padding: const EdgeInsets.all(8.0),
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          color: Colors.lightBlueAccent,
                           child: Text(
                             'ثبت',
                             textScaleFactor: 1.5,
@@ -261,19 +285,21 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 40.0),
-                        margin: EdgeInsets.only(bottom: 0.0),
+                        alignment: Alignment.bottomCenter,
+                        // padding: EdgeInsets.symmetric(horizontal: 40.0),
+                        // margin: EdgeInsets.only(bottom: 0.0),
                         child: CupertinoButton(
-                          child: Text("logs"),
-                          color: Colors.amber,
+                          child: Text("مشاهده گزارش کامل"),
+                          // color: Colors.blue,
                           onPressed: () {
                             setState(() {
-                              AddFakeData();
-
-                              // navigateToLogs(habitInfo, "گزارش عادت");
+                              // AddFakeData();
+                              //navigateToLogs(habitInfo, "گزارش عادت");
+                               navigateToLogs(habitInfo, "گزارش عادت");
                               // Navigator.push(
                               //   context,
                               //   MaterialPageRoute(
+                              //       cueReportPage(),
                               //       // builder: (context) => BarChartSample1(),
                               //       ),
                               // );
@@ -336,6 +362,7 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
       if (result != 0) {
         print(this.habitLog);
         _showAlertDialog("با موفقیت ذخیره شد");
+        label = habitLog.cue.toString();
         print('thisssssss');
       } else {
         _showAlertDialog("متاسفانه هنگام ذخیره سازی خطایی رخ داد");
@@ -417,26 +444,28 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
   //   }
   // }
 
-  Future<int> getid() async {
+  Future<Habit_with_Cue_log> getLog() async {
     debugPrint('in get id func');
-    int logexist =
-        await helper.getID(habitInfo.id, habitLog.date).then((value) {
+    Habit_with_Cue_log logexist =
+        await helper.getLogObject(habitInfo.id, habitLog.date).then((value) {
       debugPrint(value.toString() +
           'value return form exist in getId func----------------------------');
       return value;
     });
+    debugPrint(logexist.toString());
     return logexist;
   }
 
-  void AddFakeData() async {
-    var fd = await helper.insertHabitLog(Habit_with_Cue_log(1, "1400/3/6", 2));
-    fd = await helper.insertHabitLog(Habit_with_Cue_log(5, "1400/3/7", 5));
-    fd = await helper.insertHabitLog(Habit_with_Cue_log(2, "1400/3/9", 0));
-    fd = await helper.insertHabitLog(Habit_with_Cue_log(3, "1400/3/10", 4));
-    var list = helper.getHabitLogsList(habitInfo.id).then((value) {
-      return value;
-    });
-    debugPrint("in page");
-    debugPrint(list.toString());
-  }
+  // void AddFakeData() async {
+  //   var fd = await helper.insertHabitLog(Habit_with_Cue_log(1, "1400/3/6", 2));
+  //   fd = await helper.insertHabitLog(Habit_with_Cue_log(5, "1400/3/7", 5));
+  //   fd = await helper.insertHabitLog(Habit_with_Cue_log(2, "1400/3/9", 0));
+  //   fd = await helper.insertHabitLog(Habit_with_Cue_log(3, "1400/3/10", 4));
+  //   var list = helper.getHabitLogsList(habitInfo.id).then((value) {
+  //     return value;
+  //   });
+  //   debugPrint("in page");
+  //   debugPrint(list.toString());
+  // }
+
 }

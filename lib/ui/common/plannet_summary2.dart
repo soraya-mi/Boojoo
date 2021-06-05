@@ -1,4 +1,5 @@
-import 'package:boojoo/ui/detail/detail_page2.dart';
+import 'package:boojoo/Challenge/Challenge_Detail.dart';
+import 'package:boojoo/ui/detail/detail_page_mychallenge.dart';
 import 'package:flutter/material.dart';
 import 'package:boojoo/ui/common/separator.dart';
 import 'package:boojoo/ui/detail/detail_page.dart';
@@ -6,20 +7,20 @@ import 'package:boojoo/ui/detail/detail_page.dart';
 import '../../model/planets.dart';
 import '../text_style.dart';
 
-class PlanetSummary2 extends StatefulWidget {
+class challenge_for_listSummary2 extends StatefulWidget {
 
-  final Planet planet;
+  final challengedetail planet;
   final bool horizontal;
 
-  PlanetSummary2(this.planet, {this.horizontal = true});
+  challenge_for_listSummary2(this.planet, {this.horizontal = true});
 
-  PlanetSummary2.vertical(this.planet): horizontal = false;
+  challenge_for_listSummary2.vertical(this.planet): horizontal = false;
 
   @override
-  _PlanetSummary2State createState() => _PlanetSummary2State();
+  _challenge_for_listSummary2State createState() => _challenge_for_listSummary2State();
 }
 
-class _PlanetSummary2State extends State<PlanetSummary2> {
+class _challenge_for_listSummary2State extends State<challenge_for_listSummary2> {
   @override
   Widget build(BuildContext context) {
 
@@ -31,7 +32,7 @@ class _PlanetSummary2State extends State<PlanetSummary2> {
       child: new Hero(
         tag: "planet-hero-${widget.planet.id}",
         child: new Image(
-          image: new AssetImage(widget.planet.image),
+          image: new AssetImage('assets/img/mars.png'),
           height: 92.0,
           width: 92.0,
         ),
@@ -61,9 +62,9 @@ class _PlanetSummary2State extends State<PlanetSummary2> {
         crossAxisAlignment: widget.horizontal ? CrossAxisAlignment.start : CrossAxisAlignment.center,
         children: <Widget>[
           new Container(height: 4.0),
-          new Text(widget.planet.name, style: Style.titleTextStyle),
+          new Text(widget.planet.title, style: Style.titleTextStyle),
           new Container(height: 10.0),
-          new Text(widget.planet.location, style: Style.commonTextStyle),
+          new Text(widget.planet.owner.toString(), style: Style.commonTextStyle),
           new Separator(),
           new Expanded(
             child: new Row(
@@ -72,7 +73,7 @@ class _PlanetSummary2State extends State<PlanetSummary2> {
                 Expanded(
 
                     child: _planetValue(
-                        value: widget.planet.distance,
+                        value: widget.planet.startdate.toString(),
                         image: 'assets/img/ic_distance.png')
 
                 ),
@@ -82,7 +83,7 @@ class _PlanetSummary2State extends State<PlanetSummary2> {
                 Expanded(
 
                     child: _planetValue(
-                        value: widget.planet.gravity,
+                        value: widget.planet.enddate.toString(),
                         image: 'assets/img/ic_gravity.png')
                 )
               ],
@@ -98,7 +99,7 @@ class _PlanetSummary2State extends State<PlanetSummary2> {
                 Expanded(
 
                     child: _planetValue(
-                        value: widget.planet.distance,
+                        value: widget.planet.days.toString(),
                         image: 'assets/img/ic_distance.png')
 
                 ),
@@ -108,7 +109,7 @@ class _PlanetSummary2State extends State<PlanetSummary2> {
                 Expanded(
 
                     child: _planetValue(
-                        value: widget.planet.gravity,
+                        value: widget.planet.users.length.toString(),
                         image: 'assets/img/ic_gravity.png')
                 )
               ],

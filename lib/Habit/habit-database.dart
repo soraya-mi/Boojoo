@@ -159,4 +159,42 @@ class HabitDataBaseHelper {
     }
     return habitList;
   }
+
+  Future<List<Map<String, dynamic>>> getHabitListMapByPriority(
+      int priority) async {
+    debugPrint('++++.....+++++');
+    Database db = await this.database;
+    debugPrint(priority.toString());
+    var result = await _database.rawQuery(
+        'SELECT *  FROM $habitTable WHERE $colPriority="$priority"'); //$colCategory = $category
+    // // debugPrint(result.toString());
+    // List<Habit> habitList = List<Habit>();
+    // // for (int i = 0; i < count; i++) {
+    // //   List.add(Habit.fromMapObject(habitMapList[i]));
+    // // }
+    // // debugPrint(list[0].values.single.toString());
+    // for (int i = 0; i < num; i++) {
+    //   var habit = await Habit.fromMapObject(result[i]);
+    //   habitList.add(habit);
+    //   debugPrint(habitList[i].toString());
+    //   // var h = result[i].values.iterator;
+    //   // debugPrint(h.toString() + ' ' + h.toString());
+    // }
+    //
+    // debugPrint(habitList.toString());
+    // debugPrint("//////////////");
+    return result;
+  }
+
+  Future<List<Habit>> getHabitByPriorityList(int priority) async {
+    debugPrint("in");
+    var habitListbyCategory = await getHabitListMapByPriority(priority);
+    debugPrint(habitListbyCategory.toString());
+    int count = habitListbyCategory.length;
+    List<Habit> habitList = List<Habit>();
+    for (int i = 0; i < count; i++) {
+      habitList.add(Habit.fromMapObject(habitListbyCategory[i]));
+    }
+    return habitList;
+  }
 }

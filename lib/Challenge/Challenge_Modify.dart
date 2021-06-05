@@ -1,4 +1,5 @@
 import 'package:boojoo/Challenge/Challenge_Detail.dart';
+import 'package:boojoo/Challenge/Challenge_Detail2.dart';
 import 'package:boojoo/Challenge/Challenge_for_list.dart';
 import 'package:boojoo/Challenge/Challenge_Service.dart';
 import 'package:flutter/cupertino.dart';
@@ -112,13 +113,13 @@ class _challengemodifyState extends State<challengemodify> {
                     //update the page
                   }
                   else {
-                    final challenge = challengedetail(
+                    final challenge = challengedetail2(
                       // id: 1,
                       // title: _titleController.text,
                       // content: _titleController.text,
                     );
 
-                    final result = await ch_detail_service.createchallenge(challenge);
+                    final result = await ch_detail_service.createchallengeprivate(challenge);
 
                     final title = 'Done';
                     final text = result.error ? (result.errormassege ?? 'An error occured!') : 'your note created!' ;

@@ -71,19 +71,35 @@ class subTaskListState extends State<subTaskList> {
                     ),
                     child: Column(
                       children: [
-                        Text("توضیح" +
-                            (task.description == null ? "" : task.description)),
+                        Text(
+                          "توضیح" +
+                              (task.description == null
+                                  ? ""
+                                  : task.description),
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         Divider(),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text("تاریخ:  " +
-                                (task.date == null ? "" : (task.date))),
-                            Text("شروع :  " +
-                                (task.startTime == null ? "" : task.startTime)),
-                            Text("  پایان :  " +
-                                (task.endTime == null ? "" : task.endTime)),
+                            Text(
+                              "تاریخ:  " +
+                                  (task.date == null ? "" : (task.date)),
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "شروع :  " +
+                                  (task.startTime == null
+                                      ? ""
+                                      : task.startTime),
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "  پایان :  " +
+                                  (task.endTime == null ? "" : task.endTime),
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
                           ],
                         ),
                         Row(
@@ -94,12 +110,19 @@ class subTaskListState extends State<subTaskList> {
                                   (task.completed == 0
                                       ? "انجام نشده"
                                       : "انجام شده"),
+                              style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text(
                               "اولویت : " +
                                   (task.priority == null
                                       ? ""
                                       : (task.priority == 2 ? "کم" : "زیاد")),
+                              style: TextStyle(
+                                color: (task.priority == 1
+                                    ? Colors.red
+                                    : Colors.green),
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),
@@ -119,9 +142,13 @@ class subTaskListState extends State<subTaskList> {
                               },
                               // textDirection: TextDirection.RTL,
                               decoration: InputDecoration(
-                                labelText: 'نام زیر وظیفه',
-                                // labelStyle: textStyle,
-                              ),
+                                  labelText: 'نام زیر وظیفه',
+                                  labelStyle: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey,
+                                  )
+                                  // labelStyle: textStyle,
+                                  ),
                             ),
                           ),
                         ),
@@ -137,9 +164,10 @@ class subTaskListState extends State<subTaskList> {
                             debugPrint("Save button clicked");
                             setState(() {
                               debugPrint("Save button clicked");
-                              if (newSubTask != null) {
+                              if (newSubTask != "") {
                                 saveSubTask(SubTask(this.task.id, newSubTask));
                                 updateListView();
+                                newSubTask = "";
                               } else {
                                 _showAlertDialog(
                                     "لطفا نام زیر وظیفه را وارد کنید");
@@ -189,18 +217,18 @@ class subTaskListState extends State<subTaskList> {
               padding: const EdgeInsets.all(3.0),
               child: Dismissible(
                 key: Key(item.name),
-                direction: DismissDirection.startToEnd,
+                direction: DismissDirection.endToStart,
+                onDismissed: (direction) {
+                  // Remove the item from the data source.+
+                  updateListView();
+                  setState(() {});
+                },
                 confirmDismiss: (direction) async {
                   // this.subTaskList[position].completed = 1;
                   // _delete(subTaskList[position]);
                   _delete(this.subTaskList[position]);
                   updateListView();
                   return true;
-                },
-                onDismissed: (direction) {
-                  // Remove the item from the data source.+
-                  updateListView();
-                  setState(() {});
                 },
                 background: Container(
                   color: Colors.redAccent[100],
@@ -222,10 +250,6 @@ class subTaskListState extends State<subTaskList> {
                   // elevation: 4.0,
                   shadowColor: Colors.white,
                   child: ListTile(
-                    // onLongPress: ,
-                    // leading: CircleAvatar(
-                    //     backgroundImage: NetworkImage(
-                    //         "https://learncodeonline.in/mascot.png")),
                     title: Text(
                       this.subTaskList[position].name,
                       style: TextStyle(
@@ -233,18 +257,6 @@ class subTaskListState extends State<subTaskList> {
                           fontWeight: FontWeight.bold,
                           fontSize: 25.0),
                     ),
-                    // trailing: GestureDetector(
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.all(8.0),
-                    //     child: Icon(
-                    //       Icons.edit,
-                    //       color: Colors.white,
-                    //     ),
-                    //   ),
-                    //   onTap: () {
-                    //     // navigateToDetail(this.taskList[position], "ویرایش");
-                    //   },
-                    // ),
                     onTap: () {
                       debugPrint(this.subTaskList[position].toString());
                       showDialog(

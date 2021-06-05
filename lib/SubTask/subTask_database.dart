@@ -13,7 +13,7 @@ class SubTaskDataBaseHelper {
   String colID = 'id';
   String colTaskId = 'taskId';
   String colName = 'name';
-
+  // String colDone = 'done';
   SubTaskDataBaseHelper._createInstance();
 
   factory SubTaskDataBaseHelper() {

@@ -28,6 +28,7 @@ class _HabitListState extends State<HabitList> {
   List<Habit> habitList;
   int count = 0;
   String _chosenValue = 'همه';
+  String _chosenPriority = 'همه';
   @override
   Widget build(BuildContext context) {
     debugPrint("****");
@@ -38,124 +39,206 @@ class _HabitListState extends State<HabitList> {
     }
     Future<bool> _onBackPressed() {
       Navigator.pop(context, false);
-      // return showDialog(
-      //   context: context,
-      //   // builder: (context) => AlertDialog(
-      //   //   title: Text("آیا میخواهید خارج شوید؟"),
-      //   //   actions: <Widget>[
-      //   //     FlatButton(
-      //   //         child: Text(
-      //   //           "خیر",
-      //   //           style: TextStyle(
-      //   //             color: Colors.white,
-      //   //           ),
-      //   //         ),
-      //   //         onPressed: () => Navigator.pop(context, false),
-      //   //         color: Colors.green),
-      //   //     FlatButton(
-      //   //       child: Text(
-      //   //         "بله",
-      //   //         style: TextStyle(
-      //   //           color: Colors.white,
-      //   //         ),
-      //   //       ),
-      //   //       onPressed: () => Navigator.pop(context, true),
-      //   //       color: Colors.redAccent,
-      //   //     ),
-      //   //   ],
-      //   // ),
-      // );
     }
 
     // TODO: implement build
-    return WillPopScope(
-      onWillPop: _onBackPressed,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("لیست عادت ها"),
-          backgroundColor: Colors.amber,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Wrap(
-            alignment: WrapAlignment.end,
-            children: [
-              Container(
-                // color: Colors.black,
-                alignment: Alignment.topRight,
-                padding: const EdgeInsets.only(right: 20.0),
-                width: 100.0,
-                child: DropdownButtonHideUnderline(
-                  child: ButtonTheme(
-                    // splashColor: Colors.white,
-                    // highlightColor: Colors.white,
-                    // buttonColor: Colors.white,
-                    hoverColor: Colors.grey,
-                    // padding: EdgeInsets.all(35.0),
-                    // alignedDropdown: true,
-                    // materialTapTargetSize: MaterialTapTargetSize.padded,
-                    child: DropdownButton<String>(
-                      isExpanded: true,
-                      iconSize: 20.0,
-                      dropdownColor: Colors.amber[100],
-                      itemHeight: 50.0,
-                      focusColor: Colors.black,
-                      value: _chosenValue,
-                      elevation: 5,
-                      style: TextStyle(color: Colors.black),
-                      iconEnabledColor: Colors.black,
-                      items: <String>[
-                        'همه',
-                        'سلامتی',
-                        'کار',
-                        'درس',
-                        'شخصی',
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        );
-                      }).toList(),
-                      hint: Text(
-                        "لطفا یک دسته را انتخاب کنید",
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: WillPopScope(
+        onWillPop: _onBackPressed,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("لیست عادت ها"),
+            backgroundColor: Colors.blue,
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Wrap(
+              alignment: WrapAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "گروه:",
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500),
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      onChanged: (String value) {
-                        setState(() {
-                          habitList.forEach((element) {
-                            void f(item) {
-                              debugPrint(element.category);
-                            }
-                          });
-                          _chosenValue = value;
-                          // helper.getHabitByCategoryList(value);
-                          if (value != 'همه')
-                            updateListViewByCategory(value);
-                          else
-                            (updateListView());
-                        });
-                      },
-                    ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.black,
+                        ),
+                        // color: Colors.black,
+                        alignment: Alignment.topRight,
+                        padding: const EdgeInsets.only(right: 20.0),
+                        width: 100.0,
+                        height: 40.0,
+                        child: DropdownButtonHideUnderline(
+                          child: ButtonTheme(
+                            // splashColor: Colors.white,
+                            // highlightColor: Colors.white,
+                            // buttonColor: Colors.white,
+                            hoverColor: Colors.grey,
+                            // padding: EdgeInsets.all(35.0),
+                            // alignedDropdown: true,
+                            // materialTapTargetSize: MaterialTapTargetSize.padded,
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              iconSize: 30.0,
+                              icon: Icon(
+                                Icons.arrow_drop_down_rounded,
+                                // Icons.arrow_drop_down_circle,
+                              ),
+                              iconEnabledColor: Colors.white,
+                              dropdownColor: Colors.black,
+                              itemHeight: 50.0,
+                              focusColor: Colors.black,
+                              value: _chosenValue,
+                              elevation: 5,
+                              style: TextStyle(color: Colors.white),
+                              items: <String>[
+                                'همه',
+                                'سلامتی',
+                                'کار',
+                                'درس',
+                                'شخصی',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                );
+                              }).toList(),
+                              hint: Text(
+                                "لطفا یک دسته را انتخاب کنید",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              onChanged: (String value) {
+                                setState(() {
+                                  habitList.forEach((element) {
+                                    void f(item) {
+                                      debugPrint(element.category);
+                                    }
+                                  });
+                                  _chosenValue = value;
+                                  // helper.getHabitByCategoryList(value);
+                                  if (value != 'همه')
+                                    updateListViewByCategory(value);
+                                  else
+                                    (updateListView());
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "اولویت:",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.black,
+                        ),
+                        // color: Colors.black,
+                        alignment: Alignment.topRight,
+                        padding: const EdgeInsets.only(right: 20.0),
+                        width: 100.0,
+                        height: 40.0,
+                        child: DropdownButtonHideUnderline(
+                          child: ButtonTheme(
+                            hoverColor: Colors.grey,
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              iconSize: 30.0,
+                              icon: Icon(
+                                Icons.arrow_drop_down_rounded,
+                                // Icons.arrow_drop_down_circle,
+                              ),
+                              iconEnabledColor: Colors.white,
+                              dropdownColor: Colors.black,
+                              itemHeight: 50.0,
+                              focusColor: Colors.black,
+                              value: _chosenPriority,
+                              elevation: 5,
+                              style: TextStyle(color: Colors.white),
+                              items: <String>[
+                                'همه',
+                                'زیاد',
+                                'کم',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                );
+                              }).toList(),
+                              hint: Text(
+                                "لطفا یک دسته را انتخاب کنید",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              onChanged: (String value) {
+                                setState(() {
+                                  habitList.forEach((element) {
+                                    void f(item) {
+                                      debugPrint(element.category);
+                                    }
+                                  });
+                                  _chosenPriority = value;
+                                  // helper.getHabitByCategoryList(value);
+                                  if (value != 'همه') {
+                                    if (value == 'زیاد')
+                                      updateListViewByPriority(1);
+                                    else
+                                      updateListViewByPriority(2);
+                                  } else
+                                    (updateListView());
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              getHabitListView(),
-            ],
+                Divider(
+                  color: Colors.black,
+                ),
+                getHabitListView(),
+              ],
+            ),
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.amber,
-          child: Icon(Icons.add),
-          onPressed: () {
-            navigateToDetail(Habit("", "", "", 1, 0), "اضافه کردن عادت");
-            debugPrint("back");
-          },
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.blue,
+            child: Icon(Icons.add),
+            onPressed: () {
+              navigateToDetail(Habit("", "", "", 1, 0), "اضافه کردن عادت");
+              debugPrint("back");
+            },
+          ),
         ),
       ),
     );
@@ -193,24 +276,44 @@ class _HabitListState extends State<HabitList> {
     });
   }
 
+  void updateListViewByPriority(int priority) {
+    final Future<Database> dbFuture = databaseHelper.initalizeHabitDatabase();
+    dbFuture.then((database) {
+      Future<List<Habit>> habitListFuture =
+          databaseHelper.getHabitByPriorityList(priority);
+      // Future<List<Habit>> habitListFuture = databaseHelper.getHabitList();
+      habitListFuture.then((habitList) {
+        debugPrint('...');
+        setState(() {
+          this.habitList = habitList;
+          this.count = habitList.length;
+        });
+      });
+    });
+  }
+
   ListView getHabitListView() {
     return ListView.builder(
       shrinkWrap: true,
       itemCount: count,
+      // this.habitList[position].priority
       itemBuilder: (context, position) {
         return Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          color: Colors.amber[300],
+          color: Colors.blue,
           //        backgroundColor: Color.fromARGB(100, 255, 192, 7),
 
           elevation: 4.0,
           child: ListTile(
-            // leading: CircleAvatar(
-            //   backgroundImage: NetworkImage(
-            //       "https://image.flaticon.com/icons/png/128/3260/3260291.png"),
-            // ),
+            leading: CircleAvatar(
+              backgroundColor: this.habitList[position].priority == 1
+                  ? Colors.red
+                  : Colors.green,
+              //   NetworkImage(
+              //       "https://image.flaticon.com/icons/png/128/3260/3260291.png"),
+            ),
             title: Text(
               this.habitList[position].title,
               style: TextStyle(
@@ -219,7 +322,9 @@ class _HabitListState extends State<HabitList> {
                   fontSize: 25.0),
             ),
             subtitle: Text(
-              "",
+              this.habitList[position].description == null
+                  ? ""
+                  : this.habitList[position].description.toString(),
               // this.habitList[position].description.toString(),
               style: TextStyle(color: Colors.white),
             ),
@@ -229,6 +334,8 @@ class _HabitListState extends State<HabitList> {
                 child: Icon(
                   Icons.edit,
                   color: Colors.white,
+                  size: 30.0,
+                  semanticLabel: "Edit",
                 ),
               ),
               onTap: () {
@@ -360,3 +467,30 @@ class _HabitListState extends State<HabitList> {
     }
   }
 }
+// return showDialog(
+//   context: context,
+//   // builder: (context) => AlertDialog(
+//   //   title: Text("آیا میخواهید خارج شوید؟"),
+//   //   actions: <Widget>[
+//   //     FlatButton(
+//   //         child: Text(
+//   //           "خیر",
+//   //           style: TextStyle(
+//   //             color: Colors.white,
+//   //           ),
+//   //         ),
+//   //         onPressed: () => Navigator.pop(context, false),
+//   //         color: Colors.green),
+//   //     FlatButton(
+//   //       child: Text(
+//   //         "بله",
+//   //         style: TextStyle(
+//   //           color: Colors.white,
+//   //         ),
+//   //       ),
+//   //       onPressed: () => Navigator.pop(context, true),
+//   //       color: Colors.redAccent,
+//   //     ),
+//   //   ],
+//   // ),
+// );

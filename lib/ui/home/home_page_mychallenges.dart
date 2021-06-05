@@ -1,26 +1,54 @@
+import 'package:boojoo/Challenge/Challenge_group_private.dart';
 import 'package:boojoo/Challenge/challenge_group_public.dart';
 import 'package:boojoo/ui/home/home_page_body_mychallenges.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import '../text_style.dart';
 
 
 class HomePageMyChallenges extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: new Column(
-        children: <Widget>[
-          new GradientAppBar("چالش ها"),
-          new HomePageBodyMyCallenges(),
-          // new MySpeedDialButten()
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (_) => TabBarchallengePublicGroup()));
-        },
-        child: Icon(Icons.add),
+    return new Directionality(
+      textDirection: TextDirection.ltr,
+      child:new Scaffold(
+        body: new Column(
+          children: <Widget>[
+            new GradientAppBar("چالش ها"),
+            new HomePageBodyMyCallenges(),
+            // new MySpeedDialButten()
+          ],
+        ),
+
+        floatingActionButton: SpeedDial(
+
+          // marginRight: 50.0,
+          animatedIcon: AnimatedIcons.menu_close,
+          curve: Curves.easeIn,
+          overlayOpacity: 0.0,
+
+          children: [
+            SpeedDialChild(
+              child: Icon(Icons.add),
+              label: "چالش های خصوصی    ",
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => TabBarchallengePrivateGroup()));
+              },
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.add),
+              label: "چالش های عمومی    ",
+
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => TabBarchallengePublicGroup()));
+              },
+            )
+          ],
+
+        ),
       ),
     );
   }

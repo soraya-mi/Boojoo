@@ -1,9 +1,7 @@
 import 'dart:ui';
-import 'package:boojoo/Challenge/Challenge_Create2.dart';
-import 'package:boojoo/Challenge/Challenge_Detail.dart';
-import 'package:jalali_calendar/jalali_calendar.dart';
-import 'package:boojoo/Challenge/Challenge_for_list.dart';
+import 'package:boojoo/Challenge/Challenge_Create_public2.dart';
 import 'package:boojoo/Challenge/Challenge_Service.dart';
+import 'package:jalali_calendar/jalali_calendar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -13,18 +11,18 @@ import 'package:get_it/get_it.dart';
 import 'package:icon_picker/icon_picker.dart';
 import 'package:ant_icons/ant_icons.dart';
 
-class challenge_create extends StatefulWidget {
+class challenge_create_public extends StatefulWidget {
 
   final String challengeid;
 
-  challenge_create ({this.challengeid});
+  challenge_create_public ({this.challengeid});
 
 
   @override
-  _challenge_createState createState() => _challenge_createState();
+  _challenge_create_publicState createState() => _challenge_create_publicState();
 }
 
-class _challenge_createState extends State<challenge_create> {
+class _challenge_create_publicState extends State<challenge_create_public> {
 
   GlobalKey<FormState> _oFormKey = GlobalKey<FormState>();
   TextEditingController  _controller;
@@ -52,6 +50,7 @@ class _challenge_createState extends State<challenge_create> {
 
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptioncontroller = TextEditingController();
+  TextEditingController _passwordcontroller = TextEditingController();
 
   bool _isLoading = false;
 
@@ -78,7 +77,7 @@ class _challenge_createState extends State<challenge_create> {
     String picked = await jalaliCalendarPicker(
         context: context,
         convertToGregorian: false,
-        showTimePicker: false,
+        showTimePicker: true,
         hore24Format: false);
     if (picked != null) setState(() => _value2 = picked);
   }
@@ -122,8 +121,8 @@ class _challenge_createState extends State<challenge_create> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: Text(IsEditing ? 'edit challenge' : 'new challenge'),
-      // backgroundColor: Colors.amber,
+      appBar: AppBar(title: Text(IsEditing ? 'ویرایش چالش' : 'چالش جدید'),
+        // backgroundColor: Colors.amber,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -133,18 +132,24 @@ class _challenge_createState extends State<challenge_create> {
               TextFormField(
                 controller: _titleController,
                 decoration: InputDecoration(
-                    hintText: ' عنوان : ',
+                  hintText: ' عنوان : ',
                 ),
               ),
 
               TextFormField(
                 controller: _descriptioncontroller,
                 decoration: InputDecoration(
-                    hintText: '  جمله انگیزشی :'
+                    hintText: '  توضیحات :'
                 ),
               ),
 
 
+              TextFormField(
+                controller: _passwordcontroller,
+                decoration: InputDecoration(
+                    hintText: '  رمز :'
+                ),
+              ),
 
 
 
@@ -155,33 +160,33 @@ class _challenge_createState extends State<challenge_create> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget> [
                         new RaisedButton(
-                          // color: Colors.amber ,
-                          // disabledColor: Colors.amber,
+                          color: Colors.indigo ,
+                          disabledColor: Colors.indigoAccent,
                           onPressed: null,
                           child: new Text('شروع چالش'),
                         ),
                         new RaisedButton(
-                          // color: Colors.amber ,
+                          color: Colors.lightBlueAccent ,
                           onPressed: _selectDate2,
                           child: new Text(' پایان چالش '),
                         ),
                       ],
                     ),
 
-                      Container(width: 50,
-                        ),
+                    Container(width: 60,
+                    ),
 
-                      Container(
-                        padding: EdgeInsets.only(top: 30, ),
-                        child: Column(
+                    Container(
+                      padding: EdgeInsets.only(top: 35, ),
+                      child: Column(
                         children: <Widget>[
                           Container(width: 59,),
                           Text(
-                            selectedDate.toString().substring(0,10),
+                            selectedDate.toString().substring(0,20),
                             textAlign: TextAlign.center,
                           ),
                           Divider(),
-                          Container(width: 50,),
+                          Container(height: 10,),
                           Text(
                             _value2,
                             textAlign: TextAlign.center,
@@ -193,14 +198,14 @@ class _challenge_createState extends State<challenge_create> {
                           ),
 
 
-                        //   new RaisedButton(
-                        //     onPressed: _showDatePicker,
-                        //     child: new Text('یادآور'),
-                        //   ),
+                          //   new RaisedButton(
+                          //     onPressed: _showDatePicker,
+                          //     child: new Text('یادآور'),
+                          //   ),
 
                         ],
-                    ),
                       ),
+                    ),
 
 
                   ],
@@ -208,35 +213,36 @@ class _challenge_createState extends State<challenge_create> {
               ),
 
 
-              Container(height: 1, color: Colors.black38,),
-
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(0.0),
-                    margin: EdgeInsets.only(left:0.0),
-                    child: DropdownButton<ListItem>(
-                        // dropdownColor: Colors.amber,
-                        // iconEnabledColor: Colors.amber ,
-                        value: _selectedItem,
-                        items: _dropdownMenuItems,
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedItem = value;
-                            if(value.value==0)
-                              _temp = "PU";
-                            else
-                              _temp = "PR";
-                          });
-                        }),
-                    //  _type = _selectedItem[1]
-                  ),
-
-                  Container(width: 180,),
-
-                  Text(' : نوع چالش '),
-                ],
-              ),
+              Container(height: 18),
+              Container(height: 1, color: Colors.black26,),
+              Container(height: 18,),
+              // Row(
+              //   children: [
+              //     // Container(
+              //     //   padding: EdgeInsets.all(0.0),
+              //     //   margin: EdgeInsets.only(left:0.0),
+              //     //   child: DropdownButton<ListItem>(
+              //     //       dropdownColor: Colors.amber,
+              //     //       iconEnabledColor: Colors.amber ,
+              //     //       value: _selectedItem,
+              //     //       items: _dropdownMenuItems,
+              //     //       onChanged: (value) {
+              //     //         setState(() {
+              //     //           _selectedItem = value;
+              //     //           if(value.value==0)
+              //     //             _temp = "PU";
+              //     //           else
+              //     //             _temp = "PR";
+              //     //         });
+              //     //       }),
+              //     //   //  _type = _selectedItem[1]
+              //     // ),
+              //
+              //     Container(width: 180,),
+              //
+              //     Text(' : نوع چالش '),
+              //   ],
+              // ),
 
 
               Form(
@@ -268,7 +274,7 @@ class _challenge_createState extends State<challenge_create> {
                               loForm?.save();
                             }
                           },
-                          child: Text('Submit'),
+                          child: Text('ثبت'),
                         ),
                         SizedBox(width: 50,),
                         // SelectableText(_valueToValidate),
@@ -284,7 +290,7 @@ class _challenge_createState extends State<challenge_create> {
                               _valueSaved = '';
                             });
                           },
-                          child: Text('Reset'),
+                          child: Text('انتخاب مجدد'),
                         ),
                       ],
                     )
@@ -292,29 +298,32 @@ class _challenge_createState extends State<challenge_create> {
                 ),
               ),
 
+              Container(height: size.height - 600,),
+
               Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   SizedBox(
                     width: double.infinity,
                     child: RaisedButton(
-                      child: Text('ادامه', style: TextStyle(color: Colors.white),),
-                      color: Theme.of(context).primaryColor,
-                      onPressed: _titleController.text.isEmpty != true ? () {
-                        Navigator.push(context,
-                            MaterialPageRoute(
-                                builder: (_) =>
-                                    challenge_create2(
-                                      title: _titleController.toString(),
-                                      descrip: _descriptioncontroller
-                                          .toString(),
-                                      like: 0,
-                                      start: selectedDate.toString(),
-                                      end: "1391-10-9",
-                                      p_or_p: _temp,
-                                    )
-                            )
-                        );
-                      } : null
+                        child: Text('ادامه', style: TextStyle(color: Colors.white),),
+                        color: Theme.of(context).primaryColor,
+                        onPressed: _titleController.text.isEmpty != true ? () {
+                          Navigator.push(context,
+                              MaterialPageRoute(
+                                  builder: (_) =>
+                                      challenge_create_public2(
+                                        title: _titleController.toString(),
+                                        descrip: _descriptioncontroller
+                                            .toString(),
+                                        like: 0,
+                                        start: selectedDate.toString(),
+                                        end: "1391-10-9",
+                                        p_or_p: "PR",
+                                      )
+                              )
+                          );
+                        } : null
                     ),
                   ),
                 ],
@@ -323,7 +332,7 @@ class _challenge_createState extends State<challenge_create> {
 
 
 
-        ],
+            ],
           ),
         ),
       ),
