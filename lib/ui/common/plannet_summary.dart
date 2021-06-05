@@ -48,12 +48,12 @@ class _challenge_for_listSummaryState extends State<challenge_for_listSummary> {
 
     final planetThumbnail = new Container(
       margin: new EdgeInsets.symmetric(
-        vertical: 16.0
+          vertical: 16.0
       ),
       alignment: widget.horizontal ? FractionalOffset.centerLeft : FractionalOffset.center,
       child: new Hero(
-          tag: "planet-hero-${widget.planet.id}",
-          child: new Image(
+        tag: "planet-hero-${widget.planet.id}",
+        child: new Image(
           image: new AssetImage('assets/img/mars.png'),
           height: 92.0,
           width: 92.0,
@@ -66,12 +66,12 @@ class _challenge_for_listSummaryState extends State<challenge_for_listSummary> {
     Widget _planetValue({String value, String image}) {
       return new Container(
         child: new Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            new Image.asset(image, height: 12.0),
-            new Container(width: 8.0),
-            new Text(value, style: Style.smallTextStyle),
-          ]
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              new Image.asset(image, height: 12.0),
+              new Container(width: 8.0),
+              new Text(value, style: Style.smallTextStyle),
+            ]
         ),
       );
     }
@@ -92,21 +92,21 @@ class _challenge_for_listSummaryState extends State<challenge_for_listSummary> {
             child: new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                 Expanded(
-
-                  child: _planetValue(
-                    value: widget.planet.likenumber.toString(),
-                    image: 'assets/img/ic_distance.png')
-
-                ),
-                 Container(
-                  width: widget.horizontal ? 8.0 : 32.0,
-                ),
-                 Expanded(
+                Expanded(
 
                     child: _planetValue(
-                    value: widget.planet.enddate.toString(),
-                    image: 'assets/img/ic_gravity.png')
+                        value: widget.planet.likenumber.toString(),
+                        image: 'assets/img/ic_distance.png')
+
+                ),
+                Container(
+                  width: widget.horizontal ? 8.0 : 32.0,
+                ),
+                Expanded(
+
+                    child: _planetValue(
+                        value: widget.planet.enddate.toString(),
+                        image: 'assets/img/ic_gravity.png')
                 )
               ],
             ),
@@ -120,8 +120,8 @@ class _challenge_for_listSummaryState extends State<challenge_for_listSummary> {
       child: planetCardContent,
       height: widget.horizontal ? 124.0 : 154.0,
       margin: widget.horizontal
-        ? new EdgeInsets.only(left: 46.0)
-        : new EdgeInsets.only(top: 72.0),
+          ? new EdgeInsets.only(left: 46.0)
+          : new EdgeInsets.only(top: 72.0),
       decoration: new BoxDecoration(
         color: new Color(0xFF333366),
         shape: BoxShape.rectangle,
@@ -138,27 +138,27 @@ class _challenge_for_listSummaryState extends State<challenge_for_listSummary> {
 
 
     return new GestureDetector(
-      onTap: widget.horizontal
-          ? () => Navigator.of(context).push(
-            new PageRouteBuilder(
-              pageBuilder: (_, __, ___) => new DetailPage(_apiResponse.data),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-                new FadeTransition(opacity: animation, child: child),
-              ) ,
-            )
-          : null,
-      child: new Container(
-        margin: const EdgeInsets.symmetric(
-          vertical: 16.0,
-          horizontal: 24.0,
-        ),
-        child: new Stack(
-          children: <Widget>[
-            planetCard,
-            planetThumbnail,
-          ],
-        ),
-      )
+        onTap: widget.horizontal
+            ? () => Navigator.of(context).push(
+          new PageRouteBuilder(
+            pageBuilder: (_, __, ___) => new DetailPage(_apiResponse.data),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            new FadeTransition(opacity: animation, child: child),
+          ) ,
+        )
+            : null,
+        child: new Container(
+          margin: const EdgeInsets.symmetric(
+            vertical: 16.0,
+            horizontal: 24.0,
+          ),
+          child: new Stack(
+            children: <Widget>[
+              planetCard,
+              planetThumbnail,
+            ],
+          ),
+        )
     );
   }
 }

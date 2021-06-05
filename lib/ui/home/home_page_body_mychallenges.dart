@@ -41,8 +41,8 @@ class _HomePageBodyMyCallengesState extends State<HomePageBodyMyCallenges> {
   @override
   Widget build(BuildContext context) {
 
-      return new Expanded(
-          child: Scaffold(
+    return new Expanded(
+        child: Scaffold(
           body: Builder(
             builder: (_) {
               if (_isLoading) {
@@ -74,9 +74,9 @@ class _HomePageBodyMyCallengesState extends State<HomePageBodyMyCallenges> {
               );
             },
           ),
-          )
-      );
-    }
+        )
+    );
+  }
 
 
 }

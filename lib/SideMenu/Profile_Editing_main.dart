@@ -20,7 +20,7 @@ String tmp1 = "", tmp2 = "", tmpUserName = "usrname", tmpEmail = "email";
 String hintTextDefiner_Username() {
   Timer(Duration(seconds: 2), () async {
     final String returnie =
-        await ProfilePrefs.getStringValuesSF("username_SHP");
+    await ProfilePrefs.getStringValuesSF("username_SHP");
     print(" timer1 for gettings username");
     print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRrusername");
     print(returnie);
@@ -118,13 +118,13 @@ class _profilePage_MainState extends State<profilePage_Main> {
 
   RandomColor _randomColor = RandomColor();
   Color _color =
-      RandomColor().randomColor(colorBrightness: ColorBrightness.light);
+  RandomColor().randomColor(colorBrightness: ColorBrightness.light);
   File _image; //creat an object of file
   final imagePicker = ImagePicker(); //this is the object of imagepicker class
   Future getImage() async {
     final image = await imagePicker.getImage(
         source:
-            ImageSource.gallery); //this allows us to get picture from gallaey
+        ImageSource.gallery); //this allows us to get picture from gallaey
     setState(() {
       _image = File(image.path);
     });
@@ -137,7 +137,7 @@ class _profilePage_MainState extends State<profilePage_Main> {
     String tmpPath;
     Timer(Duration(seconds: 2), () async {
       final String returnie =
-          await ProfilePrefs.getStringValuesSF("PathProfilePicture");
+      await ProfilePrefs.getStringValuesSF("PathProfilePicture");
       print(" timer1 for path of profile picture");
       print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRProfile picture");
       print(returnie);

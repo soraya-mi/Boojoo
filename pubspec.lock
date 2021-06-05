@@ -21,7 +21,7 @@ packages:
       name: another_flushbar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.10.22"
+    version: "1.10.23"
   ant_icons:
     dependency: "direct main"
     description:
@@ -228,13 +228,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
-  flutter_speed_dial:
-    dependency: "direct main"
-    description:
-      name: flutter_speed_dial
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.5"
   flutter_statusbarcolor:
     dependency: "direct main"
     description:

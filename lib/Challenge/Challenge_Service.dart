@@ -129,9 +129,9 @@ class challengeservice{
         final jsonData = json.decode(data.body);
         final challenges = <challenge_for_list>[];
         for(var i in jsonData)
-          {
-            challenges.add(challenge_for_list.fromJson(i));
-          }
+        {
+          challenges.add(challenge_for_list.fromJson(i));
+        }
         return APIresponse<List<challenge_for_list>>(data: challenges);
       }
       else if(data.statusCode == 401){

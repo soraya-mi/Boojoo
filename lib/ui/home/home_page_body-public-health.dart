@@ -41,39 +41,39 @@ class _HomePageBodyHealthPublicState extends State<HomePageBodyHealthPublic> {
   @override
   Widget build(BuildContext context) {
     return new Expanded(
-        child: Scaffold(
-        body: Builder(
-          builder: (_) {
-            if (_isLoading) {
-              return Center(child: CircularProgressIndicator());
-            }
+      child: Scaffold(
+          body: Builder(
+            builder: (_) {
+              if (_isLoading) {
+                return Center(child: CircularProgressIndicator());
+              }
 
-            if (_apiResponse?.error) {
-              return Center(child: Text(_apiResponse.errormassege));
-            }
-            return new Expanded(
-              child: new Container(
-                color: new Color(0xFF736AB7),
-                child: new CustomScrollView(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: false,
-                  slivers: <Widget>[
-                    new SliverPadding(
-                      padding: const EdgeInsets.symmetric(vertical: 24.0),
-                      sliver: new SliverList(
-                        delegate: new SliverChildBuilderDelegate(
-                              (context, index) => new challenge_for_listSummary(_apiResponse.data[index]),
-                          childCount: _apiResponse.data.length,
+              if (_apiResponse?.error) {
+                return Center(child: Text(_apiResponse.errormassege));
+              }
+              return new Expanded(
+                child: new Container(
+                  color: new Color(0xFF736AB7),
+                  child: new CustomScrollView(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: false,
+                    slivers: <Widget>[
+                      new SliverPadding(
+                        padding: const EdgeInsets.symmetric(vertical: 24.0),
+                        sliver: new SliverList(
+                          delegate: new SliverChildBuilderDelegate(
+                                (context, index) => new challenge_for_listSummary(_apiResponse.data[index]),
+                            childCount: _apiResponse.data.length,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
-        )
-        ),
+              );
+            },
+          )
+      ),
     );
   }
 

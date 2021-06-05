@@ -56,6 +56,7 @@ dependencies:
 
   flutter_speed_dial: any
 
+<<<<<<< HEAD
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -87,8 +88,36 @@ flutter:
 ##         - asset: fonts/calibrili.ttf
 ##         - asset: fonts/calibriz.ttf
 
+=======
+>>>>>>> master
+
+  random_color: ^1.0.5
 
 
 
 
+<<<<<<< HEAD
+=======
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
 
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: calibri
+      fonts:
+        - asset: assets/fonts/calibrib.ttf
+          weight: 600
+        - asset: assets/fonts/calibril.ttf
+          weight: 400
+  assets:
+    - assets/img/mars.png
+    - assets/img/neptune.png
+    - assets/img/moon.png
+    - assets/img/earth.png
+    - assets/img/mercury.png
+    - assets/img/ic_distance.png
+    - assets/img/ic_gravity.png
+    - assets/
+>>>>>>> master
