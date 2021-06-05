@@ -170,7 +170,9 @@ class HabitWithoutCue_LogPageState extends State<HabitWithoutCue_LogPage> {
                         // color: Colors.purpleAccent[100],
                         width: 20,
                       ),
-                      Divider(color: Colors.black),
+                      Text("this.habitInfo.priority.toString()"),
+                      Text(this.habitInfo.priority.toString()),
+                      Divider(color: Colors.red),
                       //today
 
                       //today date

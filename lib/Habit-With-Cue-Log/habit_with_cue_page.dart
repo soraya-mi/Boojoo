@@ -114,7 +114,7 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                     Text(appBarTitle),
                   ],
                 ),
-                backgroundColor: Colors.amber,
+                backgroundColor: Colors.blue,
                 leading: IconButton(
                   icon: Icon(Icons.arrow_back),
                   // padding: EdgeInsets.only(right: 200),
@@ -151,27 +151,27 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                       SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.orangeAccent[100],
-                            border: Border.all(
-                              color: Colors.orangeAccent[100],
-                            ),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        height: 40.0,
-                        margin: EdgeInsets.fromLTRB(70.0, 15.0, 70.0, 0.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "امروز",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        // color: Colors.orangeAccent[100],
-                        width: 40,
-                      ),
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //       color: Colors.lightBlueAccent[100],
+                      //       border: Border.all(
+                      //         color: Colors.lightBlueAccent[100],
+                      //       ),
+                      //       borderRadius:
+                      //           BorderRadius.all(Radius.circular(20))),
+                      //   height: 40.0,
+                      //   margin: EdgeInsets.fromLTRB(70.0, 15.0, 70.0, 0.0),
+                      //   alignment: Alignment.center,
+                      //   child: Text(
+                      //     "امروز",
+                      //     style: TextStyle(
+                      //       fontSize: 20.0,
+                      //       fontWeight: FontWeight.bold,
+                      //     ),
+                      //   ),
+                      //   // color: Colors.orangeAccent[100],
+                      //   width: 40,
+                      // ),
                       Container(
                         height: 40.0,
                         margin: EdgeInsets.symmetric(
@@ -180,29 +180,33 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                         ),
                         alignment: Alignment.center,
                         child: Text(
-                          todayDate,
+                          "امروز : " + todayDate,
                           style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         decoration: BoxDecoration(
-                            color: Colors.orangeAccent[100],
+                            color: Colors.lightBlueAccent[100],
                             border: Border.all(
-                              color: Colors.orangeAccent[100],
+                              color: Colors.lightBlueAccent[100],
                             ),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
                         width: 40,
                       ),
                       Center(
-                          child: Text(
-                        "رکورد امروز: ",
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
+                        child: Text(
+                          "رکورد امروز: ",
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      )),
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(60.0, 0.0, 30, 0),
                         child: TextField(
@@ -223,13 +227,21 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                           },
                           decoration: InputDecoration(
                             labelText: label,
-                            labelStyle: textStyle,
+                            labelStyle: TextStyle(
+                              fontSize: 16.0,
+                            ),
+                            border: new OutlineInputBorder(
+                              borderRadius: new BorderRadius.circular(40.0),
+                            ),
                             icon: Padding(
                               padding: const EdgeInsets.only(right: 10.0),
                               child: Icon(Icons.accessibility_new_rounded),
                             ),
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
                       ),
                       Center(
                         child: Padding(
@@ -250,10 +262,11 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                           horizontal: 100.0,
                           vertical: 20.0,
                         ),
-                        child: ElevatedButton(
-                          // textColor: Colors.white,
-                          // color: Colors.teal[300],
-                          // padding: const EdgeInsets.all(8.0),
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          color: Colors.lightBlueAccent,
                           child: Text(
                             'ثبت',
                             textScaleFactor: 1.5,
@@ -270,11 +283,12 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 40.0),
-                        margin: EdgeInsets.only(bottom: 0.0),
+                        alignment: Alignment.bottomCenter,
+                        // padding: EdgeInsets.symmetric(horizontal: 40.0),
+                        // margin: EdgeInsets.only(bottom: 0.0),
                         child: CupertinoButton(
-                          child: Text("logs"),
-                          color: Colors.amber,
+                          child: Text("مشاهده گزارش کامل"),
+                          // color: Colors.blue,
                           onPressed: () {
                             setState(() {
                               // AddFakeData();

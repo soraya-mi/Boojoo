@@ -95,7 +95,7 @@ class HabitDetailState extends State<HabitDetail> {
               backgroundColor: Colors.teal[50],
               appBar: AppBar(
                 title: Text(appBarTitle),
-                backgroundColor: Colors.amber,
+                backgroundColor: Colors.blue,
                 leading: IconButton(
                   icon: Icon(Icons.arrow_back),
                   // padding: EdgeInsets.only(right: 200),
@@ -162,37 +162,52 @@ class HabitDetailState extends State<HabitDetail> {
                       Padding(
                         padding: EdgeInsets.only(top: 3.0, bottom: 5.0),
                         //dropdown menu
-                        child: new ListTile(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          leading: Padding(
-                            padding: const EdgeInsets.only(right: 0.0),
-                            child: const Icon(
-                              Icons.priority_high_rounded,
+                        child: Container(
+                          width: 40.0,
+                          child: new ListTile(
+                            // shape: RoundedRectangleBorder(
+                            //   borderRadius: BorderRadius.circular(30),
+                            // ),
+                            leading: Padding(
+                              padding: const EdgeInsets.only(right: 0.0),
+                              child: const Icon(
+                                Icons.priority_high_rounded,
+                              ),
+                            ),
+                            title: Container(
+                              alignment: Alignment.centerRight,
+                              // margin: EdgeInsets.fromLTRB(60.0, 0.0, 0.0, 0.0),
+                              padding: const EdgeInsets.only(right: 20.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30.0),
+                                color: Colors.lightBlueAccent[50],
+                              ),
+                              width: 30.0,
+                              height: 40.0,
+                              child: DropdownButton(
+                                  // isExpanded: true,
+                                  items: _prioities
+                                      .map((String dropDownStringItem) {
+                                    return DropdownMenuItem<String>(
+                                      value: dropDownStringItem,
+                                      child: Text(dropDownStringItem,
+                                          style: TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: dropDownStringItem != "low"
+                                                  ? Colors.red
+                                                  : Colors.green)),
+                                    );
+                                  }).toList(),
+                                  value: getPriorityAsString(habit.priority),
+                                  onChanged: (valueSelectedByUser) {
+                                    setState(() {
+                                      debugPrint("p is" + valueSelectedByUser);
+                                      updatePriorityAsInt(valueSelectedByUser);
+                                    });
+                                  }),
                             ),
                           ),
-                          title: DropdownButton(
-                              items:
-                                  _prioities.map((String dropDownStringItem) {
-                                return DropdownMenuItem<String>(
-                                  value: dropDownStringItem,
-                                  child: Text(dropDownStringItem,
-                                      style: TextStyle(
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: dropDownStringItem != "low"
-                                              ? Colors.red
-                                              : Colors.green)),
-                                );
-                              }).toList(),
-                              value: getPriorityAsString(habit.priority),
-                              onChanged: (valueSelectedByUser) {
-                                setState(() {
-                                  debugPrint("p is" + valueSelectedByUser);
-                                  updatePriorityAsInt(valueSelectedByUser);
-                                });
-                              }),
                         ),
                       ),
                       //forth Element:Date picker
@@ -218,7 +233,7 @@ class HabitDetailState extends State<HabitDetail> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              color: Colors.amber,
+                              color: Colors.lightBlueAccent,
                               onPressed: () async {
                                 Jalali picked = await showPersianDatePicker(
                                   context: context,
@@ -266,7 +281,7 @@ class HabitDetailState extends State<HabitDetail> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              color: Colors.amber,
+                              color: Colors.lightBlueAccent,
                               onPressed: () async {
                                 Jalali picked = await showPersianDatePicker(
                                   context: context,
