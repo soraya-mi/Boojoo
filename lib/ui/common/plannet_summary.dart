@@ -5,7 +5,6 @@ import 'package:boojoo/Challenge/Challenge_for_list.dart';
 import 'package:flutter/material.dart';
 import 'package:boojoo/ui/common/separator.dart';
 import 'package:boojoo/ui/detail/detail_page.dart';
-import 'package:boojoo/ui/detail/detail_page_mychallenge.dart';
 import 'package:get_it/get_it.dart';
 import '../text_style.dart';
 
@@ -96,7 +95,7 @@ class _challenge_for_listSummaryState extends State<challenge_for_listSummary> {
 
                     child: _planetValue(
                         value: widget.planet.likenumber.toString(),
-                        image: 'assets/img/ic_distance.png')
+                        image: 'assets/img/like.png')
 
                 ),
                 Container(
@@ -106,7 +105,7 @@ class _challenge_for_listSummaryState extends State<challenge_for_listSummary> {
 
                     child: _planetValue(
                         value: widget.planet.enddate.toString(),
-                        image: 'assets/img/ic_gravity.png')
+                        image: 'assets/img/end.png')
                 )
               ],
             ),

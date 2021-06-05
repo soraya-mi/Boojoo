@@ -84,7 +84,7 @@ class _challenge_for_listSummary2State extends State<challenge_for_listSummary2>
 
                     child: _planetValue(
                         value: widget.planet.enddate.toString(),
-                        image: 'assets/img/ic_gravity.png')
+                        image: 'assets/img/end.png')
                 )
               ],
             ),
@@ -100,7 +100,7 @@ class _challenge_for_listSummary2State extends State<challenge_for_listSummary2>
 
                     child: _planetValue(
                         value: widget.planet.days.toString(),
-                        image: 'assets/img/ic_distance.png')
+                        image: 'assets/img/day.png')
 
                 ),
                 Container(
@@ -110,7 +110,7 @@ class _challenge_for_listSummary2State extends State<challenge_for_listSummary2>
 
                     child: _planetValue(
                         value: widget.planet.users.length.toString(),
-                        image: 'assets/img/ic_gravity.png')
+                        image: 'assets/img/num.png')
                 )
               ],
             ),

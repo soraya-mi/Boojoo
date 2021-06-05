@@ -91,7 +91,7 @@ class _challenge_for_listSummary3State extends State<challenge_for_listSummary3>
 
                     child: _planetValue(
                         value: widget.planet.startdate.toString(),
-                        image: 'assets/img/ic_distance.png')
+                        image: 'assets/img/start.png')
 
                 ),
                 Container(
@@ -101,7 +101,7 @@ class _challenge_for_listSummary3State extends State<challenge_for_listSummary3>
 
                     child: _planetValue(
                         value: widget.planet.enddate.toString(),
-                        image: 'assets/img/ic_gravity.png')
+                        image: 'assets/img/end.png')
                 )
               ],
             ),
