@@ -1,25 +1,43 @@
+import 'package:boojoo/Challenge/API_Response.dart';
+import 'package:boojoo/Challenge/Challenge_Detail.dart';
+import 'package:boojoo/Challenge/Challenge_Service.dart';
 import 'package:flutter/material.dart';
 import 'package:boojoo/ui/common/separator.dart';
 import 'package:boojoo/ui/detail/detail_page.dart';
 import 'package:boojoo/ui/detail/detail_page2.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../model/planets.dart';
 import '../text_style.dart';
 
-class PlanetSummary3 extends StatefulWidget {
+class challenge_for_listSummary3 extends StatefulWidget {
 
-  final Planet planet;
+  final challenge_for_list planet;
   final bool horizontal;
 
-  PlanetSummary3(this.planet, {this.horizontal = true});
+  challenge_for_listSummary3(this.planet, {this.horizontal = true});
 
-  PlanetSummary3.vertical(this.planet): horizontal = false;
+  challenge_for_listSummary3.vertical(this.planet): horizontal = false;
 
   @override
-  _PlanetSummary3State createState() => _PlanetSummary3State();
+  _challenge_for_listSummary3State createState() => _challenge_for_listSummary3State();
 }
 
-class _PlanetSummary3State extends State<PlanetSummary3> {
+class _challenge_for_listSummary3State extends State<challenge_for_listSummary3> {
+  challengeservice get service => GetIt.I<challengeservice>();
+  APIresponse<challengedetail> _apiResponse;
+
+  @override
+  void initState(){
+    _fetchchallenge();
+    super.initState();
+  }
+
+  _fetchchallenge() async{
+
+    _apiResponse = await service.getchallenge(widget.planet.id);
+
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -31,7 +49,7 @@ class _PlanetSummary3State extends State<PlanetSummary3> {
       child: new Hero(
         tag: "planet-hero-${widget.planet.id}",
         child: new Image(
-          image: new AssetImage(widget.planet.image),
+          image: new AssetImage('assets/img/moon.png'),
           height: 92.0,
           width: 92.0,
         ),
@@ -61,9 +79,9 @@ class _PlanetSummary3State extends State<PlanetSummary3> {
         crossAxisAlignment: widget.horizontal ? CrossAxisAlignment.start : CrossAxisAlignment.center,
         children: <Widget>[
           new Container(height: 4.0),
-          new Text(widget.planet.name, style: Style.titleTextStyle),
+          new Text(widget.planet.title, style: Style.titleTextStyle),
           new Container(height: 10.0),
-          new Text(widget.planet.location, style: Style.commonTextStyle),
+          new Text(widget.planet.likenumber.toString(), style: Style.commonTextStyle),
           new Separator(),
           new Expanded(
             child: new Row(
@@ -72,7 +90,7 @@ class _PlanetSummary3State extends State<PlanetSummary3> {
                 Expanded(
 
                     child: _planetValue(
-                        value: widget.planet.distance,
+                        value: widget.planet.startdate.toString(),
                         image: 'assets/img/ic_distance.png')
 
                 ),
@@ -82,7 +100,7 @@ class _PlanetSummary3State extends State<PlanetSummary3> {
                 Expanded(
 
                     child: _planetValue(
-                        value: widget.planet.gravity,
+                        value: widget.planet.enddate.toString(),
                         image: 'assets/img/ic_gravity.png')
                 )
               ],
@@ -118,7 +136,7 @@ class _PlanetSummary3State extends State<PlanetSummary3> {
         onTap: widget.horizontal
             ? () => Navigator.of(context).push(
           new PageRouteBuilder(
-            pageBuilder: (_, __, ___) => new DetailPage2(widget.planet),
+            pageBuilder: (_, __, ___) => new DetailPage2(_apiResponse.data),
             transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             new FadeTransition(opacity: animation, child: child),
           ) ,

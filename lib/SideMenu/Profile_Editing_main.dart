@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:random_color/random_color.dart';
 import 'package:http/http.dart'as http;
@@ -75,16 +75,16 @@ class _profilePage_MainState extends State<profilePage_Main> {
   RandomColor _randomColor=RandomColor();
   Color _color= RandomColor().randomColor(colorBrightness: ColorBrightness.light);
   File _image;//creat an object of file
-  final imagePicker=ImagePicker();//this is the object of imagepicker class
-  Future getImage() async{
-    final image= await imagePicker.getImage(source: ImageSource.gallery);//this allows us to get picture from gallaey
-    setState(() {
-      _image=File(image.path);
-    });
-    ProfilePrefs.addStringToSF("PathProfilePicture", _image.path);
-    pictureCounter+=1;
-    ProfilePrefs.addIntToSF("pictureCount", pictureCounter);
-  }
+  // final imagePicker=ImagePicker();//this is the object of imagepicker class
+  // Future getImage() async{
+  //   // final image= await imagePicker.getImage(source: ImageSource.gallery);//this allows us to get picture from gallaey
+  //   setState(() {
+  //     _image=File(image.path);
+  //   });
+  //   ProfilePrefs.addStringToSF("PathProfilePicture", _image.path);
+  //   pictureCounter+=1;
+  //   ProfilePrefs.addIntToSF("pictureCount", pictureCounter);
+  // }
   String imageDefiner(){
     String tmpPath;
     Timer(Duration(seconds: 2), ()async {
@@ -256,7 +256,7 @@ class _profilePage_MainState extends State<profilePage_Main> {
                         child: FloatingActionButton(
                           backgroundColor: Colors.white,
                           child: const Icon(Icons.camera_alt_outlined,size:25,color: Colors.black,),
-                          onPressed: getImage,//(){
+                          // onPressed: getImage,//(){
                         ),
                       ),
                     ),

@@ -4,7 +4,6 @@ import 'package:boojoo/ui/home/home_page_body-public-health.dart';
 import 'package:boojoo/ui/home/home_page_body_mychallenges.dart';
 import 'package:flutter/material.dart';
 import 'package:boojoo/ui/text_style.dart';
-
 import '../text_style.dart';
 import 'home_page_body-private-health.dart';
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:boojoo/Challenge/Challenge_Detail.dart';
 import 'package:flutter/material.dart';
 import 'package:boojoo/model/planets.dart';
 import 'package:boojoo/ui/common/plannet_summary2.dart';
@@ -10,7 +11,7 @@ import '../text_style.dart';
 
 class DetailPage2 extends StatelessWidget {
 
-  final Planet planet;
+  final challengedetail planet;
 
   DetailPage2(this.planet);
 
@@ -67,7 +68,7 @@ class DetailPage2 extends StatelessWidget {
       child: new ListView(
         padding: new EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 32.0),
         children: <Widget>[
-          new PlanetSummary2(planet,
+          new challenge_for_listSummary2(planet,
             horizontal: false,
           ),
           new Expanded(

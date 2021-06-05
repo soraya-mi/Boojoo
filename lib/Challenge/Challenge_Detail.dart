@@ -1,22 +1,28 @@
 class challengedetail {
-  int  likenumber;
+  int  likenumber, id, owner;
+  String icon, category;
   String startdate, enddate;
   String  title, description, private_pub, progress_type;
-  List  days;
+  List  days, users;
 
-  challengedetail({ this.title, this.description, this.likenumber, this.startdate, this.days,
-    this.enddate, this.progress_type, this.private_pub});
+  challengedetail({ this.title, this.id, this.owner, this.icon, this.description, this.likenumber, this.startdate, this.days,
+    this.users, this.category, this.enddate, this.progress_type, this.private_pub});
 
   factory challengedetail.fromJson(Map <String, dynamic> i){
     return challengedetail(
+        id : i['id'],
+        title: i['title'],
+        owner: i['owner'],
         description: i['description'],
-        likenumber: i['like-number'],
-        //days: i['days'],
-        //startdate: i['start_date'],
-        //enddate: i['end_date'],
+        likenumber: i['like_number'],
+        icon: i['icon'],
+        category: i['category'],
+        startdate: i['start_date'],
+        enddate: i['end_date'],
         days: i['days'],
         progress_type: i['progress_type'],
-        private_pub: i['private_public_type']
+        private_pub: i['private_public_type'],
+        users: ['users'],
     );
   }
 
