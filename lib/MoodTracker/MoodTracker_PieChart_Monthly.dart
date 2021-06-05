@@ -7,17 +7,16 @@ import 'package:boojoo/MoodTracker/MoodTracker_Main.dart';
 // void main(){
 //   runApp(chartMaker());
 // }
- int countmood1Monthly=0;
- int countmood2Monthly=0;
- int countmood3Monthly=0;
- int countmood4Monthly=0;
- int countmood5Monthly=0;
-
+int countmood1Monthly=0;
+int countmood2Monthly=0;
+int countmood3Monthly=0;
+int countmood4Monthly=0;
+int countmood5Monthly=0;
 void getDataFormMDDB()async {
-  MoodTrackerDataBaseHelper moodtrackerDBinstance =  MoodTrackerDataBaseHelper();
+  MoodTrackerDataBaseHelper moodtrackerDBinstance = MoodTrackerDataBaseHelper();
   final resDBMoodTracker = await moodtrackerDBinstance.getAllLogsMap();
-  final res1DB=await moodtrackerDBinstance.getYearyLog("2021/");
-  final res2DB=await moodtrackerDBinstance.getMonthlyLog("2021/5");
+  final res2DB=await moodtrackerDBinstance.getMonthlyLog("2021/6/");
+
   print("??????????????????????????????????/");
   //print(resDBMoodTracker);
   print("??????????????????????????????????/");
@@ -46,17 +45,11 @@ void getDataFormMDDB()async {
   print("MOTHLYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
   print(countmood5Monthly);
   print("MOTHLYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
-  // MonthlyList.add(countmood1Monthly);
-  // MonthlyList.add(countmood2Monthly);
-  // MonthlyList.add(countmood3Monthly);
-  // MonthlyList.add(countmood4Monthly);
-  // MonthlyList.add(countmood5Monthly);
-
 }
 class chartMakerMonthly extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //getDataFormMDDB();
+    getDataFormMDDB();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: PieChartSample2Monthly(),
@@ -78,7 +71,6 @@ class PieChart2StateMonthly extends State {
   @override
 
   Widget build(BuildContext context) {
-    //getDataFormMDDB();
     return AspectRatio(
       aspectRatio: 1.3,
       child: Card(
@@ -267,9 +259,7 @@ class PieChart2StateMonthly extends State {
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize, fontWeight: FontWeight.bold, color: Colors.white),
-
           );
-
         case 4:
           return PieChartSectionData(
             color: Colors.amber,
@@ -300,8 +290,6 @@ class PieChart2StateMonthly extends State {
         default:
           throw Error();
       }
-    }
-    );
+    });
   }
-
 }

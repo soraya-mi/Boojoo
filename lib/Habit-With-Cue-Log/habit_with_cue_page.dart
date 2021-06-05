@@ -294,11 +294,12 @@ class HabitWithCue_PageState extends State<HabitWithCue_Page> {
                           onPressed: () {
                             setState(() {
                               // AddFakeData();
-                              navigateToLogs(habitInfo, "گزارش عادت");
-                              // navigateToLogs(habitInfo, "گزارش عادت");
+                              //navigateToLogs(habitInfo, "گزارش عادت");
+                               navigateToLogs(habitInfo, "گزارش عادت");
                               // Navigator.push(
                               //   context,
                               //   MaterialPageRoute(
+                              //       cueReportPage(),
                               //       // builder: (context) => BarChartSample1(),
                               //       ),
                               // );

@@ -1,6 +1,14 @@
 import 'dart:ui';
 import 'package:boojoo/Challenge/Challenge_Service.dart';
 import 'package:boojoo/Challenge/Challenges.dart';
+import 'package:boojoo/MoodTracker/MoodTracker_Main.dart';
+import 'package:boojoo/SideMenu/AboutUs.dart';
+import 'package:boojoo/SideMenu/FeedBack_Main.dart';
+import 'package:boojoo/SideMenu/HelpPage.dart';
+import 'package:boojoo/SideMenu/Profile_Editing_main.dart';
+import 'package:boojoo/SideMenu/ReportsPage_Main.dart';
+import 'package:boojoo/SideMenu/Setting_Main.dart';
+import 'package:boojoo/SideMenu/logInsigUpbutton.dart';
 import 'package:boojoo/ui/home/home_page_mychallenges.dart';
 import 'package:boojoo/ui/home/home_page_body_mychallenges.dart';
 import 'package:flutter/cupertino.dart';
@@ -111,7 +119,7 @@ class _ButtomNavyBarState extends State<ButtomNavyBar> {
   Color backgroundColor = Colors.white;
 
   PageController _pageController = PageController();
-  List<Widget> _screens = [HomePageMyChallenges(), HabitList(), TaskList(),  ];
+  List<Widget> _screens = [HomePageMyChallenges(), HabitList(), TaskList(), profile() ];
   void _onPageChanged(int index){
     index = index;
   }
@@ -176,6 +184,117 @@ class _ButtomNavyBarState extends State<ButtomNavyBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child:SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              DrawerHeader(
+                child: Center(
+                  child: Text(
+                    'بوژووو...',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.black, fontSize: 25),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                ),
+              ),
+              ListTile(
+                title: Text('ایجاد حساب/ ورود',textAlign: TextAlign.right,style: TextStyle(fontSize: 20)),
+                trailing: Icon(Icons.account_circle_sharp, color: Colors.greenAccent,size:50),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              entrancePage())
+                  ),
+                },
+              ),
+              Divider(),
+              ListTile(
+                title: Text('مودترکر',textAlign: TextAlign.right,style: TextStyle(fontSize: 20)),
+                trailing: Icon(Icons.mood_sharp, color: Colors.teal,size:50),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MoodTrackere())
+                  ),
+                },
+              ),
+              Divider(),
+              ListTile(
+                trailing: Icon(Icons.bar_chart,color: Colors.deepOrangeAccent,size: 50,),
+                title: Text('گزارش ها',textAlign: TextAlign.right,style: TextStyle(fontSize: 20)),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              Reports_Main())
+                  ),
+                },
+              ),
+              Divider(),
+              ListTile(
+                trailing: Icon(Icons.settings , color:Colors.blueAccent,size:50),
+                title: Text('تنظیمات',textAlign: TextAlign.right,style: TextStyle(fontSize: 20)),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              SettingMain())
+                  ),
+                },
+              ),
+              Divider(),
+              ListTile(
+                trailing: Icon(Icons.border_color,color: Colors.purpleAccent,size: 50,),
+                title: Text('ارسال نظر / ارتباط با ما',textAlign: TextAlign.right,style: TextStyle(fontSize: 20)),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              FeedBack())
+                  )
+                },
+              ),
+              Divider(),
+              ListTile(
+                trailing: Icon(Icons.help,color: Colors.tealAccent,size: 50,),
+                title: Text('راهنما',textAlign: TextAlign.right,style: TextStyle(fontSize: 20)),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              HelpPage())
+                  )
+                },
+              ),
+              Divider(),
+              ListTile(
+                trailing: Icon(Icons.info_outline,color: Colors.pinkAccent,size: 50,),
+                title: Text('درباره ما',textAlign: TextAlign.right,style: TextStyle(fontSize: 20)),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              AboutUs())
+                  )
+                },
+              ),
+              Divider(),
+            ],
+          ),
+        ),
+      ),
       body: PageView(
         controller: _pageController,
         children: _screens,

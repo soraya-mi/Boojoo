@@ -10,7 +10,14 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'habit_with_cue_database.dart';
 
+HabitWithCueLog_DBHelper DBhelper = HabitWithCueLog_DBHelper();
+void getDataFromHabitWIthCueDB()async{
+  final resDBMHabit = await DBhelper.getLogByDateList("/1400/3/");
+  print(resDBMHabit);
+  print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHhhhhh");
+}
 class cueReportPage extends StatefulWidget {
   final String appBarTitle;
   final Habit habitInfo;
@@ -24,7 +31,9 @@ class cueReportPage extends StatefulWidget {
 
 class cueReportPageState extends State<cueReportPage> {
   cueReportPageState(this.habitInfo, this.appBarTitle);
-  HabitWithoutCueLog_DBHelper DBhelper = HabitWithoutCueLog_DBHelper();
+
+
+
   String appBarTitle;
   Habit habitInfo;
   List<charts.Series<ChartLog, String>> _seriesData;
@@ -86,6 +95,7 @@ class cueReportPageState extends State<cueReportPage> {
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
+
         future: getLogs(),
         builder: (context, AsyncSnapshot<List<Object>> snapshot) {
           if (snapshot.hasData) {
@@ -122,16 +132,19 @@ class cueReportPageState extends State<cueReportPage> {
                       child: Center(
                         child: Column(
                           children: <Widget>[
-                            // Expanded(
-                            //   child: charts.BarChart(
-                            //     _seriesData,
-                            //     animate: true,
-                            //     barGroupingType:
-                            //         charts.BarGroupingType.groupedStacked,
-                            //     //behaviors: [new charts.SeriesLegend()],
-                            //     animationDuration: Duration(seconds: 5),
-                            //   ),
-                            // ),
+                            Expanded(
+                              child:SizedBox(
+                                height: 200,
+                              child: charts.BarChart(
+                                _seriesData,
+                                animate: true,
+                                barGroupingType:
+                                    charts.BarGroupingType.groupedStacked,
+                                //behaviors: [new charts.SeriesLegend()],
+                                animationDuration: Duration(seconds: 5),
+                              ),
+                              ),
+                            ),
                           ],
                         ),
                       ),

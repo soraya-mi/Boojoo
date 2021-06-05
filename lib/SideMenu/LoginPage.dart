@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:boojoo/Challenge/homepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +14,7 @@ import 'dart:ui';
 import 'package:flutter/widgets.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:boojoo/SideMenu/Profile_Editing_main.dart';
 
 int message;
 String placeholder;
@@ -336,19 +338,19 @@ class _LoginPageState extends State<LoginPage> {
                               LogInPrefs.addStringToSF("email_SHP", EmailFromTokenLogIn);
                               LogInPrefs.addStringToSF("PK_SHP", PKTokenLogIn);
                               LogInPrefs.addStringToSF("ISLOGGEDIN", IsLoggedIN);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        profile()), //NoteList()),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) =>
+                              //           App()), //NoteList()),
+                              // );
 
                               if (message == 200) {// redirect to maryam home page
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          profile()), //NoteList()),
+                                          App()), //NoteList()),
                                 );
                               }
                               else {
