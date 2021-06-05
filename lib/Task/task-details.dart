@@ -29,7 +29,7 @@ class TaskDetailState extends State<TaskDetail> {
   String label;
 
   String selectedDate = Jalali.now().formatFullDate();
-
+  String Date = '', start = '', end = '';
   // @override
   // void initState() {
   //   super.initState();
@@ -199,8 +199,13 @@ class TaskDetailState extends State<TaskDetail> {
                           if (picked != null && picked != selectedDate)
                             setState(() {
                               label = picked.formatFullDate();
-                              this.task.date = picked.toString();
+                              this.task.date = picked.year.toString() +
+                                  '/' +
+                                  picked.month.toString() +
+                                  '/' +
+                                  picked.day.toString();
                               debugPrint(this.task.date);
+                              Date = this.task.date;
                             });
                         },
                         child: Text('تاریخ '),
@@ -229,10 +234,12 @@ class TaskDetailState extends State<TaskDetail> {
                         );
                         setState(() {
                           label = picked.persianFormat(context);
-                          String time =
-                              picked.hour.toString() + picked.minute.toString();
+                          String time = picked.hour.toString() +
+                              ':' +
+                              picked.minute.toString();
                           this.task.startTime = time; //picked.toString();
                           debugPrint(this.task.startTime);
+                          start = time;
                         });
                       },
                       child: Text('زمان شروع '),
@@ -276,13 +283,32 @@ class TaskDetailState extends State<TaskDetail> {
                         );
                         setState(() {
                           label = picked.persianFormat(context);
-                          String time =
-                              picked.hour.toString() + picked.minute.toString();
+                          String time = picked.hour.toString() +
+                              ':' +
+                              picked.minute.toString();
                           this.task.endTime = time; //picked.toString();
                           debugPrint(this.task.endTime);
+                          end = time;
                         });
                       },
                       child: Text('زمان پایان '),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      Date,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      start,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      end,
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
