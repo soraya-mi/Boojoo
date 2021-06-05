@@ -83,6 +83,36 @@ class HabitWithCueLog_DBHelper {
     debugPrint("Deleted.");
   }
 
+  Future<List<Map<String, Object>>> getLogMap(int hid, String hdate) async {
+    //Future<List<Map<String, Object>>>
+    debugPrint("in get Log func");
+    Database db = await this.database;
+    debugPrint("before query");
+    var result = await db.rawQuery(
+        'SELECT * from $habitwithCueTable WHERE $colDate = "$hdate" AND $colHabitID = "$hid"');
+    debugPrint('after query');
+    debugPrint(result.toString());
+    return result;
+  }
+
+  Future<Habit_with_Cue_log> getLogObject(int hid, String hdate) async {
+    debugPrint("ininnniin");
+    var habitMapList = await getLogMap(hid, hdate);
+    int count = habitMapList.length;
+    debugPrint(count.toString());
+    debugPrint(habitMapList[0].toString());
+    if (count != 0) {
+      debugPrint(count.toString());
+      Habit_with_Cue_log Log =
+          await Habit_with_Cue_log.fromMapObject(habitMapList[0]);
+      debugPrint(Log.toString());
+      debugPrint("ers     " + Log.toString());
+      return Log;
+    } else {
+      return Habit_with_Cue_log(-1, "-1");
+    }
+  }
+
   Future<int> getID(int hid, String hdate) async {
     //Future<List<Map<String, Object>>>
     debugPrint("in get id func");
@@ -177,7 +207,8 @@ class HabitWithCueLog_DBHelper {
     }
     return habitList;
   }
-    Future<List<Map<String, dynamic>>> getLogByDate(String LogDate) async {
+
+  Future<List<Map<String, dynamic>>> getLogByDate(String LogDate) async {
     debugPrint("infff");
     Database db = await this.database;
     List<Map<String, dynamic>> x = await db.rawQuery(
@@ -185,7 +216,7 @@ class HabitWithCueLog_DBHelper {
     debugPrint(LogDate + "loggggg" + x.toString());
     return x;
   }
-  
+
   Future<List<Habit_with_Cue_log>> getLogByDateList(String LogDate) async {
     debugPrint("in");
     var habitLogsList = await getLogByDate(LogDate);
@@ -197,7 +228,6 @@ class HabitWithCueLog_DBHelper {
     }
     return habitList;
   }
-  
 
 // Future<List<>>> getHabitLogsList(int habitID) async {
 //   debugPrint("in getHabitLogs");
