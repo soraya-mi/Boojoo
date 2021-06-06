@@ -75,9 +75,11 @@ flutter:
     - assets/img/moon.png
     - assets/img/earth.png
     - assets/img/mercury.png
-    - assets/img/ic_distance.png
-    - assets/img/ic_gravity.png
-    - assets/
+    - assets/img/day.png
+    - assets/img/end.png
+    - assets/img/start.png
+    - assets/img/like.png
+    - assets/img/num.png
 #   fonts:
 #     - family: calibri
 #       fonts:
