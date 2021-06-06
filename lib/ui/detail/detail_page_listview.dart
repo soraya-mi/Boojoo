@@ -110,35 +110,30 @@ class _DetailPageState extends State<DetailPage> {
               controller: _btnController,
               onPressed: () async {
                 // print(_valuePicker2.substring(0,9));
-                final token= MySharedPreferences.instance;
-                String hintTextDefiner_Email(){
+                final ProfilePrefs = MySharedPreferences.instance;
+                String hintTextDefiner_Username() {
+                  Timer(Duration(seconds: 2), () async {
+                    final String returnie =
+                    await ProfilePrefs.getStringValuesSF("PK_SHP");
+                    print(" timer1 for gettings username");
+                    print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRrusername");
+                    print(returnie);
+                    tmpUserName = returnie;
+                  });
+                  Timer(Duration(seconds: 4), () async {
+                    print(" timer2 for printting username");
+                    print(tmpUserName);
+                    print("LLLLLLLLLLLLLLLLLLLLLL username");
 
-                Timer(Duration(seconds: 2), ()async {
-                final String returnie=await token.getStringValuesSF("");
-                print(" timer1 for gettings email");
-                print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRr email");
-                print(returnie);
-                tmpUserName = returnie;
+                    return tmpUserName;
+                  });
                 }
-                );
-
-                Timer(Duration(seconds: 4), () {
-
-                print(" timer2 for printting email");
-                print(tmpUserName);
-                print("LLLLLLLLLLLLLLLLLLLLLL email");
-
-                return tmpUserName;
-
-                }
-                );
-                }
-                int UseId= int.parse(hintTextDefiner_Email()) ;
+                int UserId= int.parse(hintTextDefiner_Username()) ;
 
 
 
                 final joinreq = joinprivateinfo(
-                      user_id:  UseId,
+                      user_id:  UserId,
                       challenge_id: widget.planet.id,
                       password: _passwordcontroller.toString()
                   );
@@ -245,30 +240,25 @@ class _DetailPageState extends State<DetailPage> {
               controller: _btnController,
               onPressed: () async {
                 // print(_valuePicker2.substring(0,9));
-                final token= MySharedPreferences.instance;
-                String hintTextDefiner_Email(){
-
-                  Timer(Duration(seconds: 2), ()async {
-                    final String returnie=await token.getStringValuesSF("");
-                    print(" timer1 for gettings email");
-                    print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRr email");
+                final ProfilePrefs = MySharedPreferences.instance;
+                String hintTextDefiner_Username() {
+                  Timer(Duration(seconds: 2), () async {
+                    final String returnie =
+                    await ProfilePrefs.getStringValuesSF("PK_SHP");
+                    print(" timer1 for gettings username");
+                    print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRrusername");
                     print(returnie);
                     tmpUserName = returnie;
-                  }
-                  );
-
-                  Timer(Duration(seconds: 4), () {
-
-                    print(" timer2 for printting email");
+                  });
+                  Timer(Duration(seconds: 4), () async {
+                    print(" timer2 for printting username");
                     print(tmpUserName);
-                    print("LLLLLLLLLLLLLLLLLLLLLL email");
+                    print("LLLLLLLLLLLLLLLLLLLLLL username");
 
                     return tmpUserName;
-
-                  }
-                  );
+                  });
                 }
-                int UserId= int.parse(hintTextDefiner_Email()) ;
+                int UserId= int.parse(hintTextDefiner_Username()) ;
 
 
 

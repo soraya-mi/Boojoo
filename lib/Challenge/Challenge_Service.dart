@@ -8,7 +8,6 @@ import 'package:boojoo/SideMenu/LoginPage.dart';
 import 'package:boojoo/SideMenu/Profile_Editing_main.dart';
 import 'package:boojoo/SideMenu/SharedPref_Class.dart';
 import 'package:http/http.dart' as http;
-
 import 'join_private_detail.dart';
 import 'join_public_detail.dart';
 
