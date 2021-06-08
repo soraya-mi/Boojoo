@@ -53,12 +53,7 @@ dependencies:
   charts_flutter: ^0.10.0
   image_picker: ^0.6.7+22
   random_color: ^1.0.5
-
-<<<<<<< HEAD
   flutter_speed_dial: any
-
-=======
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
 dev_dependencies:
   flutter_test:
     sdk: flutter
