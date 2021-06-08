@@ -83,6 +83,7 @@ flutter:
     - assets/img/start.png
     - assets/img/like.png
     - assets/img/num.png
+    - assets
 #   fonts:
 #     - family: calibri
 #       fonts:
