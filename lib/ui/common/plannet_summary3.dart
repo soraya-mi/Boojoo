@@ -5,11 +5,7 @@ import 'package:boojoo/Challenge/Challenge_for_list.dart';
 import 'package:flutter/material.dart';
 import 'package:boojoo/ui/common/separator.dart';
 import 'package:boojoo/ui/detail/detail_page.dart';
-<<<<<<< HEAD
 import 'package:boojoo/ui/detail/detail_page_mychallenge.dart';
-=======
-import 'package:boojoo/ui/detail/detail_page2.dart';
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
 import 'package:get_it/get_it.dart';
 
 import '../text_style.dart';
@@ -95,11 +91,7 @@ class _challenge_for_listSummary3State extends State<challenge_for_listSummary3>
 
                     child: _planetValue(
                         value: widget.planet.startdate.toString(),
-<<<<<<< HEAD
                         image: 'assets/img/start.png')
-=======
-                        image: 'assets/img/ic_distance.png')
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
 
                 ),
                 Container(
@@ -109,11 +101,7 @@ class _challenge_for_listSummary3State extends State<challenge_for_listSummary3>
 
                     child: _planetValue(
                         value: widget.planet.enddate.toString(),
-<<<<<<< HEAD
                         image: 'assets/img/end.png')
-=======
-                        image: 'assets/img/ic_gravity.png')
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
                 )
               ],
             ),

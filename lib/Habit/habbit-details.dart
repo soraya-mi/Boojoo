@@ -674,7 +674,6 @@ class HabitDetailState extends State<HabitDetail> {
                                   alignedDropdown: true,
                                   child: DropdownButton<String>(
                                     isExpanded: true,
-<<<<<<< HEAD
 
                                     iconSize: 30.0,
                                     icon: Icon(
@@ -689,22 +688,6 @@ class HabitDetailState extends State<HabitDetail> {
                                     // elevation: 5,
                                     style: TextStyle(color: Colors.white),
 
-=======
-
-                                    iconSize: 30.0,
-                                    icon: Icon(
-                                      Icons.arrow_drop_down_rounded,
-                                      // Icons.arrow_drop_down_circle,
-                                    ),
-                                    iconEnabledColor: Colors.white,
-                                    dropdownColor: Colors.black,
-                                    itemHeight: 50.0,
-                                    focusColor: Colors.white,
-                                    value: _chosenValue,
-                                    // elevation: 5,
-                                    style: TextStyle(color: Colors.white),
-
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
                                     items: <String>[
                                       'سلامتی',
                                       'کار',
@@ -879,7 +862,7 @@ class HabitDetailState extends State<HabitDetail> {
   //DB functions
 
   void _save() async {
-    // moveToLastScreen();
+    moveToLastScreen();
     // note.date = DateFormat.yMMMd().format(DateTime.now());
     int result;
     debugPrint("p" + habit.priority.toString());
