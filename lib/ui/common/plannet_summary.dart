@@ -5,10 +5,6 @@ import 'package:boojoo/Challenge/Challenge_for_list.dart';
 import 'package:flutter/material.dart';
 import 'package:boojoo/ui/common/separator.dart';
 import 'package:boojoo/ui/detail/detail_page.dart';
-<<<<<<< HEAD
-=======
-import 'package:boojoo/ui/detail/detail_page2.dart';
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
 import 'package:get_it/get_it.dart';
 import '../text_style.dart';
 
@@ -55,13 +51,8 @@ class _challenge_for_listSummaryState extends State<challenge_for_listSummary> {
       ),
       alignment: widget.horizontal ? FractionalOffset.centerLeft : FractionalOffset.center,
       child: new Hero(
-<<<<<<< HEAD
         tag: "planet-hero-${widget.planet.id}",
         child: new Image(
-=======
-          tag: "planet-hero-${widget.planet.id}",
-          child: new Image(
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
           image: new AssetImage('assets/img/mars.png'),
           height: 92.0,
           width: 92.0,
@@ -102,15 +93,9 @@ class _challenge_for_listSummaryState extends State<challenge_for_listSummary> {
               children: <Widget>[
                 Expanded(
 
-<<<<<<< HEAD
                     child: _planetValue(
                         value: widget.planet.likenumber.toString(),
                         image: 'assets/img/like.png')
-=======
-                  child: _planetValue(
-                    value: widget.planet.likenumber.toString(),
-                    image: 'assets/img/ic_distance.png')
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
 
                 ),
                 Container(
@@ -119,13 +104,8 @@ class _challenge_for_listSummaryState extends State<challenge_for_listSummary> {
                 Expanded(
 
                     child: _planetValue(
-<<<<<<< HEAD
                         value: widget.planet.enddate.toString(),
                         image: 'assets/img/end.png')
-=======
-                    value: widget.planet.enddate.toString(),
-                    image: 'assets/img/ic_gravity.png')
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
                 )
               ],
             ),
@@ -157,7 +137,6 @@ class _challenge_for_listSummaryState extends State<challenge_for_listSummary> {
 
 
     return new GestureDetector(
-<<<<<<< HEAD
         onTap: widget.horizontal
             ? () => Navigator.of(context).push(
           new PageRouteBuilder(
@@ -179,29 +158,6 @@ class _challenge_for_listSummaryState extends State<challenge_for_listSummary> {
             ],
           ),
         )
-=======
-      onTap: widget.horizontal
-          ? () => Navigator.of(context).push(
-            new PageRouteBuilder(
-              pageBuilder: (_, __, ___) => new DetailPage(_apiResponse.data),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-                new FadeTransition(opacity: animation, child: child),
-              ) ,
-            )
-          : null,
-      child: new Container(
-        margin: const EdgeInsets.symmetric(
-          vertical: 16.0,
-          horizontal: 24.0,
-        ),
-        child: new Stack(
-          children: <Widget>[
-            planetCard,
-            planetThumbnail,
-          ],
-        ),
-      )
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
     );
   }
 }

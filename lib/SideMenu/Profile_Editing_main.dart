@@ -13,7 +13,6 @@ import 'package:flutter/widgets.dart';
 import 'package:boojoo/SideMenu//SharedPref_Class.dart';
 import 'dart:core';
 
-<<<<<<< HEAD
 final ProfilePrefs = MySharedPreferences.instance;
 int flag = 0;
 String tmp1 = "", tmp2 = "", tmpUserName = "usrname", tmpEmail = "email";
@@ -22,33 +21,17 @@ String hintTextDefiner_Username() {
   Timer(Duration(seconds: 2), () async {
     final String returnie =
     await ProfilePrefs.getStringValuesSF("username_SHP");
-=======
-final ProfilePrefs= MySharedPreferences.instance;
-int flag=0;
-String tmp1="",tmp2="" , tmpUserName="usrname",tmpEmail="email";
-String hintTextDefiner_Username(){
-
-  Timer(Duration(seconds: 2), ()async {
-    final String returnie=await ProfilePrefs.getStringValuesSF("username_SHP");
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
     print(" timer1 for gettings username");
     print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRrusername");
     print(returnie);
     tmpUserName = returnie;
-<<<<<<< HEAD
   });
   Timer(Duration(seconds: 4), () async {
-=======
-  }
-  );
-  Timer(Duration(seconds: 4), () async{
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
     print(" timer2 for printting username");
     print(tmpUserName);
     print("LLLLLLLLLLLLLLLLLLLLLL username");
 
     return tmpUserName;
-<<<<<<< HEAD
   });
 }
 
@@ -73,53 +56,14 @@ String hintTextDefiner_Email() {
 // String tmp1=hintTextDefiner_Username();
 // String tmp2=hintTextDefiner_Email();
 int pictureCounter = 0;
-=======
-
-  }
-  );
-}
-
-String hintTextDefiner_Email(){
-
-  Timer(Duration(seconds: 0), ()async {
-    final String returnie=await ProfilePrefs.getStringValuesSF("email_SHP");
-    print(" timer1 for gettings email");
-    print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRr email");
-    print(returnie);
-    tmpUserName = returnie;
-  }
-  );
-
-  Timer(Duration(seconds: 2), ()async {
-
-    print(" timer2 for printting email");
-    print(tmpUserName);
-    print("LLLLLLLLLLLLLLLLLLLLLL email");
-
-    return tmpUserName;
-
-  }
-  );
-}
-
-// String tmp1=hintTextDefiner_Username();
-// String tmp2=hintTextDefiner_Email();
-int pictureCounter=0;
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
 int back_answer_edit_profile_code;
 String back_answer_edit_profile_message;
 // String tmpUserName=hintTextDefiner_Username();
 // String tmpEmail=hintTextDefiner_Email();
-<<<<<<< HEAD
 Future<AlbumEditProfile> CreatAlbumProfile(
     String UserName, String Email) async {
   final http.Response ResponseEditProfile = await http.post(
     Uri.http('37.152.182.36:8000', 'api/rest-auth/login/'),
-=======
-Future<AlbumEditProfile>CreatAlbumProfile(String UserName,String Email)async{
-
-  final http.Response ResponseEditProfile= await http.post(Uri.http('37.152.182.36:8000','api/rest-auth/login/'),
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -150,12 +94,7 @@ class AlbumEditProfile {
 //   runApp(profile());
 // }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
 class profile extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     //print("HELLO");
@@ -168,14 +107,10 @@ class profile extends StatelessWidget {
 
 class profilePage_Main extends StatefulWidget {
   @override
-
-  _profilePage_MainState createState()=>_profilePage_MainState();
-
-
+  _profilePage_MainState createState() => _profilePage_MainState();
 }
 
 class _profilePage_MainState extends State<profilePage_Main> {
-<<<<<<< HEAD
   final TextEditingController EditedUserName = TextEditingController();
   final TextEditingController EditEmail = TextEditingController();
   Future<AlbumEditProfile> _futureAlbumEditProfile; //this is for sending
@@ -190,29 +125,11 @@ class _profilePage_MainState extends State<profilePage_Main> {
     final image = await imagePicker.getImage(
         source:
         ImageSource.gallery); //this allows us to get picture from gallaey
-=======
-  final TextEditingController EditedUserName=TextEditingController();
-  final TextEditingController EditEmail=TextEditingController();
-  Future<AlbumEditProfile> _futureAlbumEditProfile;//this is for sending
-  Future<AlbumEditProfile> futureAlbumEditProfile;//this is for fetching
-
-  RandomColor _randomColor=RandomColor();
-  Color _color= RandomColor().randomColor(colorBrightness: ColorBrightness.light);
-  File _image;//creat an object of file
-  final imagePicker=ImagePicker();//this is the object of imagepicker class
-  Future getImage() async{
-    final image= await imagePicker.getImage(source: ImageSource.gallery);//this allows us to get picture from gallaey
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
     setState(() {
       _image = File(image.path);
     });
-<<<<<<< HEAD
     ProfilePrefs.addStringToSF("PathProfilePicture", _image.path);
     pictureCounter += 1;
-=======
-   ProfilePrefs.addStringToSF("PathProfilePicture", _image.path);
-   pictureCounter+=1;
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
     ProfilePrefs.addIntToSF("pictureCount", pictureCounter);
   }
 
@@ -225,19 +142,12 @@ class _profilePage_MainState extends State<profilePage_Main> {
       print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRProfile picture");
       print(returnie);
       tmpPath = returnie;
-<<<<<<< HEAD
     });
     Timer(Duration(seconds: 4), () async {
-=======
-    }
-    );
-    Timer(Duration(seconds: 4), () async{
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
       print(" timer2 for  cheking path");
       print(tmpPath);
       print("LLLLLLLLLLLLLLLLLLLLLL path");
 
-<<<<<<< HEAD
       if (tmpPath == null) {
         return 'assets/software-engineer.png';
       } else {
@@ -245,21 +155,6 @@ class _profilePage_MainState extends State<profilePage_Main> {
       }
     });
   }
-=======
-     if(tmpPath==null){
-       return 'assets/software-engineer.png';
-     }
-     else{
-       return tmpPath;
-     }
-
-    }
-    );
-
-  }
-  //get from shared prefrences
-
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
 
   //get from shared prefrences
 
@@ -307,21 +202,9 @@ class _profilePage_MainState extends State<profilePage_Main> {
     super.initState();
   }
 
-  void initState() {
-    tmp1=hintTextDefiner_Username();
-    tmp2=hintTextDefiner_Email();
-    super.initState();
-
-  }
-
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     tmp1 = hintTextDefiner_Username();
     tmp2 = hintTextDefiner_Email();
-=======
-    tmp1=hintTextDefiner_Username();
-    tmp2=hintTextDefiner_Email();
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
     // tmpUserName=hintTextDefiner_Username();
     // tmpEmail=hintTextDefiner_Email();
     // print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd");
@@ -329,7 +212,6 @@ class _profilePage_MainState extends State<profilePage_Main> {
     // print(tmpEmail);
     // print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
     return Scaffold(
-
       appBar: AppBar(
           brightness: Brightness.light,
           backgroundColor: Colors.transparent,
@@ -368,22 +250,11 @@ class _profilePage_MainState extends State<profilePage_Main> {
                 child: Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
-<<<<<<< HEAD
                     GestureDetector(onTap: () {
                       setState(() {
                         flag = 1;
                       });
                     }),
-=======
-                    GestureDetector(
-                    onTap: () {
-              setState(() {
-                flag=1;
-
-              });
-              }
-                    ),
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
                     ClipRRect(
                       //Image.file(_image)
                       child: CircleAvatar(
@@ -430,21 +301,11 @@ class _profilePage_MainState extends State<profilePage_Main> {
                         fontWeight: FontWeight.w600,
                         color: Colors.black),
                     controller: EditedUserName,
-<<<<<<< HEAD
                     decoration: InputDecoration(
                         hintText: tmp1 == "" ? tmp1 : tmpUserName,
                         border: InputBorder.none),
                   ),
                   leading: Icon(
-=======
-                    decoration: InputDecoration (
-                       hintText:tmp1==""?tmp1:tmpUserName,
-                        border: InputBorder.none
-                    ),
-                  ),
-                  leading:  Icon(
-
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
                     Icons.edit,
                     color: Colors.grey,
                   ),
@@ -477,15 +338,8 @@ class _profilePage_MainState extends State<profilePage_Main> {
               ),
               SizedBox(height: 30),
               Container(
-<<<<<<< HEAD
                 child: ListTile(
                   trailing: Icon(
-=======
-
-                child:ListTile(
-
-                  trailing:  Icon(
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
                     Icons.email_outlined,
                     color: Colors.grey,
                   ),
@@ -496,15 +350,8 @@ class _profilePage_MainState extends State<profilePage_Main> {
                         color: Colors.black),
                     controller: EditEmail,
                     decoration: InputDecoration(
-<<<<<<< HEAD
                         hintText: tmp2 == "" ? tmp2 : tmpEmail,
                         border: InputBorder.none),
-=======
-
-                        hintText:tmp2==""?tmp2:tmpEmail,
-                        border: InputBorder.none
-                    ),
->>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
                   ),
                   leading: Icon(
                     Icons.edit,
@@ -541,7 +388,6 @@ class _profilePage_MainState extends State<profilePage_Main> {
                   ),
                   onTap: () {
                     setState(() {
-
                       Timer(Duration(seconds: 2), () {
                         print(" This line is execute after 5 seconds");
 
@@ -586,7 +432,7 @@ class _profilePage_MainState extends State<profilePage_Main> {
                     textAlign: TextAlign.right,
                   ),
                   onTap: () => {
-                  ProfilePrefs.removeAll(),
+                    ProfilePrefs.removeAll(),
                     // Navigator.push(
                     //     context,
                     //     MaterialPageRoute(
