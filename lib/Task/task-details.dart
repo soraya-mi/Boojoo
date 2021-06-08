@@ -23,11 +23,13 @@ class TaskDetailState extends State<TaskDetail> {
   TaskDataBaseHelper helper = TaskDataBaseHelper();
   String appBarTitle;
   Task task;
+  String _chosenValue = ' ';
+  var listChanged = null;
   //---
   String label;
 
   String selectedDate = Jalali.now().formatFullDate();
-
+  String Date = '', start = '', end = '';
   // @override
   // void initState() {
   //   super.initState();
@@ -39,11 +41,13 @@ class TaskDetailState extends State<TaskDetail> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController completedController = TextEditingController(); //why??
+  bool _validate = false;
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.title;
     titleController.text = task.title;
     descriptionController.text = task.description;
+
     return WillPopScope(
       onWillPop: () {
         moveToLastScreen();
@@ -77,6 +81,11 @@ class TaskDetailState extends State<TaskDetail> {
                     style: textStyle,
                     onChanged: (value) {
                       updateTitle();
+                      if (titleController.text.isEmpty)
+                        _validate = false;
+                      else
+                        _validate = true;
+                      debugPrint(_validate.toString());
                     },
                     decoration: InputDecoration(
                       labelText: 'عنوان',
@@ -102,37 +111,71 @@ class TaskDetailState extends State<TaskDetail> {
                       labelText: 'توضیحات',
                       icon: Padding(
                         padding: const EdgeInsets.only(right: 20.0),
-                        child: Icon(Icons.details_rounded),
+                        child: Icon(Icons.description),
                       ),
                     ),
                   ),
                 ),
                 //third Element:priority
-                Padding(
-                  padding: EdgeInsets.only(top: 15.0, bottom: 5.0),
+                Container(
+                  padding: EdgeInsets.only(top: 0.0, bottom: 0.0),
+                  width: 20.0,
+                  // decoration: BoxDecoration(
+                  //   borderRadius: BorderRadius.circular(50.0),
+                  //   color: Colors.yellow,
+                  // ),
+
                   //dropdown menu
                   child: new ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     leading: Padding(
                       padding: const EdgeInsets.only(right: 12.0),
                       child: const Icon(Icons.priority_high),
                     ),
-                    title: DropdownButton(
-                        items: _prioities.map((String dropDownStringItem) {
-                          return DropdownMenuItem<String>(
-                            value: dropDownStringItem,
-                            child: Text(dropDownStringItem,
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black)),
-                          );
-                        }).toList(),
-                        value: getPriorityAsString(task.priority),
-                        onChanged: (valueSelectedByUser) {
-                          setState(() {
-                            updatePriorityAsInt(valueSelectedByUser);
-                          });
-                        }),
+                    title: ButtonTheme(
+                      alignedDropdown: true,
+                      child: DropdownButton(
+                          disabledHint: Text("لطفا انتخاب کنید"),
+                          isExpanded: true,
+                          iconSize: 20.0,
+                          icon: IconButton(
+                            icon: Icon(
+                              Icons.keyboard_arrow_down,
+                              color: Colors.white,
+                              size: 30.0,
+                            ),
+                            color: Colors.white,
+                          ),
+                          dropdownColor: Colors.white,
+                          itemHeight: 50.0,
+                          focusColor: Colors.white,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                          ),
+                          isDense: false,
+                          iconEnabledColor: Colors.black,
+                          items: _prioities.map((String dropDownStringItem) {
+                            return DropdownMenuItem<String>(
+                              value: dropDownStringItem,
+                              child: Text(dropDownStringItem,
+                                  style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: dropDownStringItem != "low"
+                                          ? Colors.red
+                                          : Colors.green)),
+                            );
+                          }).toList(),
+                          value: getPriorityAsString(task.priority),
+                          onChanged: (valueSelectedByUser) {
+                            setState(() {
+                              updatePriorityAsInt(valueSelectedByUser);
+                            });
+                          }),
+                    ),
                   ),
                 ),
                 //forth Element:Date picker
@@ -141,8 +184,11 @@ class TaskDetailState extends State<TaskDetail> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 20.0),
-                      child: ElevatedButton(
-                        // color: Colors.teal,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        color: Colors.amber,
                         onPressed: () async {
                           Jalali picked = await showPersianDatePicker(
                             context: context,
@@ -153,8 +199,13 @@ class TaskDetailState extends State<TaskDetail> {
                           if (picked != null && picked != selectedDate)
                             setState(() {
                               label = picked.formatFullDate();
-                              this.task.date = picked.toString();
+                              this.task.date = picked.year.toString() +
+                                  '/' +
+                                  picked.month.toString() +
+                                  '/' +
+                                  picked.day.toString();
                               debugPrint(this.task.date);
+                              Date = this.task.date;
                             });
                         },
                         child: Text('تاریخ '),
@@ -164,7 +215,11 @@ class TaskDetailState extends State<TaskDetail> {
                       width: 20.0,
                     ),
                     //fifth Element:Time picker
-                    ElevatedButton(
+                    RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      color: Colors.amber,
                       // color: Colors.teal,
                       onPressed: () async {
                         var picked = await showPersianTimePicker(
@@ -179,10 +234,12 @@ class TaskDetailState extends State<TaskDetail> {
                         );
                         setState(() {
                           label = picked.persianFormat(context);
-                          String time =
-                              picked.hour.toString() + picked.minute.toString();
+                          String time = picked.hour.toString() +
+                              ':' +
+                              picked.minute.toString();
                           this.task.startTime = time; //picked.toString();
                           debugPrint(this.task.startTime);
+                          start = time;
                         });
                       },
                       child: Text('زمان شروع '),
@@ -190,8 +247,29 @@ class TaskDetailState extends State<TaskDetail> {
                     SizedBox(
                       width: 20.0,
                     ),
-                    ElevatedButton(
+                    RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      // style: ButtonStyle(
+                      //   backgroundColor:
+                      //       MaterialStateProperty.resolveWith<Color>(
+                      //     (Set<MaterialState> states) {
+                      //       if (states.contains(MaterialState.pressed))
+                      //         return Theme.of(context)
+                      //             .colorScheme
+                      //             .primary
+                      //             .withOpacity(1.0);
+                      //       return null; // Use the component's default.
+                      //     },
+                      //   ),
+                      // ),
                       // color: Colors.teal,
+                      color: Colors.amber,
+                      clipBehavior: Clip.antiAlias,
+                      animationDuration: Duration(
+                        seconds: 20,
+                      ),
                       onPressed: () async {
                         var picked = await showPersianTimePicker(
                           context: context,
@@ -205,15 +283,128 @@ class TaskDetailState extends State<TaskDetail> {
                         );
                         setState(() {
                           label = picked.persianFormat(context);
-                          String time =
-                              picked.hour.toString() + picked.minute.toString();
+                          String time = picked.hour.toString() +
+                              ':' +
+                              picked.minute.toString();
                           this.task.endTime = time; //picked.toString();
                           debugPrint(this.task.endTime);
+                          end = time;
                         });
                       },
                       child: Text('زمان پایان '),
                     ),
                   ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      Date,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    //sdfdsf
+                    Text(
+                      start,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      end,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                Center(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    textBaseline: TextBaseline.alphabetic,
+                    // alignment: AxisAlignment.center,
+                    // verticalDirection: VerticalDirection.down,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "دسته بندی",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: Container(
+                          // foregroundDecoration: BoxDecoration(
+                          //   // borderRadius: BorderRadius.circular(30.0),
+                          //   color: Colors.black,
+                          // ),
+                          padding: const EdgeInsets.all(0.0),
+                          width: 140.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30.0),
+                            color: Colors.amber,
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: ButtonTheme(
+                              alignedDropdown: true,
+                              child: DropdownButton<String>(
+                                disabledHint: Text("لطفا انتخاب کنید"),
+                                isExpanded: true,
+                                iconSize: 20.0,
+                                icon: IconButton(
+                                  icon: Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: Colors.white,
+                                    size: 30.0,
+                                  ),
+                                  color: Colors.white,
+                                ),
+                                dropdownColor: Colors.white,
+                                itemHeight: 50.0,
+                                focusColor: Colors.white,
+                                value: _chosenValue,
+                                // elevation: 5,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20.0,
+                                ),
+                                isDense: false,
+                                iconEnabledColor: Colors.black,
+                                items: <String>[
+                                  'سلامتی',
+                                  'کار',
+                                  'درس',
+                                  'شخصی',
+                                  ' ',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  );
+                                }).toList(),
+                                hint: Text(
+                                  "لطفا یک دسته را انتخاب کنید",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                onChanged: (String value) {
+                                  setState(() {
+                                    _chosenValue = value;
+                                    task.category = value;
+                                    if (value == ' ') task.category = null;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 20.0,
@@ -237,7 +428,12 @@ class TaskDetailState extends State<TaskDetail> {
                             debugPrint("Save button clicked");
                             setState(() {
                               debugPrint("Save button clicked");
-                              _save();
+                              if (_validate) {
+                                _save();
+                              } else {
+                                debugPrint("sfsfgsfdg");
+                                _showAlertDialog("لطفا نام وظیفه را وارد کنید");
+                              }
                             });
                           },
                         ),
@@ -315,6 +511,7 @@ class TaskDetailState extends State<TaskDetail> {
 
   void _save() async {
     moveToLastScreen();
+    debugPrint(_validate.toString());
     // note.date = DateFormat.yMMMd().format(DateTime.now());
     int result;
     if (task.id != null) {

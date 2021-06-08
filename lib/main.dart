@@ -10,7 +10,7 @@ import 'package:flutter/rendering.dart';
 import 'package:boojoo/slider/OnBoardScreenMain.dart';
 import 'package:boojoo/Challenge/Challenge_Service.dart';
 import 'package:get_it/get_it.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+
 
 
 void setupLocator(){
@@ -33,14 +33,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      localizationsDelegates: [
-        GlobalCupertinoLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale("fa", "IR"), // OR Locale('ar', 'AE') OR Other RTL locales
-      ],
       color: Colors.white,
       home: new Splash(),
       debugShowCheckedModeBanner: false,

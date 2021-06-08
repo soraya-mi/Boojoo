@@ -13,7 +13,7 @@ String tmp1;
 // ignore: missing_return
 Future<AlbumResetPassword> createAlbumResetPassword(String email) async {
   final http.Response response = await http.post(
-    Uri.http('37.152.182.36:8000','api/rest-auth/password/reset/'),
+    Uri.http('185.235.43.184','/auth/password/reset/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

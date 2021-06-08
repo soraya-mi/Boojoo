@@ -1,11 +1,23 @@
+import 'dart:ui';
 import 'package:boojoo/Challenge/Challenge_Service.dart';
 import 'package:boojoo/Challenge/Challenges.dart';
+import 'package:boojoo/MoodTracker/MoodTracker_Main.dart';
+import 'package:boojoo/SideMenu/AboutUs.dart';
+import 'package:boojoo/SideMenu/FeedBack_Main.dart';
+import 'package:boojoo/SideMenu/HelpPage.dart';
+import 'package:boojoo/SideMenu/Profile_Editing_main.dart';
+import 'package:boojoo/SideMenu/ReportsPage_Main.dart';
+import 'package:boojoo/SideMenu/Setting_Main.dart';
+import 'package:boojoo/SideMenu/logInsigUpbutton.dart';
+import 'package:boojoo/ui/home/home_page_mychallenges.dart';
+import 'package:boojoo/ui/home/home_page_body_mychallenges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:boojoo/Habit/habbit-list.dart';
 import 'package:boojoo/Task/task-list.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 // void setupLocator(){
 //   GetIt.I.registerLazySingleton(() => challengeservice());
@@ -21,10 +33,18 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(primaryColor: Colors.lightBlue , fontFamily: 'calibri'),
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale("fa", "IR"), // OR Locale('ar', 'AE') OR Other RTL locales
+      ],
       title: '',
-      theme: ThemeData(
-        primarySwatch: Colors.amber,
-      ),
+
       home: MyHomePage(),
     );
   }
@@ -99,18 +119,28 @@ class _ButtomNavyBarState extends State<ButtomNavyBar> {
   Color backgroundColor = Colors.white;
 
   PageController _pageController = PageController();
-  List<Widget> _screens = [MyChallenges(), HabitList(), TaskList(),  ];
+  List<Widget> _screens = [HomePageMyChallenges(), HabitList(), TaskList(), profile() ];
   void _onPageChanged(int index){
     index = index;
   }
 
   
   List<NavigationItem> items = [
-    NavigationItem(Icon(Icons.home), Text('خانه'), Colors.amber),
-    NavigationItem(Icon(Icons.person), Text('پروفایل'), Colors.blueAccent),
-    NavigationItem(Icon(Icons.add_alarm_outlined), Text('عادت'), Colors.purpleAccent),
-    NavigationItem(Icon(Icons.settings), Text('چالش'), Colors.teal)
+    NavigationItem(Icon(Icons.group), Text('   چالش'),Colors.blue),
+    NavigationItem(Icon(Icons.add_alarm_outlined), Text('   عادت'),Colors.blue),
+    NavigationItem(Icon(Icons.calendar_today), Text('   وظایف'), Colors.blue),
+    NavigationItem(Icon(Icons.person), Text('   پروفایل'),Colors.blue)
   ];
+  // gradient: new LinearGradient(
+  // colors: [
+  // const Color(0xFF3366FF),
+  // const Color(0xFF00CCFF)
+  // ],
+  // begin: const FractionalOffset(0.0, 0.0),
+  // end: const FractionalOffset(1.0, 0.0),
+  // stops: [0.0, 1.0],
+  // tileMode: TileMode.clamp
+  // ),
   
   Widget _buildItem(NavigationItem item, bool IsSelected){
     return AnimatedContainer(
@@ -131,7 +161,7 @@ class _ButtomNavyBarState extends State<ButtomNavyBar> {
             children: <Widget>[
               IconTheme(data: IconThemeData(
                   size: 24,
-                  color: IsSelected ? backgroundColor : Colors.black
+                  color: IsSelected ? backgroundColor : Colors.lightBlueAccent
               ),
                   child: item.icon),
               Padding(padding: const EdgeInsets.only(left: 8),
@@ -154,6 +184,117 @@ class _ButtomNavyBarState extends State<ButtomNavyBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: Drawer(
+        child:SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              DrawerHeader(
+                child: Center(
+                  child: Text(
+                    '....بوژووو',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.black, fontSize: 25),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                ),
+              ),
+              ListTile(
+                title: Text('ایجاد حساب/ ورود',textAlign: TextAlign.right,style: TextStyle(fontSize: 20)),
+                trailing: Icon(Icons.account_circle_sharp, color: Colors.greenAccent,size:50),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              entrancePage())
+                  ),
+                },
+              ),
+              Divider(),
+              ListTile(
+                title: Text('مودترکر',textAlign: TextAlign.right,style: TextStyle(fontSize: 20)),
+                trailing: Icon(Icons.mood_sharp, color: Colors.teal,size:50),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MoodTrackere())
+                  ),
+                },
+              ),
+              Divider(),
+              ListTile(
+                trailing: Icon(Icons.bar_chart,color: Colors.deepOrangeAccent,size: 50,),
+                title: Text('گزارش ها',textAlign: TextAlign.right,style: TextStyle(fontSize: 20)),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              Reports_Main())
+                  ),
+                },
+              ),
+              Divider(),
+              ListTile(
+                trailing: Icon(Icons.settings , color:Colors.blueAccent,size:50),
+                title: Text('تنظیمات',textAlign: TextAlign.right,style: TextStyle(fontSize: 20)),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              SettingMain())
+                  ),
+                },
+              ),
+              Divider(),
+              ListTile(
+                trailing: Icon(Icons.border_color,color: Colors.purpleAccent,size: 50,),
+                title: Text('ارسال نظر / ارتباط با ما',textAlign: TextAlign.right,style: TextStyle(fontSize: 20)),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              FeedBack())
+                  )
+                },
+              ),
+              Divider(),
+              ListTile(
+                trailing: Icon(Icons.help,color: Colors.tealAccent,size: 50,),
+                title: Text('راهنما',textAlign: TextAlign.right,style: TextStyle(fontSize: 20)),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              HelpPage())
+                  )
+                },
+              ),
+              Divider(),
+              ListTile(
+                trailing: Icon(Icons.info_outline,color: Colors.pinkAccent,size: 50,),
+                title: Text('درباره ما',textAlign: TextAlign.right,style: TextStyle(fontSize: 20)),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              AboutUs())
+                  )
+                },
+              ),
+              Divider(),
+            ],
+          ),
+        ),
+      ),
       body: PageView(
         controller: _pageController,
         children: _screens,
@@ -165,7 +306,7 @@ class _ButtomNavyBarState extends State<ButtomNavyBar> {
         height: 56,
         padding: EdgeInsets.only(left: 8, right: 8, bottom: 4, top: 4),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.blue,
           boxShadow: [
             BoxShadow(
               color: Colors.black12,

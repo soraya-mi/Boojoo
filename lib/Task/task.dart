@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Task {
   int _id;
   int _priority;
@@ -9,13 +7,14 @@ class Task {
   String _startTime;
   String _endTime;
   int _completed = 0;
+  String _category;
   //This is Optioanl Position Paremeter if {} This is Optional Named Parameter
   Task(this._title, this._date, this._startTime, this._endTime, this._priority,
-      [this._description]);
+      [this._description, this._category]);
   //This is during editing(Called with Id)
   Task.withId(this._id, this._title, this._date, this._startTime, this._endTime,
       this._priority, this._completed,
-      [this._description]);
+      [this._description, this._category]);
 
 //All the Getters(Controls the Data Asked By another method from this Class)
   int get id {
@@ -29,6 +28,7 @@ class Task {
   String get startTime => _startTime;
   String get endTime => _endTime;
   int get completed => _completed;
+  String get category => _category;
 //These are all the Setters
   set title(String newTitle) {
     if (newTitle.length <= 255) {
@@ -70,6 +70,12 @@ class Task {
     this._completed = newStatus;
   }
 
+  set category(String newCategory) {
+    if (newCategory.length <= 255) {
+      this._category = newCategory;
+    }
+  }
+
 //Used to Save and Retrive from the Database
 //Converting the Note Object into Map Object
   Map<String, dynamic> toMap() {
@@ -86,6 +92,7 @@ class Task {
     map['starttime'] = _startTime;
     map['endtime'] = _endTime;
     map['completed'] = _completed;
+    map['category'] = _category;
     return map;
   }
 
@@ -98,5 +105,6 @@ class Task {
     this._startTime = map['starttime'];
     this._endTime = map['endtime'];
     this._completed = map['completed'];
+    this._category = map['category'];
   }
 }

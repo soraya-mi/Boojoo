@@ -5,18 +5,25 @@ import 'LoginPage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
-
-
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:boojoo/SideMenu//SharedPref_Class.dart';
+import 'package:another_flushbar/flushbar.dart';
+import 'package:connectivity/connectivity.dart';
 //import 'home-page.dart';
 int messageStatusCode=-1;
 String tmpUsername="";
 String backAnswer="";
 String errorTeller="کاربر گرامی خطایی رخ داده است. \n نام کاربری نباید تکراری باشد  همچنین رمز عبور باید حداقل شامل 10 کاراکتر از جمله حروف و اعداد باشد";
+String AccessTokenSignUp="";
+String RefreshTokenSignUp="";
+String UsernNameFromTokenSignUp="";
+String EmailFromTokenSignUp="";
+String PKTokenSignUp="";
+
 // ignore: missing_return
 Future<AlbumSignUp> createAlbumSigUp(String username,String email,String password1, String password2) async {
   final http.Response response1 = await http.post(
-    Uri.http('37.152.182.36:8000', 'api/rest-auth/registration/'),
+    Uri.http('185.235.43.184', '/auth/registration/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -28,15 +35,27 @@ Future<AlbumSignUp> createAlbumSigUp(String username,String email,String passwor
     }),
   );
   print("ddd");
+  print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   print(response1.statusCode);
+  print(response1.body);
+  print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   tmpUsername=username;
   backAnswer=response1.body;
   messageStatusCode=response1.statusCode;
-  /*if (response1.statusCode == 201) {
-    return AlbumSignUp.fromJson(jsonDecode(response1.body));
-  } else {
-    throw Exception('Failed to create album.');
-  }*/
+
+  List<String>ServerResponseInListS=backAnswer.split(",");
+  List<String>accesstokenS=ServerResponseInListS[0].split(":");
+  List<String>refreshtokenS=ServerResponseInListS[1].split(":");
+  List<String>pktokenS=ServerResponseInListS[2].split(":");
+  List<String>usernametokenS=ServerResponseInListS[3].split(":");
+  List<String>emailtokenS=ServerResponseInListS[4].split(":");
+  AccessTokenSignUp=accesstokenS[1].substring(1,accesstokenS[1].length-1);
+  RefreshTokenSignUp=refreshtokenS[1].substring(1,refreshtokenS[1].length-1);
+  UsernNameFromTokenSignUp=usernametokenS[1].substring(1,usernametokenS[1].length-1);
+  EmailFromTokenSignUp=emailtokenS[1].substring(1,emailtokenS[1].length-1);
+  PKTokenLogIn=pktokenS[2];
+
+
 }
 class AlbumSignUp {
   final String username;
@@ -81,7 +100,33 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController usernameController=TextEditingController();
   final TextEditingController password1Controller=TextEditingController();
   final TextEditingController password2Controller=TextEditingController();
+  final SignUpPrefs = MySharedPreferences.instance;
   Future<AlbumSignUp> _futureAlbumSignUp;
+  void showFlushBar(BuildContext context,String Message){
+    Flushbar(
+      //message:Message ,
+
+      //icon:,
+      leftBarIndicatorColor: Colors.amber,
+      messageText: Text(Message,textAlign: TextAlign.right,style: TextStyle(color: Colors.white,fontSize: 20),),
+      //brar icon , inas,
+      messageSize: 20,
+      backgroundColor: Colors.black,
+      borderColor: Colors.amber,
+      messageColor: Colors.white,
+      duration: Duration(seconds: 2),
+    )..show(context);
+
+  }
+
+  void isInternetConnected()async{
+    var result=await Connectivity().checkConnectivity();
+    if(result==ConnectivityResult.none)
+    {
+      print("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw");
+      showFlushBar(context, "اینترنت متصل نیست");
+    }
+  }
   bool hidePwd = true;
   @override
   Widget build(BuildContext context) {
@@ -110,293 +155,276 @@ class _SignUpPageState extends State<SignUpPage> {
       body: Center(
         child:SingleChildScrollView(
           child:Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
 
-          SingleChildScrollView(
-            // child: Container(
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.all(Radius.circular(40)),
-            //     color: Colors.grey.withOpacity(0.3),
-            //   ),
-              child: Container(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 40,bottom: 80),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(left: 20),
-                      alignment: Alignment.centerRight,
-                      child: Text('نام کاربری', style: TextStyle(
-                        color:Colors.black.withOpacity(0.7),
-                        fontSize: 15,
-                        //print("username is on");
-                      ),),
-                    ),
-                    SizedBox(height: 10,),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        color: Colors.grey.withOpacity(0.2),
+              SingleChildScrollView(
+                // child: Container(
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.all(Radius.circular(40)),
+                //     color: Colors.grey.withOpacity(0.3),
+                //   ),
+                child: Container(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 40,bottom: 80),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(left: 20),
+                        alignment: Alignment.centerRight,
+                        child: Text('نام کاربری', style: TextStyle(
+                          color:Colors.black.withOpacity(0.7),
+                          fontSize: 15,
+                          //print("username is on");
+                        ),),
                       ),
-                      alignment: Alignment.centerRight,
-                      child: TextField(
-                        style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black
+                      SizedBox(height: 10,),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 2, horizontal: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          color: Colors.grey.withOpacity(0.2),
                         ),
-                        controller: usernameController,
-                        decoration: InputDecoration(
-                            hintText: "مثال : ghazal ",
-                            border: InputBorder.none
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20,),
-                    Container(
-                      padding: EdgeInsets.only(left: 20),
-                      alignment: Alignment.centerRight,
-                      child: Text('ایمیل', style: TextStyle(
-                        color:Colors.black.withOpacity(0.7),
-                        fontSize: 15,
-                      ),),
-                    ),
-                    SizedBox(height: 10,),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        color: Colors.grey.withOpacity(0.2),
-                      ),
-                      alignment: Alignment.centerRight,
-                      child: TextField(
-                        style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black
-                        ),
-                        controller: emailController,
-
-                        decoration: InputDecoration(
-                            hintText: "مثال : gmail.com",
-                            border: InputBorder.none
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20,),
-                    Container(
-                      padding: EdgeInsets.only(left: 20),
-                      alignment: Alignment.centerRight,
-                      child: Text('رمز عبور', style: TextStyle(
-                        color:Colors.black.withOpacity(0.7),
-                        fontSize: 15,
-                      ),),
-                    ),
-                    SizedBox(height: 10,),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        color: Colors.grey.withOpacity(0.2),
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: TextField(
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black
-                              ),
-                              obscureText: hidePwd,
-                              controller: password1Controller,
-                              decoration: InputDecoration(
-                                  hintText: "****",
-                                  border: InputBorder.none
-                              ),
-                            ),
+                        alignment: Alignment.centerRight,
+                        child: TextField(
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black
                           ),
-                          Container(
-                            height: 50,
-                            width: 50,
-                            child: IconButton(
-                                onPressed: togglePwdVisibility,
-                                icon: IconButton(
-                                  icon: hidePwd == true ? Icon(
-                                      Icons.visibility_off
-                                  ): Icon(Icons.visibility),
-                                )
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20,),
-                    Container(
-                      padding: EdgeInsets.only(left: 20),
-                      alignment: Alignment.centerRight,
-                      child: Text(' تایید رمز عبور', style: TextStyle(
-                        color:Colors.black.withOpacity(0.7),
-                        fontSize: 15,
-                      ),),
-                    ),
-                    SizedBox(height: 10,),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        color: Colors.grey.withOpacity(0.2),
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: TextField(
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black
-                              ),
-                              obscureText: hidePwd,
-                              controller: password2Controller,
-                              decoration: InputDecoration(
-                                  hintText: "****",
-                                  border: InputBorder.none
-                              ),
-                            ),
+                          controller: usernameController,
+                          decoration: InputDecoration(
+                              hintText: "مثال : ghazal ",
+                              border: InputBorder.none
                           ),
-                          Container(
-                            height: 50,
-                            width: 50,
-                            child: IconButton(
-                                onPressed: togglePwdVisibility,
-                                icon: IconButton(
-                                  icon: hidePwd == true ? Icon(
-                                      Icons.visibility_off
-                                  ): Icon(Icons.visibility),
-                                )
-                            ),
-                          )
-                        ],
+                        ),
                       ),
-                    ),
-                    // Container(
-                    //   padding: EdgeInsets.only(top: 5, right: 20),
-                    //   alignment: Alignment.centerRight,
-                    //   child: Text('رمز عبور خود را فراموش کرده اید؟'),
-                    // ),
-                     SizedBox(height: 50,),
-                    Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xffffeb3b), Color(0xffffc107)],
-                            stops: [0,1],
+                      SizedBox(height: 20,),
+                      Container(
+                        padding: EdgeInsets.only(left: 20),
+                        alignment: Alignment.centerRight,
+                        child: Text('ایمیل', style: TextStyle(
+                          color:Colors.black.withOpacity(0.7),
+                          fontSize: 15,
+                        ),),
+                      ),
+                      SizedBox(height: 10,),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 2, horizontal: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          color: Colors.grey.withOpacity(0.2),
+                        ),
+                        alignment: Alignment.centerRight,
+                        child: TextField(
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(15))
+                          controller: emailController,
+
+                          decoration: InputDecoration(
+                              hintText: "مثال : gmail.com",
+                              border: InputBorder.none
+                          ),
+                        ),
                       ),
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
+                      SizedBox(height: 20,),
+                      Container(
+                        padding: EdgeInsets.only(left: 20),
+                        alignment: Alignment.centerRight,
+                        child: Text('رمز عبور', style: TextStyle(
+                          color:Colors.black.withOpacity(0.7),
+                          fontSize: 15,
+                        ),),
+                      ),
+                      SizedBox(height: 10,),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 2, horizontal: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          color: Colors.grey.withOpacity(0.2),
+                        ),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: TextField(
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black
+                                ),
+                                obscureText: hidePwd,
+                                controller: password1Controller,
+                                decoration: InputDecoration(
+                                    hintText: "****",
+                                    border: InputBorder.none
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 50,
+                              width: 50,
+                              child: IconButton(
+                                  onPressed: togglePwdVisibility,
+                                  icon: IconButton(
+                                    icon: hidePwd == true ? Icon(
+                                        Icons.visibility_off
+                                    ): Icon(Icons.visibility),
+                                  )
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 20,),
+                      Container(
+                        padding: EdgeInsets.only(left: 20),
+                        alignment: Alignment.centerRight,
+                        child: Text(' تایید رمز عبور', style: TextStyle(
+                          color:Colors.black.withOpacity(0.7),
+                          fontSize: 15,
+                        ),),
+                      ),
+                      SizedBox(height: 10,),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 2, horizontal: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          color: Colors.grey.withOpacity(0.2),
+                        ),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: TextField(
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black
+                                ),
+                                obscureText: hidePwd,
+                                controller: password2Controller,
+                                decoration: InputDecoration(
+                                    hintText: "****",
+                                    border: InputBorder.none
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 50,
+                              width: 50,
+                              child: IconButton(
+                                  onPressed: togglePwdVisibility,
+                                  icon: IconButton(
+                                    icon: hidePwd == true ? Icon(
+                                        Icons.visibility_off
+                                    ): Icon(Icons.visibility),
+                                  )
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      // Container(
+                      //   padding: EdgeInsets.only(top: 5, right: 20),
+                      //   alignment: Alignment.centerRight,
+                      //   child: Text('رمز عبور خود را فراموش کرده اید؟'),
+                      // ),
+                      SizedBox(height: 50,),
+                      Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Color(0xffffeb3b), Color(0xffffc107)],
+                              stops: [0,1],
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(15))
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
 
-                            Timer(Duration(seconds: 5), () {
-                              //print(" This line is execute after 5 seconds");
 
-                              if (messageStatusCode == 201) {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) =>
-                                //           MyHomePage()), //NoteList()),
-                                // );
-                                final snackBar1 = SnackBar(content: Text(
-                                    " .عزیز حساب کاربری شما ساخته شد  " + /*usernameController.text*/
-                                        tmpUsername,
-                                    textAlign: TextAlign.right));
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    snackBar1);
-                                print("sign up");
-                              }
+                              Timer(Duration(seconds: 5), () {
 
-                              else {
+                                if (messageStatusCode == 201) {
+                                  print(" This line is execute after 5 seconds");
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) =>
+                                  //           MyHomePage()), //NoteList()),
+                                  // );
 
-                                if (backAnswer.contains("password") ) {
-                                  final snackBar2 = SnackBar(content: Text(
-                                      ".رمز عبور باید حداقل شامل 10 کاراکتر حرف و عدد باشد",
-                                      textAlign: TextAlign.right));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      snackBar2);
-                                  print("error password");
+                                  showFlushBar(context,  " .عزیز حساب کاربری شما ساخته شد  " + tmpUsername);
+                                  print("sign up");
+                                  SignUpPrefs.addStringToSF("username_SHP_SI", UsernNameFromTokenSignUp);
+                                  SignUpPrefs.addStringToSF("access token_SHP_SI", AccessTokenSignUp);
+                                  SignUpPrefs.addStringToSF("refresh token_SHP_SI", RefreshTokenSignUp);
+                                  SignUpPrefs.addStringToSF("email_SHP_SI", EmailFromTokenSignUp);
+                                  SignUpPrefs.addStringToSF("PK_SHP_SI", PKTokenSignUp);
+
                                 }
-                                if (backAnswer.contains("username")) {
-                                  final snackBar2 = SnackBar(content: Text(
-                                      ".نام کاربری مورد نظر قبلا انتخاب شده است",
-                                      textAlign: TextAlign.right));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      snackBar2);
-                                  print("error username");
+
+                                else {
+
+                                  if (backAnswer.contains("password") ) {
+                                    showFlushBar(context, ".رمز عبور باید حداقل شامل 10 کاراکتر حرف و عدد باشد");
+                                    print("error password");
+                                  }
+                                  if (backAnswer.contains("username")) {
+                                    showFlushBar(context, ".نام کاربری مورد نظر قبلا انتخاب شده است");
+                                    print("error username");
+                                  }
+                                  if (backAnswer.contains("email")) {
+                                    showFlushBar(context,  ".ایمیل مورد نظر اکانت دارد. لطفا با یک ایمیل دیگر اقدام کنید");
+                                    print("error email");
+                                  }
                                 }
-                                if (backAnswer.contains("email")) {
-                                  final snackBar2 = SnackBar(content: Text(
-                                      ".ایمیل مورد نظر اکانت دارد. لطفا با یک ایمیل دیگر اقدام کنید",
-                                      textAlign: TextAlign.right));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      snackBar2);
-                                  print("error email");
-                                }
-                              }
+                              });
+
+                              print("on tap");
+                              _futureAlbumSignUp =  createAlbumSigUp(usernameController.text,emailController.text,
+                                  password1Controller.text,password2Controller.text);
+                              showFlushBar(context, "لطفا صبر کنید");
                             });
 
-                            /*else
-                            {
-                              final snackBar3 =  SnackBar(content: Text(" .لطفا صبر کنید ",textAlign: TextAlign.right));
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar3);
-                            }*/
-                          });
-                          print("on tap");
-                          _futureAlbumSignUp =  createAlbumSigUp(usernameController.text,emailController.text,
-                              password1Controller.text,password2Controller.text);
-                          Timer(Duration(seconds: 5), () {
-                            print(" This line is execute after 5 seconds");
-                          });
-                          final snackBar3 =  SnackBar(content: Text(" .لطفا صبر کنید ",textAlign: TextAlign.right));
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar3);
-                        },
+                          },
 
 
-                        child: Center(
-                          child: Text("ساخت حساب کاربری", style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15
-                          ),),
+                          child: Center(
+                            child: Text("ساخت حساب کاربری", style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 15
+                            ),),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 10,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text("اکانت دارید؟ "),
-                        InkWell(
-                          onTap: openLoginPage,
-                          child: Text(" وارد شدن ", style: TextStyle(
-                              color: Colors.amber,
-                              fontWeight: FontWeight.w700
-                          ),),
-                        )
-                      ],
-                    )
-                  ],
+                      SizedBox(height: 10,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text("اکانت دارید؟ "),
+                          InkWell(
+                            onTap: openLoginPage,
+                            child: Text(" وارد شدن ", style: TextStyle(
+                                color: Colors.amber,
+                                fontWeight: FontWeight.w700
+                            ),),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
 
-        ],
-      ),
-    ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -413,3 +441,8 @@ class _SignUpPageState extends State<SignUpPage> {
     });
   }
 }
+
+
+
+
+//commnt for test

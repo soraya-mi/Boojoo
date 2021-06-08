@@ -45,18 +45,11 @@ class HabitWithCueLog_DBHelper {
     return habitsWithCueDatabase;
   }
 
+//crud
   void _createHabitWithCueLogDb(Database db, int newVersion) async {
     debugPrint('create*********');
     await db.execute(
         'CREATE TABLE $habitwithCueTable($colID INTEGER PRIMARY KEY AUTOINCREMENT,$colHabitID INTEGER, $colDate TEXT,$colCue INTEGER)');
-  }
-
-  Future<List<Map<String, dynamic>>> getHabitWithCueLogMapList() async {
-    Database db = await this.database;
-    //optional
-    // var result = await db.rawQuery('SELECT * from $noteTable order by $colPriority ASC');
-    var result = await db.query(habitwithCueTable);
-    return result;
   }
 
   Future<int> insertHabitLog(Habit_with_Cue_log habit) async {
@@ -83,11 +76,79 @@ class HabitWithCueLog_DBHelper {
     return result;
   }
 
+  Future<void> deleteHabitLogs(int habitID) async {
+    debugPrint("in Delete fun");
+    Database db = await this.database;
+    db.rawDelete('DELETE FROM $habitwithCueTable WHERE $colHabitID="$habitID"');
+    debugPrint("Deleted.");
+  }
+
+  Future<List<Map<String, Object>>> getLogMap(int hid, String hdate) async {
+    //Future<List<Map<String, Object>>>
+    debugPrint("in get Log func");
+    Database db = await this.database;
+    debugPrint("before query");
+    var result = await db.rawQuery(
+        'SELECT * from $habitwithCueTable WHERE $colDate = "$hdate" AND $colHabitID = "$hid"');
+    debugPrint('after query');
+    debugPrint(result.toString());
+    return result;
+  }
+
+  Future<Habit_with_Cue_log> getLogObject(int hid, String hdate) async {
+    debugPrint("ininnniin");
+    var habitMapList = await getLogMap(hid, hdate);
+    int count = habitMapList.length;
+    debugPrint(count.toString());
+    debugPrint(habitMapList[0].toString());
+    if (count != 0) {
+      debugPrint(count.toString());
+      Habit_with_Cue_log Log =
+          await Habit_with_Cue_log.fromMapObject(habitMapList[0]);
+      debugPrint(Log.toString());
+      debugPrint("ers     " + Log.toString());
+      return Log;
+    } else {
+      return Habit_with_Cue_log(-1, "-1");
+    }
+  }
+
+  Future<int> getID(int hid, String hdate) async {
+    //Future<List<Map<String, Object>>>
+    debugPrint("in get id func");
+    Database db = await this.database;
+    debugPrint("before query");
+    var result = await db.rawQuery(
+        'SELECT $colID from $habitwithCueTable WHERE $colDate = "$hdate" AND $colHabitID = "$hid"');
+    debugPrint('after query');
+    // if (result != null)
+    //   debugPrint('id=' + result[0].values.first.toString() + '....');
+    // int logID = int.parse(result[0].values.toString()[1]);
+    // debugPrint(logID.toString());
+    // int logID = await int.parse(result[0].values.first.toString());
+    // debugPrint('id' + logID.toString());
+    // debugPrint(result.toString());
+    debugPrint('brefore return id value');
+    if (result.length != 0) {
+      return await result[0].values.first;
+    } else
+      return -1;
+  }
+
   Future<int> getCount() async {
     Database db = await this.database;
     List<Map<String, dynamic>> x =
         await db.rawQuery('SELECT COUNT (*) from $habitwithCueTable');
     int result = Sqflite.firstIntValue(x);
+    return result;
+  }
+
+//los queries
+  Future<List<Map<String, dynamic>>> getHabitWithCueLogMapList() async {
+    Database db = await this.database;
+    //optional
+    // var result = await db.rawQuery('SELECT * from $noteTable order by $colPriority ASC');
+    var result = await db.query(habitwithCueTable);
     return result;
   }
 
@@ -120,28 +181,6 @@ class HabitWithCueLog_DBHelper {
   //   // debugPrint(date);
   // }
 
-  Future<int> getID(int hid, String hdate) async {
-    //Future<List<Map<String, Object>>>
-    debugPrint("in get id func");
-    Database db = await this.database;
-    debugPrint("before query");
-    var result = await db.rawQuery(
-        'SELECT $colID from $habitwithCueTable WHERE $colDate = "$hdate" AND $colHabitID = "$hid"');
-    debugPrint('after query');
-    // if (result != null)
-    //   debugPrint('id=' + result[0].values.first.toString() + '....');
-    // int logID = int.parse(result[0].values.toString()[1]);
-    // debugPrint(logID.toString());
-    // int logID = await int.parse(result[0].values.first.toString());
-    // debugPrint('id' + logID.toString());
-    // debugPrint(result.toString());
-    debugPrint('brefore return id value');
-    if (result.length != 0) {
-      return await result[0].values.first;
-    } else
-      return -1;
-  }
-
   Future<List<Map<String, Object>>> getHabitLogsMap(int habitID) async {
     //Future<List<Map<String, Object>>>
     debugPrint("in getHabitLogs");
@@ -169,12 +208,27 @@ class HabitWithCueLog_DBHelper {
     return habitList;
   }
 
-  Future<void> deleteHabitLogs(int habitID) async {
-    debugPrint("in Delete fun");
+  Future<List<Map<String, dynamic>>> getLogByDate(String LogDate) async {
+    debugPrint("infff");
     Database db = await this.database;
-    db.rawDelete('DELETE FROM $habitwithCueTable WHERE $colHabitID="$habitID"');
-    debugPrint("Deleted.");
+    List<Map<String, dynamic>> x = await db.rawQuery(
+        'SELECT * from $habitwithCueTable WHERE $colDate LIKE "$LogDate%"');
+    debugPrint(LogDate + "loggggg" + x.toString());
+    return x;
   }
+
+  Future<List<Habit_with_Cue_log>> getLogByDateList(String LogDate) async {
+    debugPrint("in");
+    var habitLogsList = await getLogByDate(LogDate);
+    debugPrint(habitLogsList.toString());
+    int count = habitLogsList.length;
+    List<Habit_with_Cue_log> habitList = List<Habit_with_Cue_log>();
+    for (int i = 0; i < count; i++) {
+      habitList.add(Habit_with_Cue_log.fromMapObject(habitLogsList[i]));
+    }
+    return habitList;
+  }
+
 // Future<List<>>> getHabitLogsList(int habitID) async {
 //   debugPrint("in getHabitLogs");
 //   Database db = await this.database;
