@@ -322,9 +322,15 @@ class _HabitListState extends State<HabitList> {
                   fontSize: 25.0),
             ),
             subtitle: Text(
+<<<<<<< HEAD
               this.habitList[position].description == null
                   ? ""
                   : this.habitList[position].description.toString(),
+=======
+              this.habitList[position].description != ""
+                  ? this.habitList[position].description.toString()
+                  : "",
+>>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
               // this.habitList[position].description.toString(),
               style: TextStyle(color: Colors.white),
             ),

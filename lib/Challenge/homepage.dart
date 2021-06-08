@@ -184,14 +184,22 @@ class _ButtomNavyBarState extends State<ButtomNavyBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
       endDrawer: Drawer(
+=======
+      drawer: Drawer(
+>>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
         child:SingleChildScrollView(
           child: Column(
             children: <Widget>[
               DrawerHeader(
                 child: Center(
                   child: Text(
+<<<<<<< HEAD
                     '....بوژووو',
+=======
+                    'بوژووو...',
+>>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.black, fontSize: 25),
                   ),

@@ -84,11 +84,92 @@ void sendRefreshTokenToBack(){
 
 
 
+<<<<<<< HEAD
 
 
 final token= MySharedPreferences.instance;
 String hintTextDefiner_Email(){
 
+=======
+//codes for getting new access token using refresh token
+int back_answer_refresh_token_status_code;
+String back_answer_refresh_token_body;
+class AlbumRefresh {
+  final String newAccessToken;
+  AlbumRefresh({this.newAccessToken});
+  factory AlbumRefresh.fromJson(Map<String,dynamic>json){
+    return     AlbumRefresh(
+      newAccessToken: json['newAccessToken'],
+    );
+  }
+
+}//write this class before statefull class that you have
+Future<AlbumRefresh> createAlbumRefresh(String newAccessToken)async{
+  final http.Response responseNewAccessToken=await http.post(
+    Uri.http('37.152.182.36:8000','api/auth/token/refresh/'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body:jsonEncode(<String,String>{
+      'newAccessToken':newAccessToken,
+    }),
+
+
+  );
+  back_answer_refresh_token_status_code=responseNewAccessToken.statusCode;
+  back_answer_refresh_token_body=responseNewAccessToken.body;
+  print("DEBUG BACK ANSWER STATUS");
+  print(back_answer_refresh_token_status_code);
+  print("DEBUF BACK ANSWER BODY");
+  print(back_answer_refresh_token_body);
+  if(back_answer_refresh_token_status_code==200){
+    print("access token is going to be updated");
+
+    // updatePrefs.removeValuesString("access token_SHP");//this removes the prevoius content of acess token
+    // updatePrefs.addStringToSF("access token_SHP", back_answer_refresh_token_body);//this assign the new value of access token to it
+    // final  String myStringAccessToken =  await updatePrefs.getStringValuesSF("access token_SHP");// this is for printing the result to check
+    // print(myStringAccessToken);
+
+  }
+  else{
+    print("something bad happens ");
+  }
+
+
+}
+final updatePrefs=MySharedPreferences.instance;//write in the statfull
+Future<AlbumRefresh> futureAlbumRefresh;//write this in statefull
+
+//use this function when you want to click on a button and send refresh token to back;
+void sendRefreshTokenToBack(){
+  String tmpRefresh;
+  Timer(Duration(seconds: 2), ()async {
+    final String returnie=await updatePrefs.getStringValuesSF("refresh token_SHP");
+    print(" timer1 for gettings refresh token");
+    print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRr refresh token");
+    print(returnie);
+    tmpRefresh = returnie;
+  }
+  );
+  Timer(Duration(seconds: 4), () {
+    print(" timer2 for printting refresh token");
+    print(tmpRefresh);
+    print("LLLLLLLLLLLLLLLLLLLLLL refesh token");
+    futureAlbumRefresh =   createAlbumRefresh(tmpRefresh);//this sends refresh token to back
+
+  }
+  );
+
+}
+
+
+
+
+
+final token= MySharedPreferences.instance;
+String hintTextDefiner_Email(){
+
+>>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
   Timer(Duration(seconds: 2), ()async {
     final String returnie=await token.getStringValuesSF("access token_SHP");
     print(" timer1 for gettings email");
@@ -121,7 +202,11 @@ class challengeservice{
 
   Future<APIresponse<List<challenge_for_list>>> getchallengelist() async{
     await sendRefreshTokenToBack();
+<<<<<<< HEAD
     return http.get(API + 'challenge/my-challenges', headers : headers).
+=======
+    return http.get(API + 'challenge/challenges/', headers : headers).
+>>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
     then((data){
       print(data.statusCode);
       if(data.statusCode == 200){
@@ -144,21 +229,29 @@ class challengeservice{
 
   Future<APIresponse<challengedetail>> getchallenge(int id) async{
     await sendRefreshTokenToBack();
+<<<<<<< HEAD
     return http.get(API + 'challenge/challenge/', headers : headers).
+=======
+    return http.get(API , headers : headers).
+>>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
     then((data) {
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
         return APIresponse<challengedetail>(
             data: challengedetail.fromJson(jsonData));
+<<<<<<< HEAD
       }
       else if(data.statusCode == 401){
         return APIresponse<List<challenge_for_list>>(error: true, errormassege: '(:جانم اول لاگین کن');
+=======
+>>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
       }
       return APIresponse<challengedetail>(error: true, errormassege: 'An error occured!');
     }).catchError((_) => APIresponse<challengedetail>(error: true, errormassege: 'An error occured!'));
 
   }
 
+<<<<<<< HEAD
   Future<APIresponse<bool>> createchallengepublic(challengedetail item) async{
     await sendRefreshTokenToBack();
     return http.post(API + 'challenge/public-challenge/add/', headers : headers, body: json.encode(item.toJson())).
@@ -178,6 +271,11 @@ class challengeservice{
   Future<APIresponse<bool>> createchallengeprivate(challengedetail2 item) async{
     await sendRefreshTokenToBack();
     return http.post(API + 'challenge/private-challenge/add/', headers : headers, body: json.encode(item.toJson())).
+=======
+  Future<APIresponse<bool>> createchallenge(challengedetail item) async{
+    await sendRefreshTokenToBack();
+    return http.post(API + '/challenge/add/', headers : headers, body: json.encode(item.toJson())).
+>>>>>>> 9fdef8eedc2657b35673a5668abd7e9ece27cfae
     then((data) {
       print(data.statusCode);
       if (data.statusCode == 201) {
@@ -349,6 +447,114 @@ class challengeservice{
       }
       return APIresponse<bool>(error: true, errormassege: 'An error occured!');
     }).catchError((_) => APIresponse<bool>(error: true, errormassege: 'An error occured!'));
+
+  }
+
+  Future<APIresponse<List<challenge_for_list>>> getchallenge_pr_life() async{
+    await sendRefreshTokenToBack();
+    return http.get(API + '/challenges/', headers : headers).
+    then((data){
+      if(data.statusCode == 200){
+        final jsonData = json.decode(data.body);
+        final challenges = <challenge_for_list>[];
+        for(var i in jsonData)
+        {
+          challenges.add(challenge_for_list.fromJson(i));
+        }
+        return APIresponse<List<challenge_for_list>>(data: challenges);
+      }
+      return APIresponse<List<challenge_for_list>>(error: true, errormassege: 'an error occured!');
+    }).catchError((_) => APIresponse<List<challenge_for_list>>(error: true, errormassege: 'an error occured!'));
+
+  }
+
+  Future<APIresponse<List<challenge_for_list>>> getchallenge_pr_health() async{
+    await sendRefreshTokenToBack();
+    return http.get(API + '/challenges/', headers : headers).
+    then((data){
+      if(data.statusCode == 200){
+        final jsonData = json.decode(data.body);
+        final challenges = <challenge_for_list>[];
+        for(var i in jsonData)
+        {
+          challenges.add(challenge_for_list.fromJson(i));
+        }
+        return APIresponse<List<challenge_for_list>>(data: challenges);
+      }
+      return APIresponse<List<challenge_for_list>>(error: true, errormassege: 'an error occured!');
+    }).catchError((_) => APIresponse<List<challenge_for_list>>(error: true, errormassege: 'an error occured!'));
+
+  }
+
+  Future<APIresponse<List<challenge_for_list>>> getchallenge_pr_sport() async{
+    await sendRefreshTokenToBack();
+    return http.get(API + '/challenges/', headers : headers).
+    then((data){
+      if(data.statusCode == 200){
+        final jsonData = json.decode(data.body);
+        final challenges = <challenge_for_list>[];
+        for(var i in jsonData)
+        {
+          challenges.add(challenge_for_list.fromJson(i));
+        }
+        return APIresponse<List<challenge_for_list>>(data: challenges);
+      }
+      return APIresponse<List<challenge_for_list>>(error: true, errormassege: 'an error occured!');
+    }).catchError((_) => APIresponse<List<challenge_for_list>>(error: true, errormassege: 'an error occured!'));
+
+  }
+
+  Future<APIresponse<List<challenge_for_list>>> getchallenge_pu_life() async{
+    await sendRefreshTokenToBack();
+    return http.get(API + '/challenges/', headers : headers).
+    then((data){
+      if(data.statusCode == 200){
+        final jsonData = json.decode(data.body);
+        final challenges = <challenge_for_list>[];
+        for(var i in jsonData)
+        {
+          challenges.add(challenge_for_list.fromJson(i));
+        }
+        return APIresponse<List<challenge_for_list>>(data: challenges);
+      }
+      return APIresponse<List<challenge_for_list>>(error: true, errormassege: 'an error occured!');
+    }).catchError((_) => APIresponse<List<challenge_for_list>>(error: true, errormassege: 'an error occured!'));
+
+  }
+
+  Future<APIresponse<List<challenge_for_list>>> getchallenge_pu_health() async{
+    await sendRefreshTokenToBack();
+    return http.get(API + '/challenges/', headers : headers).
+    then((data){
+      if(data.statusCode == 200){
+        final jsonData = json.decode(data.body);
+        final challenges = <challenge_for_list>[];
+        for(var i in jsonData)
+        {
+          challenges.add(challenge_for_list.fromJson(i));
+        }
+        return APIresponse<List<challenge_for_list>>(data: challenges);
+      }
+      return APIresponse<List<challenge_for_list>>(error: true, errormassege: 'an error occured!');
+    }).catchError((_) => APIresponse<List<challenge_for_list>>(error: true, errormassege: 'an error occured!'));
+
+  }
+
+  Future<APIresponse<List<challenge_for_list>>> getchallenge_pu_sport() async{
+    await sendRefreshTokenToBack();
+    return http.get(API + '/challenges/', headers : headers).
+    then((data){
+      if(data.statusCode == 200){
+        final jsonData = json.decode(data.body);
+        final challenges = <challenge_for_list>[];
+        for(var i in jsonData)
+        {
+          challenges.add(challenge_for_list.fromJson(i));
+        }
+        return APIresponse<List<challenge_for_list>>(data: challenges);
+      }
+      return APIresponse<List<challenge_for_list>>(error: true, errormassege: 'an error occured!');
+    }).catchError((_) => APIresponse<List<challenge_for_list>>(error: true, errormassege: 'an error occured!'));
 
   }
 
